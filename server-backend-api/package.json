@@ -1,0 +1,23 @@
+{
+  "name": "backend_api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start" : "node dist/index.js",
+    "build" : "tsc",
+    "dev" : "ts-node src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.20.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
