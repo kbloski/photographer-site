@@ -3,19 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start" : "node dist/index.js",
-    "build" : "tsc",
-    "dev" : "npx ts-node-dev --respanw src/server.ts"
-
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "npx ts-node-dev --respawn --watch ./ src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.20.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^22.5.4",
     "ts-node": "^10.9.2",
