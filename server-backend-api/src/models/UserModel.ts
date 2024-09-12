@@ -1,5 +1,5 @@
 import { sequelize } from "../utils/db";
-import { DataTypes } from "sequelize";
+import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 
 enum Roles {
     ADMIN = 'admin',
@@ -7,7 +7,17 @@ enum Roles {
 }
 const rolesArr: string[] = Object.values(Roles);
 
-const User = sequelize.define("User", {
+interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>>
+{
+    id: number,
+    role: Roles,
+    username: string,
+    email: string,
+    password: string,
+    phone: number
+}
+
+const UserModel = sequelize.define<UserModel>("User", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -63,6 +73,6 @@ const User = sequelize.define("User", {
 });
 
 export { 
-    User,
-    Roles
+    UserModel 
 };
+

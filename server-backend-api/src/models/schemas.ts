@@ -3,13 +3,13 @@ import { Album } from "./AlbumModel";
 import { Message } from "./MessagesModel";
 import { Photo } from "./PhotosUser";
 import { Service } from "./ServiceModel";
-import { User } from "./UserModel";
+import { UserModel } from "./UserModel";
 
 // Album
-User.hasMany(Album, {
+UserModel.hasMany(Album, {
     foreignKey: 'user_id'
 });
-Album.belongsTo(User, {
+Album.belongsTo(UserModel, {
     foreignKey: 'user_id'
 })
 
@@ -23,12 +23,10 @@ Photo.belongsTo(Album, {
 
 sequelize.sync();
 
-console.log('123')
-
 export {
     Album,
     Message,
     Photo,
     Service,
-    User
+    UserModel
 }
