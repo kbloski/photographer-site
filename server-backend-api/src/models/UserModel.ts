@@ -1,7 +1,11 @@
 import { sequelize } from "../utils/db";
 import { DataTypes } from "sequelize";
 
-const roles: string[] = ["admin", "client"];
+enum Roles {
+    ADMIN = 'admin',
+    CLIENT = 'client'
+}
+const rolesArr: string[] = Object.values(Roles);
 
 const User = sequelize.define("User", {
     id: {
@@ -14,9 +18,9 @@ const User = sequelize.define("User", {
         },
     },
     role: {
-        type: DataTypes.ENUM(...roles),
+        type: DataTypes.ENUM(...rolesArr),
         allowNull: false,
-        defaultValue: "client",
+        defaultValue: Roles.CLIENT,
     },
     username: {
         type: DataTypes.STRING(64),
@@ -58,4 +62,7 @@ const User = sequelize.define("User", {
     },
 });
 
-export { User };
+export { 
+    User,
+    Roles
+};
