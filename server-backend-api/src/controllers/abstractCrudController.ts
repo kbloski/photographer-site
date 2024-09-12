@@ -1,7 +1,7 @@
 import { Model, ModelStatic, UpdateOptions, WhereOptions } from "sequelize";
 
 // Definicja klasy abstrakcyjnej CRUD
-export abstract class AbstractCrud<T extends Model> {
+export abstract class AbstractCrudController<T extends Model> {
     protected model: ModelStatic<T>;
 
     constructor(sequelizeModel: ModelStatic<T>) {

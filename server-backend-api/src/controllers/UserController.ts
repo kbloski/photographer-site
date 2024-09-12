@@ -1,9 +1,9 @@
-import { AbstractCrud } from "./abstractCrudController";
+import {  AbstractCrudController } from "./abstractCrudController";
 import { UserModel } from "../models/UserModel";
 import { UserType } from "../types/UserType";
 import bcrypt from "bcrypt";
 
-export class UserController extends AbstractCrud<UserModel> {
+export class UserController extends AbstractCrudController<UserModel> {
     constructor() {
         super(UserModel);
     }
