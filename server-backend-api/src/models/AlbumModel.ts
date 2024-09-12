@@ -7,8 +7,8 @@ extends Model<InferAttributes<Album>, InferCreationAttributes<Album>>
 implements AlbumType
 {
     declare id: number;
-    declare name?: string;
-    declare description?: string;
+    declare name: string;
+    declare description: string;
 } 
 
 Album.init(

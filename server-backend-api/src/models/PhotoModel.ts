@@ -15,8 +15,8 @@ export class Photo
     implements PhotoType
 {
     declare id: number;
-    declare url?: string;
-    declare title?: string;
+    declare url: string;
+    declare title: string;
     declare description?: string;
 }
 

@@ -7,12 +7,11 @@ const statusArr = Object.values(MessageStatus);
 export class Message 
 extends Model<InferAttributes<Message>, InferCreationAttributes<Message>>
 implements MessageType {
-    declare id?: number;
-    declare name?: string;
-    declare email?: string;
-    declare message?: string
-    declare subject?: string;
-    declare status?: MessageStatus
+    declare id: number;
+    declare email: string;
+    declare subject: string;
+    declare status: MessageStatus;
+    declare message?: string;
 }
 
 Message.init({
@@ -23,13 +22,6 @@ Message.init({
         allowNull: false,
         validate: {
             isInt: true,
-        },
-    },
-    name: {
-        type: DataTypes.STRING(64),
-        allowNull: false,
-        validate: {
-            len: [2, 64],
         },
     },
     email: {

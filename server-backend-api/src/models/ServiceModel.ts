@@ -14,7 +14,7 @@ export class Service
     >
     implements ServiceType
 {
-    declare id?: number;
+    declare id: number;
     declare price?: number;
     declare name: string;
     declare description?: string;

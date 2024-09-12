@@ -8,6 +8,10 @@ export class UserController extends AbstractCrudController<User> {
         super(User);
     }
 
+    updateById = async (id: number, data: Partial<UserType>) : Promise<[affectedCount: number]> => {
+        return await this.updateById(id, data)
+    }
+
     // @ts-ignore
     async create(data: UserType): Promise<User | null> {
         try {

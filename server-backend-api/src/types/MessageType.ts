@@ -5,10 +5,9 @@ export enum MessageStatus {
 }
 
 export interface MessageType {
-    id?: number;
-    name?: string;
-    email?: string;
-    subject?: string;
+    id: number;
+    email: string;
+    subject: string;
+    status: MessageStatus;
     message?: string;
-    status?: MessageStatus;
 }

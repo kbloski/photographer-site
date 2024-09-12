@@ -1,6 +1,6 @@
 export interface ServiceType {
-    id?: number,
-    price?: number,
+    id: number,
     name: string,
+    price?: number,
     description?: string
 }

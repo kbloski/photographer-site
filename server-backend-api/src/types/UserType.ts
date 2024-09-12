@@ -4,11 +4,11 @@ export enum UserRoles {
 }
 
 export interface UserType {
-    id?: number,
-    role?: UserRoles.CLIENT | UserRoles.ADMIN,
-    username?: string,
-    email?: string,
-    password?: string,
+    id: number,
+    role: UserRoles.CLIENT | UserRoles.ADMIN,
+    username: string,
+    email: string,
+    password: string,
     phone?: string,
 }
 
