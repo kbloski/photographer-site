@@ -1,7 +1,7 @@
 import { sequelize } from "../utils/db";
 import { DataTypes } from "sequelize";
 
-const Album = sequelize.define("album", {
+const Photo = sequelize.define("album", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,7 +11,13 @@ const Album = sequelize.define("album", {
             isInt: true
         }
     },
-    name: {
+    url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+        }
+    },
+    title: {
         type: DataTypes.STRING(64),
         allowNull: false,
         validate: {
@@ -31,5 +37,5 @@ const Album = sequelize.define("album", {
 });
 
 export {
-    Album
+    Photo
 }
