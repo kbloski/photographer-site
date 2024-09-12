@@ -1,7 +1,6 @@
-import { ModelStatic } from "sequelize";
 import { AbstractCrud } from "./abstractCrudController";
 import { UserModel } from "../models/UserModel";
-import { UserRoles, UserType } from "../types/UserType";
+import { UserType } from "../types/UserType";
 import bcrypt from "bcrypt";
 
 export class UserController extends AbstractCrud<UserModel> {
