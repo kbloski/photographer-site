@@ -2,8 +2,8 @@ import { AlbumType } from "../types/AlbumType";
 import { sequelize } from "../utils/db";
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 
-export class AlbumModel 
-extends Model<InferAttributes<AlbumModel>, InferCreationAttributes<AlbumModel>>
+export class Album 
+extends Model<InferAttributes<Album>, InferCreationAttributes<Album>>
 implements AlbumType
 {
     declare id: number;
@@ -11,7 +11,7 @@ implements AlbumType
     declare description?: string;
 } 
 
-AlbumModel.init(
+Album.init(
     {
         id: {
             type: DataTypes.INTEGER,

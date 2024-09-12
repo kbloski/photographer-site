@@ -1,8 +1,8 @@
-import { PhotoModel } from "../models/PhotoModel";
+import { Photo } from "../models/PhotoModel";
 import { AbstractCrudController } from "./abstractCrudController";
 
-export class PhotoController extends AbstractCrudController<PhotoModel>{
+export class PhotoController extends AbstractCrudController<Photo>{
     constructor(){
-        super(PhotoModel);
+        super(Photo);
     }
 }

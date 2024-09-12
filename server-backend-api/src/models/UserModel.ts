@@ -8,10 +8,10 @@ import {
 } from "sequelize";
 import { UserRoles, UserType } from "../types/UserType";
 
-export class UserModel
+export class User
     extends Model<
-        InferAttributes<UserModel>,
-        InferCreationAttributes<UserModel>
+        InferAttributes<User>,
+        InferCreationAttributes<User>
     >
     implements UserType
 {
@@ -23,7 +23,7 @@ export class UserModel
     declare phone: string; 
 }
 
-UserModel.init({
+User.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

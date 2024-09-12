@@ -7,10 +7,10 @@ import {
     Model,
 } from "sequelize";
 
-export class PhotoModel
+export class Photo
     extends Model<
-        InferAttributes<PhotoModel>,
-        InferCreationAttributes<PhotoModel>
+        InferAttributes<Photo>,
+        InferCreationAttributes<Photo>
     >
     implements PhotoType
 {
@@ -20,7 +20,7 @@ export class PhotoModel
     declare description?: string;
 }
 
-PhotoModel.init(
+Photo.init(
     {
         id: {
             type: DataTypes.INTEGER,

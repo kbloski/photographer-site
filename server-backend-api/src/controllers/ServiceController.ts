@@ -1,8 +1,8 @@
-import { ServiceModel } from "../models/ServiceModel";
+import { Service } from "../models/ServiceModel";
 import {  AbstractCrudController } from "./abstractCrudController";
 
-export class ServiceController extends AbstractCrudController<ServiceModel> {
+export class ServiceController extends AbstractCrudController<Service> {
     constructor (){
-        super(ServiceModel);
+        super(Service);
     }
 }

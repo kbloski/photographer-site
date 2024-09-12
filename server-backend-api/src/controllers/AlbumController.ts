@@ -1,8 +1,8 @@
-import { AlbumModel } from "../models/AlbumModel";
+import { Album } from "../models/AlbumModel";
 import {  AbstractCrudController } from "./abstractCrudController";
 
-export class AlbumController extends AbstractCrudController<AlbumModel>{
+export class AlbumController extends AbstractCrudController<Album>{
     constructor(){
-        super(AlbumModel);
+        super(Album);
     };
 };

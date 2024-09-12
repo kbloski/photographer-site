@@ -7,10 +7,10 @@ import {
     Model,
 } from "sequelize";
 
-export class ServiceModel
+export class Service
     extends Model<
-        InferAttributes<ServiceModel>,
-        InferCreationAttributes<ServiceModel>
+        InferAttributes<Service>,
+        InferCreationAttributes<Service>
     >
     implements ServiceType
 {
@@ -20,7 +20,7 @@ export class ServiceModel
     declare description?: string;
 }
 
-ServiceModel.init(
+Service.init(
     {
         id: {
             type: DataTypes.INTEGER,

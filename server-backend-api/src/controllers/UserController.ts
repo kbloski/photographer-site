@@ -1,15 +1,15 @@
 import {  AbstractCrudController } from "./abstractCrudController";
-import { UserModel } from "../models/UserModel";
+import { User } from "../models/UserModel";
 import { UserType } from "../types/UserType";
 import bcrypt from "bcrypt";
 
-export class UserController extends AbstractCrudController<UserModel> {
+export class UserController extends AbstractCrudController<User> {
     constructor() {
-        super(UserModel);
+        super(User);
     }
 
     // @ts-ignore
-    async create(data: UserType): Promise<UserModel | null> {
+    async create(data: UserType): Promise<User | null> {
         try {
             const salt = await bcrypt.genSalt(10);
             data.password = await bcrypt.hash(String(data.password), salt);
@@ -22,11 +22,11 @@ export class UserController extends AbstractCrudController<UserModel> {
         }
     }
 
-    async getByEmail(email: string): Promise<UserModel | null> {
+    async getByEmail(email: string): Promise<User | null> {
         return await this.model.findOne({ where: { email } });
     }
 
-    async validPassword(password: string, userDb: UserModel): Promise<boolean> {
+    async validPassword(password: string, userDb: User): Promise<boolean> {
         return await bcrypt.compare(password, userDb.password);
     }
 }

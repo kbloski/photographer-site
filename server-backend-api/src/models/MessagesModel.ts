@@ -1,16 +1,21 @@
+import { MessageStatus, MessageType  } from "../types/MessageType";
 import { sequelize } from "../utils/db";
-import { DataTypes } from "sequelize";
+import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 
-// const status : string[] = ['new', 'read', 'archived'];
-enum Status {
-    NEW = 'new',
-    READ = 'read',
-    ARCHIVED = 'archived'
+const statusArr = Object.values(MessageStatus);
+
+export class Message 
+extends Model<InferAttributes<Message>, InferCreationAttributes<Message>>
+implements MessageType {
+    declare id?: number;
+    declare name?: string;
+    declare email?: string;
+    declare message?: string
+    declare subject?: string;
+    declare status?: MessageStatus
 }
 
-const statusArr = Object.values(Status);
-
-const Message = sequelize.define("message", {
+Message.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -49,11 +54,8 @@ const Message = sequelize.define("message", {
     status: {
         type: DataTypes.ENUM( ...statusArr ),
         allowNull: false,
-        defaultValue: Status.NEW
+        defaultValue: MessageStatus.NEW
     }
+}, {
+    sequelize
 });
-
-export { 
-    Message,
-    Status
-};
