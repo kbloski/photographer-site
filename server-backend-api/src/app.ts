@@ -1,6 +1,8 @@
+// Cel: Konfiguracja i inicjalizacja aplikacji.
+
 import express from 'express';
 import cors from 'cors';
-import { ALLOWED_ORIGINS, API_PORT } from './config/config';
+import { ALLOWED_ORIGINS } from './config/config';
 
 const app = express();
 
@@ -20,12 +22,7 @@ app.use(cors({
 app.use( express.json());
 app.use( express.static('./public'))
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        msg: "Server started at PORT " + API_PORT
-    })
-})
+// Trasy
+app.use('')
 
-app.listen(API_PORT, () => {
-    console.log('Server running on port ' + API_PORT);
-});
+export default app;
