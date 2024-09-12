@@ -8,12 +8,17 @@ export abstract class AbstractCrud<T extends Model> {
         this.model = sequelizeModel;
     }
 
-    create = (data: Partial<T>): Promise<T> => {
-        // @ts-ignore
-        return this.model.create(data);
+    create = (data: Partial<T>): Promise<T> | null => {
+        try {
+            // @ts-ignore
+            return this.model.create(data);
+        } catch (err){
+            console.error(err);
+            return null;
+        }
     };
 
-    getAll = async (): Promise<T[]> => {
+    getAll = async (): Promise<T[] | null> => {
         return await this.model.findAll();
     };
 
@@ -25,12 +30,12 @@ export abstract class AbstractCrud<T extends Model> {
         id: number,
         data: Partial<T>
     ): Promise<[affectedCount: number]> => {
-        const whereClause: WhereOptions = { id } as WhereOptions;
-        return this.model.update(data, { where: whereClause });
+        const whereOption: WhereOptions = { id } as WhereOptions;
+        return this.model.update(data, { where: whereOption });
     };
 
     deleteById = async (id: number): Promise<number> => {
-        const whereClause: WhereOptions = { id } as WhereOptions;
-        return this.model.destroy({ where: whereClause });
+        const whereOption: WhereOptions = { id } as WhereOptions;
+        return this.model.destroy({ where: whereOption });
     };
 }
