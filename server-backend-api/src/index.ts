@@ -6,11 +6,11 @@ const PORT = API_PORT || 3010;
 
 app.get('/', (req, res) => {
     res.status(200).json({
-        msg: "Server started at PORT " + API_PORT
+        msg: "Server started at PORT " + PORT
     })
 })
 
-app.listen(API_PORT, () => {
-    console.log('Server running on port ' + API_PORT);
+app.listen(PORT, () => {
+    console.log('Server running on port ' + PORT);
 });
 

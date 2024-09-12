@@ -23,6 +23,6 @@ app.use( express.json());
 app.use( express.static('./public'))
 
 // Trasy
-app.use('')
+// app.use('')
 
 export default app;
