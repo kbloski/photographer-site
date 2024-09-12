@@ -8,8 +8,10 @@ export abstract class AbstractCrudController<T extends Model> {
         this.model = sequelizeModel;
     }
 
-    create = (data: any): Promise<T> | null => {
+    create = (data: Omit<any, 'id' | 'role'>): Promise<T> | null => {
         try {
+            if (data.id) delete data.id;
+            
             // @ts-ignore
             return this.model.create(data);
         } catch (err){

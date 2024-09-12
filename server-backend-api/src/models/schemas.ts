@@ -23,10 +23,6 @@ Photo.belongsTo(Album, {
 
 sequelize.sync();
 
-export function cc(){
-    console.log( 'schemas')
-}
-
 export {
     Album,
     Message,

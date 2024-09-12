@@ -13,7 +13,7 @@ export class UserController extends AbstractCrudController<User> {
     }
 
     // @ts-ignore
-    async create(data: UserType): Promise<User | null> {
+    async create(data: Omit<UserType, 'id' | 'role'>): Promise<User | null> {
         try {
             const salt = await bcrypt.genSalt(10);
             data.password = await bcrypt.hash(String(data.password), salt);
