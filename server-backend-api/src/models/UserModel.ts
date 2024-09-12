@@ -1,6 +1,8 @@
 import { sequelize } from "../utils/db";
 import { DataTypes } from "sequelize";
 
+const roles: string[] = ["admin", "client"];
+
 const User = sequelize.define("User", {
     id: {
         type: DataTypes.INTEGER,
@@ -10,6 +12,11 @@ const User = sequelize.define("User", {
         validate: {
             isInt: true,
         },
+    },
+    role: {
+        type: DataTypes.ENUM(...roles),
+        allowNull: false,
+        defaultValue: "client",
     },
     username: {
         type: DataTypes.STRING(64),
@@ -27,7 +34,6 @@ const User = sequelize.define("User", {
             len: [5, 128],
         },
     },
-
     password: {
         type: DataTypes.STRING,
         allowNull: false,
