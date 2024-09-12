@@ -1,32 +1,32 @@
 import { sequelize } from "../utils/db";
-import { Album } from "./AlbumModel";
+import { AlbumModel } from "./AlbumModel";
 import { Message } from "./MessagesModel";
-import { Photo } from "./PhotosUser";
-import { Service } from "./ServiceModel";
+import { PhotoModel } from "./PhotoModel";
+import { ServiceModel } from "./ServiceModel";
 import { UserModel } from "./UserModel";
 
-// Album
-UserModel.hasMany(Album, {
+// AlbumModel
+UserModel.hasMany(AlbumModel, {
     foreignKey: 'user_id'
 });
-Album.belongsTo(UserModel, {
+AlbumModel.belongsTo(UserModel, {
     foreignKey: 'user_id'
 })
 
-// Album
-Album.hasMany(Album, {
+// AlbumModel
+AlbumModel.hasMany(AlbumModel, {
     foreignKey: 'album_id'
 });
-Photo.belongsTo(Album, {
+PhotoModel.belongsTo(AlbumModel, {
     foreignKey: 'album_id'
 })
 
 sequelize.sync();
 
 export {
-    Album,
+    AlbumModel,
     Message,
-    Photo,
-    Service,
+    PhotoModel,
+    ServiceModel,
     UserModel
 }
