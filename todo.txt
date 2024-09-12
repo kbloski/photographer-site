@@ -1,0 +1,213 @@
+1. Tabela: users (dla administratora/fotografa)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator użytkownika.
+username (VARCHAR(50), -- UNIQUE --) — nazwa użytkownika do logowania.
+password (VARCHAR(255)) — hasło użytkownika, najlepiej w formie hasza.
+email (VARCHAR(100), -- UNIQUE --) — adres e-mail użytkownika.
+created_at (DATETIME) — data i czas utworzenia konta.
+2. Tabela: albums (portfolio fotografa)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator albumu.
+name (VARCHAR(100)) — nazwa albumu (np. "Śluby", "Portrety").
+description (TEXT) — opcjonalny opis albumu.
+created_at (DATETIME) — data utworzenia albumu.
+updated_at (DATETIME) — data ostatniej aktualizacji albumu.
+3. Tabela: photos (zdjęcia w portfolio)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator zdjęcia.
+album_id (INT, FOREIGN KEY) — identyfikator albumu, do którego należy zdjęcie (powiązanie z tabelą albums).
+title (VARCHAR(100)) — opcjonalny tytuł zdjęcia.
+description (TEXT) — opcjonalny opis zdjęcia.
+url (VARCHAR(255)) — ścieżka do zdjęcia na serwerze lub w chmurze.
+created_at (DATETIME) — data dodania zdjęcia.
+updated_at (DATETIME) — data ostatniej aktualizacji zdjęcia.
+4. Tabela: services (usługi fotograficzne)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator usługi.
+name (VARCHAR(100)) — nazwa usługi (np. "Fotografia ślubna").
+description (TEXT) — opis usługi.
+price (DECIMAL(10, 2)) — cena usługi.
+created_at (DATETIME) — data utworzenia wpisu usługi.
+updated_at (DATETIME) — data ostatniej aktualizacji wpisu.
+5. Tabela: clients (klienci)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator klienta.
+name (VARCHAR(100)) — imię i nazwisko klienta.
+email (VARCHAR(100)) — adres e-mail klienta.
+phone (VARCHAR(20)) — numer telefonu klienta.
+password (VARCHAR(255)) — hasło do prywatnych galerii (opcjonalnie).
+created_at (DATETIME) — data utworzenia konta klienta.
+
+8. Tabela: messages (wiadomości z formularza kontaktowego)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator wiadomości.
+name (VARCHAR(100)) — imię i nazwisko nadawcy.
+email (VARCHAR(100)) — adres e-mail nadawcy.
+subject (VARCHAR(100)) — temat wiadomości.
+message (TEXT) — treść wiadomości.
+created_at (DATETIME) — data otrzymania wiadomości.
+status (ENUM('new', 'read', 'archived')) — status wiadomości (domyślnie 'new').
+
+// Maybe in the feature
+6. Tabela: client_galleries (prywatne galerie klientów)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator galerii klienta.
+client_id (INT, FOREIGN KEY) — identyfikator klienta (powiązanie z tabelą clients).
+name (VARCHAR(100)) — nazwa galerii.
+password (VARCHAR(255)) — hasło do galerii (opcjonalnie).
+created_at (DATETIME) — data utworzenia galerii.
+updated_at (DATETIME) — data ostatniej aktualizacji galerii.
+7. Tabela: client_photos (zdjęcia w prywatnych galeriach)
+id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator zdjęcia klienta.
+gallery_id (INT, FOREIGN KEY) — identyfikator galerii, do której należy zdjęcie (powiązanie z tabelą client_galleries).
+url (VARCHAR(255)) — ścieżka do zdjęcia na serwerze lub w chmurze.
+title (VARCHAR(100)) — opcjonalny tytuł zdjęcia.
+created_at (DATETIME) — data dodania zdjęcia.
+
+----------------------------------- ADMIN PANEL ------------------------------------------------
+Jeśli chcesz stworzyć bardzo prostą wersję panelu administracyjnego dla fotografa, możesz skupić się na podstawowych funkcjach, które umożliwią efektywne zarządzanie stroną internetową, bez nadmiaru zaawansowanych opcji. Oto uproszczona wersja panelu administracyjnego:
+
+Prosty Panel Administracyjny dla Fotografa
+1. Dashboard (Pulpit nawigacyjny)
+Podsumowanie aktywności: Szybki przegląd nowych wiadomości, zamówień oraz statystyk odwiedzin (np. liczba odwiedzin w danym dniu/tygodniu).
+Powiadomienia: Informacje o nowych zapytaniach od klientów lub nowych zamówieniach.
+2. Zarządzanie Portfolio
+Dodawanie i edycja albumów: Możliwość tworzenia nowych albumów lub edycji istniejących, np. "Śluby", "Portrety".
+Upload zdjęć: Opcja przesyłania zdjęć do wybranych albumów.
+Usuwanie zdjęć: Proste narzędzie do usuwania niechcianych zdjęć.
+3. Zarządzanie Usługami
+Lista usług: Możliwość dodania, edycji lub usunięcia opisu oferowanych usług.
+Cena i pakiety: Podstawowe opcje do aktualizacji cen lub szczegółów pakietów.
+4. Zarządzanie Kontaktami
+Wiadomości z formularza kontaktowego: Lista wszystkich wiadomości otrzymanych przez formularz kontaktowy.
+Odpowiadanie na wiadomości: Możliwość bezpośredniego odpowiadania na wiadomości z poziomu panelu (opcjonalnie przekierowanie na e-mail).
+5. Zarządzanie Klientami
+Dodawanie galerii klienta: Opcja tworzenia prostych, zabezpieczonych hasłem galerii zdjęć dla klientów.
+Edycja i usuwanie galerii: Możliwość edytowania lub usuwania istniejących galerii.
+6. Ustawienia Strony
+Podstawowe informacje o stronie: Możliwość edytowania nazwy strony, opisu, dodawania lub zmiany logo.
+Dane kontaktowe: Edycja danych kontaktowych, które pojawiają się na stronie (e-mail, telefon, adres).
+
+
+
+
+Dzięki za przypomnienie! Panel administracyjny (admin panel) to kluczowy element każdej strony internetowej dla fotografa, umożliwiający zarządzanie treścią strony, zamówieniami, klientami i innymi funkcjami. Oto szczegółowy opis funkcji, które powinny znajdować się w panelu administracyjnym:
+
+Panel Administracyjny dla Fotografa – Funkcje i Opis
+1. Dashboard (Pulpit nawigacyjny)
+Podsumowanie aktywności: Przegląd ostatnich działań na stronie, np. nowych zamówień, nowych wiadomości z formularza kontaktowego, nowych opinii klientów.
+Statystyki witryny: Szybki wgląd w statystyki dotyczące odwiedzin strony, popularnych stron, liczby zamówień, sprzedaży w sklepie itp.
+Powiadomienia: Informacje o nieprzeczytanych wiadomościach, nowych opiniach, zapytaniach lub problemach technicznych.
+2. Zarządzanie Portfolio
+Dodawanie i edycja albumów: Opcja dodawania nowych albumów tematycznych (np. Śluby, Portrety) i zarządzania istniejącymi.
+Upload zdjęć: Możliwość łatwego przesyłania zdjęć w wysokiej rozdzielczości do poszczególnych albumów.
+Edycja opisu i tagów: Możliwość dodawania tytułów, opisów i tagów SEO dla zdjęć i albumów.
+Zarządzanie kolejnością zdjęć: Przeciąganie i upuszczanie (drag-and-drop) w celu zmiany kolejności zdjęć w albumie.
+3. Zarządzanie Usługami
+Dodawanie i edytowanie usług: Tworzenie nowych wpisów usługowych i modyfikowanie istniejących.
+Cennik i pakiety: Możliwość aktualizacji cen i szczegółów pakietów (np. różne opcje pakietów ślubnych).
+Zarządzanie dostępnością: Możliwość ustalania dostępnych terminów i zarządzania kalendarzem rezerwacji.
+4. Zarządzanie Blogiem
+Dodawanie i edytowanie wpisów: Intuicyjny edytor tekstowy do tworzenia nowych artykułów blogowych oraz edycji istniejących.
+Zarządzanie kategoriami i tagami: Dodawanie i edycja kategorii, podział na tematy.
+Podgląd i publikacja: Podgląd wpisów przed publikacją, możliwość zapisu jako szkic.
+Zarządzanie komentarzami: Moderacja komentarzy użytkowników – zatwierdzanie, usuwanie lub odpowiedzi.
+5. Zarządzanie opiniami klientów (Testimonials)
+Dodawanie nowych opinii: Opcja ręcznego dodawania opinii, które klienci wysłali poza stroną.
+Zarządzanie istniejącymi opiniami: Edycja, zatwierdzanie, usuwanie lub wyróżnianie opinii na stronie głównej.
+Automatyczne generowanie zapytań o opinie: Możliwość wysyłania automatycznych e-maili do klientów z prośbą o zostawienie opinii po zakończeniu sesji.
+6. Zarządzanie Klientami (Client Area)
+Tworzenie kont klientów: Możliwość tworzenia i zarządzania kontami klientów, którzy mogą przeglądać swoje prywatne galerie.
+Przypisywanie galerii do klientów: Łatwe przypisywanie poszczególnych galerii do klientów.
+Zarządzanie dostępem: Ustalanie haseł i dostępu do poszczególnych galerii.
+Śledzenie zamówień: Monitorowanie i zarządzanie zamówieniami klientów na wydruki lub cyfrowe pliki.
+7. Sklep (Store Management)
+Zarządzanie produktami: Dodawanie nowych produktów (wydruków, albumów, voucherów), edytowanie i usuwanie istniejących.
+Zarządzanie zapasami: Monitorowanie dostępności produktów, ustawianie powiadomień o niskim stanie magazynowym.
+Zarządzanie zamówieniami: Śledzenie statusów zamówień (np. nowe, w trakcie realizacji, zrealizowane, anulowane).
+Integracja płatności: Zarządzanie opcjami płatności i ich konfiguracja (np. PayPal, przelewy bankowe).
+8. Zarządzanie formularzem kontaktowym
+Przegląd wiadomości: Widok wszystkich wiadomości otrzymanych przez formularz kontaktowy.
+Odpowiadanie na zapytania: Bezpośrednia możliwość odpowiedzi na zapytania z panelu.
+Szablony odpowiedzi: Tworzenie i zarządzanie szablonami odpowiedzi na najczęstsze pytania.
+9. Kalendarz i Rezerwacje
+Zarządzanie kalendarzem sesji: Interaktywny kalendarz do zarządzania terminami sesji zdjęciowych, dostępnością i rezerwacjami.
+Synchronizacja z zewnętrznymi kalendarzami: Możliwość synchronizacji z Google Calendar lub innymi narzędziami do zarządzania czasem.
+Powiadomienia: Automatyczne przypomnienia e-mail lub SMS o nadchodzących sesjach dla fotografa i klientów.
+10. SEO i Analiza
+Zarządzanie SEO: Możliwość edytowania tytułów stron, meta opisów, tagów ALT dla zdjęć oraz innych elementów SEO.
+Statystyki ruchu na stronie: Podstawowe dane analityczne (integracja z Google Analytics) dotyczące odwiedzin, źródeł ruchu, współczynnika konwersji itp.
+11. Zarządzanie użytkownikami i rolami
+Zarządzanie kontami użytkowników: Dodawanie nowych użytkowników do panelu (np. asystenci, redaktorzy bloga).
+Uprawnienia użytkowników: Przydzielanie różnych
+
+----------------- end of admin panel -------------------------
+
+
+bez płatności , z grafikiem wyświetlanym na bieżąco
+
+1. Strona Główna (Home Page)
+Nagłówek i hero image: Na samej górze strony umieść przyciągający wzrok hero image (duże, efektowne zdjęcie) lub dynamiczny slajder z kilkoma najlepszymi pracami.
+Krótki opis: Pod zdjęciem powinien znaleźć się krótki, chwytliwy opis, który w jednym zdaniu mówi, kim jesteś i co oferujesz (np. "Profesjonalna fotografia ślubna i portretowa w sercu Warszawy").
+Linki do kluczowych stron: Przyciski lub linki prowadzące do Portfolio, Usług, O mnie i Kontakt. Mogą być umieszczone jako menu w górnej części strony lub w postaci przycisków na stronie głównej.
+Najważniejsze informacje: Wprowadzenie do twoich głównych usług lub wyjątkowych ofert.
+Call to Action (CTA): Przycisk zachęcający do dalszej akcji, np. "Umów się na sesję" lub "Zobacz portfolio".
+Opinie klientów: Kilka najważniejszych recenzji od zadowolonych klientów, które przyciągają uwagę odwiedzających i budują zaufanie.
+
+2. Portfolio
+Struktura albumowa: Podział na kategorie, np. "Śluby", "Portrety", "Fotografia produktowa", "Krajobrazy", itp. Każda kategoria powinna mieć swoją podstronę.
+Galerie zdjęć: Każda podstrona kategorii powinna zawierać wysokiej jakości galerie zdjęć. Każde zdjęcie powinno być zoptymalizowane pod kątem szybkości ładowania, ale jednocześnie zachować jakość.
+Podpisy i informacje: Możliwość dodania krótkiego opisu lub tytułu do każdego zdjęcia. Opcjonalnie: szczegóły techniczne (np. rodzaj aparatu i obiektywu).
+Przyciski nawigacyjne: Łatwy powrót do głównej strony Portfolio lub na stronę główną.
+
+3. Usługi (Services) + Cennik
+Lista usług: Opis wszystkich usług fotograficznych, jakie oferujesz (np. "Fotografia ślubna", "Sesje rodzinne", "Fotografia produktowa").
+Opis usług: Szczegółowe informacje o każdej usłudze, w tym:
+Co jest zawarte w usłudze (np. liczba zdjęć, czas trwania sesji).
+Cena (opcjonalnie) lub informacja o dostępnych pakietach.
+Twój unikalny styl lub podejście do danej usługi (np. "Dokumentalne podejście do fotografii ślubnej").
+Zdjęcia przykładowe: Dodanie jednego lub dwóch zdjęć reprezentatywnych dla każdej usługi.
+Call to Action (CTA): Przycisk do umówienia się na sesję lub konsultację.
+// Cennik - sklep todo in feature
+3.1. Sklep (Store) 
+Produkty: Oferta wydruków, albumów, voucherów na sesje zdjęciowe.
+Zdjęcia produktów: Wysokiej jakości zdjęcia produktów, które sprzedajesz.
+Szczegóły produktu: Opis, dostępne rozmiary, ceny, opcje dostawy.
+Koszyk i płatność: Funkcjonalność dodania produktu do koszyka i bezpieczna opcja płatności online.
+
+4. O mnie (About Me)
+Zdjęcie: Profesjonalne zdjęcie Ciebie lub zdjęcie w trakcie pracy (np. fotografowania na sesji).
+Historia: Twoja historia jako fotografa – jak zaczęła się twoja pasja, doświadczenie zawodowe, inspiracje.
+Twój styl i filozofia: Opis twojego stylu fotograficznego, podejścia do pracy z klientami, oraz filozofii artystycznej.
+Umiejętności i osiągnięcia: Wspomnienie o nagrodach, wyróżnieniach, kursach lub szkoleniach, które odbyłeś.
+Call to Action (CTA): Przycisk "Skontaktuj się ze mną" lub "Zobacz portfolio".
+
+5. Blog
+Artykuły i wpisy: Regularnie publikowane wpisy na tematy związane z fotografią (np. "Jak przygotować się do sesji zdjęciowej?", "Poradnik dla par przed sesją ślubną", "Najlepsze miejsca na sesję plenerową w Warszawie").
+Kategorie: Podział na kategorie (np. porady, sesje ślubne, fotografia produktowa), aby użytkownicy mogli łatwo znaleźć interesujące ich treści.
+Zdjęcia: W każdym wpisie powinno znajdować się kilka zdjęć wysokiej jakości związanych z tematem artykułu.
+Sekcja komentarzy: Opcjonalnie, miejsce na komentarze dla użytkowników (z moderacją).
+
+6. Opinie klientów (Testimonials)
+Opinie i recenzje: Zamieszczenie recenzji i opinii od zadowolonych klientów, w tym ich imiona (jeśli się zgadzają) i krótkie opisy sesji, którą wykonaliście razem.
+Zdjęcia: Możliwość dodania zdjęć wykonanych dla danego klienta obok ich opinii.
+Call to Action (CTA): Przycisk "Umów się na sesję" lub "Zobacz więcej opinii na Google/Facebook".
+
+7. Kontakt (Contact)
+Formularz kontaktowy: Prosty formularz do wypełnienia, który umożliwia klientom wysłanie zapytania. Pola takie jak: imię, e-mail, temat wiadomości, treść wiadomości.
+Dane kontaktowe: Adres e-mail, numer telefonu, adres studia fotograficznego (jeśli istnieje).
+Mapa: Osadzona mapa (np. Google Maps) z lokalizacją studia fotograficznego.
+Linki do mediów społecznościowych: Ikony prowadzące do Twoich kont na Instagramie, Facebooku itp.
+
+9. Sekcja Klientów (Client Area)
+Logowanie/Hasło: Dostęp tylko dla klientów poprzez hasło.
+Galerie klientów: Indywidualne galerie zdjęć dla każdego klienta, gdzie mogą przeglądać, zamawiać wydruki lub pobierać zdjęcia cyfrowe.
+Informacje o zamówieniach: Możliwość śledzenia zamówień na wydruki i albumy.
+
+10. Strona „Często zadawane pytania” (FAQ)
+Pytania i odpowiedzi: Lista najczęściej zadawanych pytań przez klientów z wyczerpującymi odpowiedziami (np. "Jak przygotować się do sesji zdjęciowej?", "Jak długo trwa realizacja zdjęć?", "Czy oferujesz sesje poza miastem?").
+Podział na kategorie: Możliwość podziału pytań na różne kategorie, np. "Sesje ślubne", "Płatności", "Postprodukcja".
+
+11. Polityka prywatności i regulamin
+Polityka prywatności: Informacje na temat przetwarzania danych osobowych, zgodne z RODO i innymi przepisami prawa.
+Regulamin: Zasady korzystania z serwisu, polityka płatności, zwrotów, oraz inne informacje prawne.
+
+
+
+
+
+
+
