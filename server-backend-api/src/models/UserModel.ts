@@ -1,23 +1,29 @@
 import { sequelize } from "../utils/db";
-import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import {
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    Model,
+    Optional,
+} from "sequelize";
+import { UserRoles, UserType } from "../types/UserType";
 
-enum Roles {
-    ADMIN = 'admin',
-    CLIENT = 'client'
-}
-const rolesArr: string[] = Object.values(Roles);
-
-interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>>
+export class UserModel
+    extends Model<
+        InferAttributes<UserModel>,
+        InferCreationAttributes<UserModel>
+    >
+    implements UserType
 {
-    id: number,
-    role: Roles,
-    username: string,
-    email: string,
-    password: string,
-    phone: number
+    declare id: number;
+    declare role: UserRoles;
+    declare username: string;
+    declare email: string;
+    declare password: string;
+    declare phone: string; 
 }
 
-const UserModel = sequelize.define<UserModel>("User", {
+UserModel.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -28,9 +34,9 @@ const UserModel = sequelize.define<UserModel>("User", {
         },
     },
     role: {
-        type: DataTypes.ENUM(...rolesArr),
+        type: DataTypes.ENUM(...Object.values(UserRoles)),
         allowNull: false,
-        defaultValue: Roles.CLIENT,
+        defaultValue: UserRoles.CLIENT,
     },
     username: {
         type: DataTypes.STRING(64),
@@ -42,7 +48,6 @@ const UserModel = sequelize.define<UserModel>("User", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        // unique: true,
         validate: {
             isEmail: true,
             len: [5, 128],
@@ -51,28 +56,19 @@ const UserModel = sequelize.define<UserModel>("User", {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-
         validate: {
             len: [4, 128],
             notNull: { msg: "Password is needed" },
             notEmpty: { msg: "Please provide a password" },
-            isNotEasy: function (value: string) {
-                const arrSimplePasswords = ["haslo1234", "haslo4321", "haslo"];
-                if (arrSimplePasswords.indexOf(value) != -1)
-                    throw new Error("Password is too simple");
-            },
         },
     },
     phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
         validate: {
-            len: [9, 9],
+            len: [9, 15], 
         },
     },
+}, {
+    sequelize,
 });
-
-export { 
-    UserModel 
-};
-

@@ -8,7 +8,7 @@ export abstract class AbstractCrud<T extends Model> {
         this.model = sequelizeModel;
     }
 
-    create = (data: Partial<T>): Promise<T> | null => {
+    create = (data: any): Promise<T> | null => {
         try {
             // @ts-ignore
             return this.model.create(data);
@@ -28,7 +28,7 @@ export abstract class AbstractCrud<T extends Model> {
 
     updateById = async (
         id: number,
-        data: Partial<T>
+        data: any
     ): Promise<[affectedCount: number]> => {
         const whereOption: WhereOptions = { id } as WhereOptions;
         return this.model.update(data, { where: whereOption });
