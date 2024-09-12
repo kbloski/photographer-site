@@ -8,34 +8,28 @@ const Photo = sequelize.define("album", {
         autoIncrement: true,
         allowNull: false,
         validate: {
-            isInt: true
-        }
+            isInt: true,
+        },
     },
     url: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-        }
+        validate: {},
     },
     title: {
         type: DataTypes.STRING(64),
         allowNull: false,
         validate: {
-            len: [2,64]
-        }
+            len: [2, 64],
+        },
     },
     description: {
         type: DataTypes.TEXT,
         allowNull: true,
         validate: {
-            len: [0,1024]
-        }
-    }   
-
- 
-    
+            len: [0, 1024],
+        },
+    },
 });
 
-export {
-    Photo
-}
+export { Photo };

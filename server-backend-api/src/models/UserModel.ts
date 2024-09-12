@@ -8,15 +8,15 @@ const User = sequelize.define("User", {
         autoIncrement: true,
         allowNull: false,
         validate: {
-            isInt: true
-        }
+            isInt: true,
+        },
     },
     username: {
         type: DataTypes.STRING(64),
         allowNull: false,
         validate: {
-            len: [2,64]
-        }
+            len: [2, 64],
+        },
     },
     email: {
         type: DataTypes.STRING,
@@ -25,38 +25,31 @@ const User = sequelize.define("User", {
         validate: {
             isEmail: true,
             len: [5, 128],
-        }
+        },
     },
 
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-        
+
         validate: {
             len: [4, 128],
-            notNull: { msg:  'Password is needed'},
-            notEmpty: { msg: 'Please provide a password' },
-            isNotEasy: function (value : string){
-                const arrSimplePasswords = [
-                    'haslo1234',
-                    'haslo4321',
-                    'haslo'
-                ]
-                if (arrSimplePasswords.indexOf(value) != -1) throw new Error('Password is too simple')
-            }
-        }
-
+            notNull: { msg: "Password is needed" },
+            notEmpty: { msg: "Please provide a password" },
+            isNotEasy: function (value: string) {
+                const arrSimplePasswords = ["haslo1234", "haslo4321", "haslo"];
+                if (arrSimplePasswords.indexOf(value) != -1)
+                    throw new Error("Password is too simple");
+            },
+        },
     },
     phone: {
         type: DataTypes.INTEGER,
         allowNull: true,
         validate: {
-            len: [9,9]
-        }
+            len: [9, 9],
+        },
     },
-    
 });
 
-export {
-    User
-}
+export { User };

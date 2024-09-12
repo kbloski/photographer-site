@@ -1,7 +1,7 @@
 import { sequelize } from "../utils/db";
 import { DataTypes } from "sequelize";
 
-const Album = sequelize.define("album", {
+const Service = sequelize.define("service", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -9,6 +9,13 @@ const Album = sequelize.define("album", {
         allowNull: false,
         validate: {
             isInt: true,
+        },
+    },
+    price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+        validate: {
+            isDecimal: true,
         },
     },
     name: {
@@ -27,4 +34,4 @@ const Album = sequelize.define("album", {
     },
 });
 
-export { Album };
+export { Service };
