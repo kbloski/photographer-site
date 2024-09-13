@@ -21,12 +21,6 @@ export class UserController extends AbstractCrudController<User> {
         super(User);
     }
 
-    async updateById (id: number, data: Partial<UserType>) : Promise<number> {
-        if (data.password) data.password = await UserService.hashPassword(data.password);
-
-        return await super.updateById(id, data);
-    }
-
     // @ts-ignore
     async create(data: Omit<UserType, 'id' | 'role'>): Promise<User | null> {
         try {
@@ -39,6 +33,12 @@ export class UserController extends AbstractCrudController<User> {
             console.error(err);
             return null;
         }
+    }
+
+    async updateById (id: number, data: Partial<UserType>) : Promise<number> {
+        if (data.password) data.password = await UserService.hashPassword(data.password);
+
+        return await super.updateById(id, data);
     }
 
     async getByEmail(email: string): Promise<User | null> {
