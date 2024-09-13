@@ -67,6 +67,20 @@ class ApiUrlBuilder {
         const queryString = new URLSearchParams(queryParams).toString();
         return `${this.getBaseUrl()}/${resource}${queryString ? `?${queryString}` : ''}`;
     }
+
+    
+    /**
+     * Tworzy customowy url
+     * @param resource Ścieżka ..new/path/:id/..
+     * @returns URL do dodawania zasobu
+     * @path /../resource/:id
+    */
+   createCustomUrl(resource: string): string {
+    if (!resource) {
+        throw new Error('Resource path cannot be empty');
+     }
+     return `${this.getBaseUrl()}/${resource}`;
+ }
 }
 
 export const apiUrlBuilderV1 = new ApiUrlBuilder('api', 'v1');
