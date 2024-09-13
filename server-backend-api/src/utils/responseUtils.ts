@@ -4,8 +4,8 @@ import { Response } from "express";
 export async function sendError(
     req: Request,
     res: Response,
-    statusCode: number,
-    errorMessage: string
+    statusCode: number = 500,
+    errorMessage: string = 'Internal Server Error'
 ): Promise<void> {
     res.statusMessage = errorMessage;
     res.status(statusCode);

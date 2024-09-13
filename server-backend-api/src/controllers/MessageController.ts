@@ -1,5 +1,5 @@
 import { Message } from "../models/MessagesModel";
-import { AbstractCrudController } from "./abstractCrudController";
+import { AbstractCrudController } from "./AbstrctCrudController";
 
 export class MessageController extends AbstractCrudController<Message> {
     constructor(){

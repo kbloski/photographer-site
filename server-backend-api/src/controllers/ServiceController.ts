@@ -1,6 +1,6 @@
 import { Service } from "../models/ServiceModel";
 import { ServiceType } from "../types/ServiceType";
-import {  AbstractCrudController } from "./abstractCrudController";
+import {  AbstractCrudController } from "./AbstrctCrudController";
 
 export class ServiceController extends AbstractCrudController<Service> 
 {

@@ -1,4 +1,4 @@
-import {  AbstractCrudController } from "./abstractCrudController";
+import {  AbstractCrudController } from "./AbstrctCrudController";
 import { User } from "../models/UserModel";
 import { UserType } from "../types/UserType";
 import bcrypt from "bcrypt";
