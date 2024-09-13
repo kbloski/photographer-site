@@ -43,7 +43,7 @@ router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
         AlbumSchema.parse(albumData);
 
         const albumDb = await albumController.create(albumData);
-        sendSuccess(req, res, 200, { album: albumDb});
+        sendSuccess(req, res, 201, { album: albumDb});
     } catch (err){
         if (err instanceof z.ZodError) return sendError(req,res, 400, generateZodErrorString(err));
         sendError(req, res);
