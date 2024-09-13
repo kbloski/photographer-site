@@ -61,7 +61,7 @@ router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
         ServiceSchema.partial().parse( req.body );
 
         const update = await serviceController.updateById(Number(id), serviceData);
-        sendSuccess(req, res, 204, { update } )
+        sendSuccess(req, res, 204)
     } catch (err){
         
     }
@@ -71,7 +71,9 @@ router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     try {
         const {id} = req.params;
         if (!isNumberString(id)) return sendError(req, res, 400, 'Bad Request')
-
+        
+        await serviceController.deleteById(Number(id));
+        sendError(req, res, 204)
     } catch (err){
         console.error(err);
         sendError(req, res);

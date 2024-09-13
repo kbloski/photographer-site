@@ -4,4 +4,4 @@ export interface AlbumInterface {
     description?: string
 }
 
-export type AlbumType = AlbumInterface
+export type AlbumType = AlbumInterface;

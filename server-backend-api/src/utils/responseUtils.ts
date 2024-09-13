@@ -22,7 +22,7 @@ export async function sendSuccess<T>(
     req: Request,
     res: Response,
     statusCode: number,
-    data: object,
+    data?: object,
     message?: string
 ): Promise<void> {
     res.status(statusCode).json({

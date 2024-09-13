@@ -73,7 +73,7 @@ router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
             updatedUser
         );
 
-        sendSuccess(req, res, 204, { updated });
+        sendSuccess(req, res, 204);
     } catch (err) {
         if (err instanceof z.ZodError)
             return sendError(
@@ -91,7 +91,7 @@ router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
         const { id } = req.params;
         if (!isNumberString(id)) return sendError(req, res, 400, "Bad request");
         const deleted: number = await userController.deleteById(Number(id));
-        sendSuccess(req, res, 200, { deleted: deleted });
+        sendSuccess(req, res, 204);
     } catch (err) {
         console.error(err);
         sendError(req, res);
