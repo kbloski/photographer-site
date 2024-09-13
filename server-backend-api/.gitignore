@@ -1,3 +1,6 @@
+# Uploads file folder 
+src/uploads/images/*
+
 # Logs
 logs
 *.log
