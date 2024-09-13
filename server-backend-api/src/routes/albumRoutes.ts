@@ -15,6 +15,7 @@ router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
     try {
         const albumsDb : AlbumType[] | null = await albumController.getAll();
 
+        if (!albumsDb) return sendError(req, res, 404);
         sendSuccess(req, res, 200, { albums: albumsDb});
     } catch (err){
         sendError(req, res);
@@ -24,8 +25,10 @@ router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
 router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     try {
         const {id} = req.params;
-        if (!isNumberString(id)) return sendError(req, res, 400, 'Bad request');
+        if (!isNumberString(id)) return sendError(req, res, 400, 'id: bad id');
         const albumDb : AlbumType | null = await albumController.getById(Number(id));
+
+        if (!albumDb) return sendError(req, res, 404)
         sendSuccess(req, res, 200, { album: albumDb});
     } catch (err){
         sendError(req, res);
@@ -42,14 +45,14 @@ router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
         const albumDb = await albumController.create(albumData);
         sendSuccess(req, res, 200, { album: albumDb});
     } catch (err){
-        if (err instanceof z.ZodError) return sendError(req,res, 400, `Bad request: ${generateZodErrorString(err)}`);
+        if (err instanceof z.ZodError) return sendError(req,res, 400, generateZodErrorString(err));
         sendError(req, res);
     }
 });
 
 router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     const { id } = req.params;
-    if (!isNumberString(id)) return sendError(req, res, 400, 'Bad Request');
+    if (!isNumberString(id)) return sendError(req, res, 400, 'id: bad id');
 
     delete req.body.id;
     const albumUpdate : Omit<AlbumType, 'id'> = req.body;
@@ -62,7 +65,7 @@ router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
 router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     try {
         const { id } = req.params;
-        if (!isNumberString(id)) return sendError(req, res, 400, 'Bad request');
+        if (!isNumberString(id)) return sendError(req, res, 400, 'id: bad id');
 
         await albumController.deleteById(Number(id));
         sendSuccess(req, res, 204)
