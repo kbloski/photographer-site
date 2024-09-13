@@ -22,15 +22,25 @@ class ApiUrlBuilder {
     }
     
     /**
-     * Tworzy URL do dodawania zasobu
+     * Tworzy URL do pobrania wszystkich zasobów
+     * @param resource Ścieżka zasobu
+     * @returns Url do pobrania wszystkich zasobów
+     */
+    createUrlAll(resource: string){
+        return `${this.getBaseUrl()}/${resource}/all`
+    }
+
+    /**
+     * Tworzy URL z dynamicznym id
      * @param resource Ścieżka zasobu
      * @returns URL do dodawania zasobu
+     * @path /../resource/:id
     */
-   createAddUrl(resource: string): string {
+   createUrlWithId(resource: string): string {
        if (!resource) {
            throw new Error('Resource path cannot be empty');
         }
-        return `${this.getBaseUrl()}/${resource}/add`;
+        return `${this.getBaseUrl()}/${resource}/:id`;
     }
     
     /**
