@@ -3,7 +3,7 @@ export enum UserRoles {
     CLIENT = 'client'
 }
 
-export interface UserType {
+export interface UserInterface {
     id: number,
     role: UserRoles.CLIENT | UserRoles.ADMIN,
     username: string,
@@ -12,3 +12,4 @@ export interface UserType {
     phone?: string,
 }
 
+export type UserType = UserInterface;

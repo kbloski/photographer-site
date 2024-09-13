@@ -4,10 +4,12 @@ export enum MessageStatus {
     ARCHIVED = 'archived'
 }
 
-export interface MessageType {
+export interface MessageInterface {
     id: number;
     email: string;
     subject: string;
     status: MessageStatus;
     message?: string;
 }
+
+export type MessageType = MessageInterface

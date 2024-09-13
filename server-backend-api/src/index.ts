@@ -1,6 +1,7 @@
 // Cel: Punkt wejściowy aplikacji.
 import app from './app';
 import { API_PORT } from './config/config';
+import { userController } from './controllers/controllers';
 import registerRoutes from './routes/routes';
 
 const PORT = API_PORT || 3010;

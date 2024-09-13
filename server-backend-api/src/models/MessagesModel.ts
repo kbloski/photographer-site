@@ -1,4 +1,4 @@
-import { MessageStatus, MessageType  } from "../types/MessageType";
+import { MessageInterface, MessageStatus  } from "../types/MessageType";
 import { sequelize } from "../utils/db";
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 
@@ -6,7 +6,7 @@ const statusArr = Object.values(MessageStatus);
 
 export class Message 
 extends Model<InferAttributes<Message>, InferCreationAttributes<Message>>
-implements MessageType {
+implements MessageInterface {
     declare id: number;
     declare email: string;
     declare subject: string;

@@ -1,4 +1,4 @@
-import { ServiceType } from "../types/ServiceType";
+import { ServiceInterface } from "../types/ServiceType";
 import { sequelize } from "../utils/db";
 import {
     DataTypes,
@@ -12,7 +12,7 @@ export class Service
         InferAttributes<Service>,
         InferCreationAttributes<Service>
     >
-    implements ServiceType
+    implements ServiceInterface
 {
     declare id: number;
     declare price?: number;

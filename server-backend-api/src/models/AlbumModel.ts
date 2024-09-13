@@ -1,10 +1,10 @@
-import { AlbumType } from "../types/AlbumType";
+import { AlbumInterface } from "../types/AlbumType";
 import { sequelize } from "../utils/db";
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 
 export class Album 
 extends Model<InferAttributes<Album>, InferCreationAttributes<Album>>
-implements AlbumType
+implements AlbumInterface
 {
     declare id: number;
     declare name: string;
