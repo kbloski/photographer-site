@@ -6,7 +6,7 @@ export class MessageController extends AbstractCrudController<Message> {
         super(Message);
     };
 
-    updateById = async (id: number, data: Partial<Message>) : Promise<[number]> => {
+    updateById = async (id: number, data: Partial<Message>) : Promise<number> => {
         return await super.updateById(id, data);
     };
 }

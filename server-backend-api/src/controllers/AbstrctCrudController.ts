@@ -31,9 +31,9 @@ export abstract class AbstractCrudController<T extends Model> {
     async updateById (
         id: number,
         data: any
-    ): Promise<[number]> {
+    ): Promise<number> {
         const whereOption: WhereOptions = { id } as WhereOptions;
-        return this.model.update(data, { where: whereOption });
+        return (await this.model.update(data, { where: whereOption }))[0];
     };
 
     deleteById = async (id: number): Promise<number> => {
