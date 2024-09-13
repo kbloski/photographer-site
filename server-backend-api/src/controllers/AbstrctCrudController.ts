@@ -28,10 +28,10 @@ export abstract class AbstractCrudController<T extends Model> {
         return await this.model.findByPk(id);
     };
 
-    updateById = async (
+    async updateById (
         id: number,
         data: any
-    ): Promise<[affectedCount: number]> => {
+    ): Promise<[affectedCount: number]> {
         const whereOption: WhereOptions = { id } as WhereOptions;
         return this.model.update(data, { where: whereOption });
     };
