@@ -8,7 +8,7 @@ export abstract class AbstractCrudController<T extends Model> {
         this.model = sequelizeModel;
     }
 
-    create = (data: Omit<any, "id" | "role">): Promise<T> | null => {
+    create = async (data: Omit<any, "id">): Promise<T | null> => {
         try {
             if (data.id) delete data.id;
 

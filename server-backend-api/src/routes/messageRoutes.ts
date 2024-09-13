@@ -14,7 +14,7 @@ const resource = 'message';
 router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
     try {
         const messagesDb : MessageType[] | null = await messageController.getAll();
-        if (!messagesDb) return sendError(req, res, 404);
+        if (!messagesDb || ![].length) return sendError(req, res, 404);
         sendSuccess(req, res, 200, { messages: messagesDb});
     } catch (err){
         sendError(req, res, 500);   

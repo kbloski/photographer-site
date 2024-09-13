@@ -14,8 +14,8 @@ const resource = "user";
 router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
     try {
         const usersDb: UserType[] | null = await userController.getAll();
-        
-        if (!usersDb) return sendError(req, res, 404);
+
+        if (!usersDb || ![].length) return sendError(req, res, 404);
         sendSuccess(req, res, 200, { users: usersDb });
     } catch (err) {
         console.error(err);

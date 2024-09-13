@@ -16,8 +16,8 @@ router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
         const servicesDb: ServiceType[] | null =
             await serviceController.getAll();
 
-        if (!servicesDb) return sendError(req, res, 404);
-        sendSuccess(req, res, 20, { services: servicesDb });
+        if (!servicesDb || ![].length) return sendError(req, res, 404);
+        sendSuccess(req, res, 200, { services: servicesDb });
     } catch (err) {
         console.error(err);
         sendError(req, res);
