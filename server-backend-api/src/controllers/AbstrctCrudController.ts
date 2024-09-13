@@ -8,7 +8,7 @@ export abstract class AbstractCrudController<T extends Model> {
         this.model = sequelizeModel;
     }
 
-    create = async (data: Omit<any, "id">): Promise<T | null> => {
+    async create (data: Omit<any, "id">): Promise<T | null> {
         try {
             if (data.id) delete data.id;
 
@@ -20,11 +20,11 @@ export abstract class AbstractCrudController<T extends Model> {
         }
     };
 
-    getAll = async (): Promise<T[] | null> => {
+    async getAll (): Promise<T[] | null> {
         return await this.model.findAll();
     };
 
-    getById = async (id: number): Promise<T | null> => {
+    async getById (id: number): Promise<T | null> {
         return await this.model.findByPk(id);
     };
 
@@ -36,7 +36,7 @@ export abstract class AbstractCrudController<T extends Model> {
         return (await this.model.update(data, { where: whereOption }))[0];
     };
 
-    deleteById = async (id: number): Promise<number> => {
+    async deleteById (id: number): Promise<number> {
         const whereOption: WhereOptions = { id } as WhereOptions;
         return this.model.destroy({ where: whereOption });
     };
