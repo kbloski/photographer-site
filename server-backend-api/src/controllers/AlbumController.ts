@@ -6,7 +6,7 @@ export class AlbumController extends AbstractCrudController<Album> {
         super(Album);
     }
 
-    updateById = async (id: number, data: Partial<Album>): Promise<[affectedCount: number]> => {
-        return await this.updateById(id, data);
+    updateById = async (id: number, data: Partial<Album>): Promise<[ number]> => {
+        return await super.updateById(id, data);
     };
 }

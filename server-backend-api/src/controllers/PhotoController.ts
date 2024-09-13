@@ -6,7 +6,7 @@ export class PhotoController extends AbstractCrudController<Photo>{
         super(Photo);
     }
 
-    updateById = async (id: number, data: Partial<Photo>) : Promise<[affectedCount: number]> =>  {
-        return await this.updateById(id, data);
+    updateById = async (id: number, data: Partial<Photo>) : Promise<[ number]> =>  {
+        return await super.updateById(id, data);
     };
 }

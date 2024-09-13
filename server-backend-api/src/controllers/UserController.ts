@@ -21,7 +21,7 @@ export class UserController extends AbstractCrudController<User> {
         super(User);
     }
 
-    async updateById (id: number, data: Partial<UserType>) : Promise<[affectedCount: number]> {
+    async updateById (id: number, data: Partial<UserType>) : Promise<[number]> {
         if (data.password) data.password = await UserService.hashPassword(data.password);
 
         return await super.updateById(id, data);

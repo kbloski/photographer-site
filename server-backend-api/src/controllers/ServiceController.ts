@@ -8,7 +8,7 @@ export class ServiceController extends AbstractCrudController<Service>
         super(Service);
     }
 
-    updateById = async (id: number, data: Partial<ServiceType>): Promise<[affectedCount: number]> =>  {
-        return await this.updateById(id, data);
+    updateById = async (id: number, data: Partial<ServiceType>): Promise<[ number]> =>  {
+        return await super.updateById(id, data);
     };
 }
