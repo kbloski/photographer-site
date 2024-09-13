@@ -29,6 +29,16 @@ class ApiUrlBuilder {
     createUrlAll(resource: string){
         return `${this.getBaseUrl()}/${resource}/all`
     }
+    
+    /**
+     * Tworzy URL do tworzenia nowych zasobów
+     * @param resource Ścieżka zasobu
+     * @returns Url do pobrania wszystkich zasobów
+     * @url /../resource/add
+     */
+    createUrlAdd(resource: string){
+        return `${this.getBaseUrl()}/${resource}/add`
+    }
 
     /**
      * Tworzy URL z dynamicznym id
