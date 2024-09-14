@@ -3,6 +3,7 @@
 import express from 'express';
 import cors from 'cors';
 import { ALLOWED_ORIGINS } from './config/config';
+import { authTokenHeader } from './middleware/authTokenHeader';
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.use( express.urlencoded());
 app.use( express.json() );
 app.use( express.static('./public'))
 
-// Trasy
-// app.use('')
+app.use( authTokenHeader );
+
 
 export default app;
