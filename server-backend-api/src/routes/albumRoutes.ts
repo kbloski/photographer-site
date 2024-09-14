@@ -37,7 +37,6 @@ router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     }
 });
 
-// router.get(apiUrlBuilderV1.createCustomUrl(''))
 
 router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
     try {

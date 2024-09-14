@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import { ALLOWED_ORIGINS } from './config/config';
 import { authTokenHeader } from './middleware/authTokenHeader';
+import accessControMiddleware from './middleware/accessControMiddleware';
 
 const app = express();
 
@@ -27,6 +28,6 @@ app.use( express.json() );
 app.use( express.static('./public'))
 
 app.use( authTokenHeader );
-
+app.use( accessControMiddleware );
 
 export default app;
