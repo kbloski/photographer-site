@@ -1,20 +1,21 @@
 import multer from 'multer';
 import path, { dirname, join } from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
+import { unlink } from 'node:fs';
 
-export const uploadPath = path.resolve(__dirname, '../uploads/images');
+
+export const uploadPath = './uploads/images';
 const storage = multer.diskStorage(
     {
         destination: function(req, file, cb){
-            
-            console.log( uploadPath);
-            if (!fs.existsSync(uploadPath)){
+            const fpath = path.resolve(__dirname, '../','../', uploadPath )
+            console.log( fpath )
+            if (!fs.existsSync(fpath)){
                 // recursive: true: Ta opcja pozwala na tworzenie katalogów wewnętrznych, które nie istnieją.
-                fs.mkdirSync(uploadPath, {recursive: true})
+                fs.mkdirSync(fpath, {recursive: true})
             }
 
-            cb(null, uploadPath);
+            cb(null, fpath);
         },
         filename: function(req, file, cb){
             cb(null, Date.now() + path.extname(file.originalname));
@@ -24,15 +25,18 @@ const storage = multer.diskStorage(
 
 export const upload = multer( {storage: storage} ); 
 
-
-// export async function deleteFile( fileUrl : string ){
-//     const __filename = fileURLToPath( import.meta.url );
-//     const __dirname = dirname( __filename );
-
-//     const pathToFile = join(__dirname, '/..', fileUrl);
-//     try {
-//         await fs.unlink( pathToFile)
-//     } catch (err){
-
-//     }
-// }
+/**
+ * Delete file 
+ * @base_dir dir app
+ * @param urlFormat /path/to/file
+ * 
+*/
+export function deleteFile( fileUrl : string = '/file/to/path.ext'){
+    try {
+        const filePath = path.join(__dirname, '../', '../', fileUrl)
+        unlink( filePath , ()=>{});
+        return { deleted : true };
+    } catch (err){
+        return { deleted : false, error: err };
+    }
+}
