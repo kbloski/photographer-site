@@ -15,16 +15,19 @@ import { PhotoSchema } from "../schemas/PhotoSchema";
 const router = express.Router();
 const resource = "photo";
 
-router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
-    try {
-        const photosDb: PhotoType[] | null = await photoController.getAll();
-        if (!photosDb || ![].length) return sendError(req, res, 404);
+router.get(
+    apiUrlBuilderV1.createCustomUrl(`${resource}/list/all`),
+    async (req, res) => {
+        try {
+            const photosDb: PhotoType[] | null = await photoController.getAll();
+            if (!photosDb || ![].length) return sendError(req, res, 404);
 
-        sendSuccess(req, res, 200, { photos: photosDb });
-    } catch (err) {
-        sendError(req, res, 500);
+            sendSuccess(req, res, 200, { photos: photosDb });
+        } catch (err) {
+            sendError(req, res, 500);
+        }
     }
-});
+);
 
 router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     try {
@@ -41,6 +44,24 @@ router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
         sendError(req, res, 500);
     }
 });
+
+router.get(
+    apiUrlBuilderV1.createCustomUrl(`${resource}/list/for-album/:albumId`),
+    async (req, res) => {
+        try {
+            const { albumId } = req.params;
+            if (!isNumberString(albumId))
+                return sendError(req, res, 400, "Bad album id");
+
+            const photosDb = await photoController.getAllByAlbumId(albumId);
+            if (!photosDb) return sendError(req, res, 404);
+
+            sendSuccess(req, res, 200, { albumPhotos: photosDb });
+        } catch (err) {
+            sendError(req, res, 500);
+        }
+    }
+);
 
 router.post(
     apiUrlBuilderV1.createUrlAdd(resource),

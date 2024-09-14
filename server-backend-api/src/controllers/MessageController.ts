@@ -1,30 +1,49 @@
+import { WhereOptions } from "sequelize";
 import { Message } from "../models/MessagesModel";
-import { MessageType } from "../types/MessageType";
+import { MessageStatus, MessageType } from "../types/MessageType";
 import { UserType } from "../types/UserType";
 import { AbstractCrudController } from "./AbstrctCrudController";
 
 export class MessageController extends AbstractCrudController<Message> {
-    constructor(){
+    constructor() {
         super(Message);
-    };
-
-    create(data: Omit<MessageType, "id">): Promise<Message | null> {
-        return super.create(data)
     }
 
-    updateById = async (id: number, data: Partial<MessageType>) : Promise<number> => {
-        return await super.updateById(id, data);
-    };
+    create(data: Omit<MessageType, "id">): Promise<Message | null> {
+        return super.create(data);
+    }
 
-    async setSender(messageDb : MessageType, sender : UserType ){
-        return this.updateById(messageDb.id, {
-            sender_id: sender.id
+    async getAllByRecipientId(
+        recipientId: number,
+        status?: MessageStatus
+    ): Promise<Message[] | null> {
+        const optionsWhere: WhereOptions = {
+            recipient_id: recipientId,
+        };
+
+        if (status) optionsWhere.status = status;
+
+        return await Message.findAll({
+            where: optionsWhere,
         });
     }
 
-    async setRecipient(messageDb: MessageType, recipient : UserType)  {
+    async updateById(id: number, data: Partial<MessageType>): Promise<number> {
+        return await super.updateById(id, data);
+    }
+
+    async setSender(messageDb: MessageType, sender: UserType): Promise<number> {
+        return this.updateById(messageDb.id, {
+            sender_id: sender.id,
+        });
+    }
+
+    async setRecipient(
+        messageDb: MessageType,
+        recipient: UserType
+    ): Promise<number> {
         return await this.updateById(messageDb.id, {
-            recipient_id: recipient.id
-        })
+            recipient_id: recipient.id,
+        });
     }
 }

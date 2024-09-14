@@ -1,3 +1,6 @@
+TODO - 
+AUTHORIZE URL IN DATABASE
+
 1. Tabela: users (dla administratora/fotografa)
 id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator użytkownika.
 username (VARCHAR(50), -- UNIQUE --) — nazwa użytkownika do logowania.
