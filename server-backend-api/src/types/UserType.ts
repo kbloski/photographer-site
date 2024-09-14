@@ -10,6 +10,7 @@ export interface UserInterface {
     email: string,
     password: string,
     phone?: string,
+    
 }
 
 export type UserType = UserInterface;

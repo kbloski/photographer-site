@@ -9,6 +9,7 @@ implements AlbumInterface
     declare id: number;
     declare name: string;
     declare description: string;
+    declare user_id?: number;
 } 
 
 Album.init(
@@ -36,6 +37,13 @@ Album.init(
                 len: [0, 1024],
             },
         },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            validate: {
+                isInt: true
+            }
+        }
     },
     {
         sequelize

@@ -7,7 +7,6 @@ dotenv.config();
 class WebTokenManager{
     private SECRET_KEY = process.env.JWT_SECRET as string;
     constructor(){
-        console.log( this.SECRET_KEY)
         if (!this.SECRET_KEY) throw new Error("ERROR SECRET TOKEN KEY");
 
     }

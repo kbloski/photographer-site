@@ -12,6 +12,8 @@ implements MessageInterface {
     declare subject: string;
     declare status: MessageStatus;
     declare message?: string;
+    declare sender_id?: number;
+    declare recipient_id?: number;
 }
 
 Message.init({
@@ -28,7 +30,7 @@ Message.init({
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            isEmail: false,
+            isEmail: true,
             len: [5, 128],
         },
     },
@@ -47,7 +49,15 @@ Message.init({
         type: DataTypes.ENUM( ...statusArr ),
         allowNull: false,
         defaultValue: MessageStatus.NEW
-    }
+    },
+    sender_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    recipient_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
 }, {
     sequelize
 });

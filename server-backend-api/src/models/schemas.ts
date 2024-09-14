@@ -21,6 +21,16 @@ Photo.belongsTo(Album, {
     foreignKey: 'album_id'
 })
 
+// Message 
+Message.belongsTo(User, {
+    as: 'Sender',
+    foreignKey: 'sender_id'
+});
+Message.belongsTo(User, {
+    as: 'Recipient',
+    foreignKey: 'recipient_id'
+});
+
 sequelize.sync();
 
 export {

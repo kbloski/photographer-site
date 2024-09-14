@@ -5,4 +5,5 @@ export const PhotoSchema = z.object({
     url: z.string(),
     title: z.string().min(2).max(64),
     description: z.string().max(1024).optional(),
+    album_id: z.number().int().positive().optional()
 })

@@ -18,6 +18,7 @@ export class Photo
     declare url: string;
     declare title: string;
     declare description?: string;
+    declare album_id?: number;
 }
 
 Photo.init(
@@ -50,6 +51,13 @@ Photo.init(
                 len: [0, 1024],
             },
         },
+        album_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            validate: {
+                isInt: true
+            }
+        }
     },
     {
         sequelize,
