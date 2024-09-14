@@ -1,12 +1,13 @@
 import jwt, {SignOptions} from 'jsonwebtoken';
 import { UserType } from '../types/UserType';
 import { TokenType } from '../types/TokenType';
-
-if (process.env.JWT_SECRET) throw new Error('ERROR SECRET TOKEN KEY')
+import dotenv from 'dotenv';
+dotenv.config();
 
 class WebTokenManager{
     private SECRET_KEY = process.env.JWT_SECRET as string;
     constructor(){
+        console.log( this.SECRET_KEY)
         if (!this.SECRET_KEY) throw new Error("ERROR SECRET TOKEN KEY");
 
     }
