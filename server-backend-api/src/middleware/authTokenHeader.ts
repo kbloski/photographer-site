@@ -14,7 +14,6 @@ export async function authTokenHeader ( req : Request, res : Response, next : Ne
         const token : string  = authHeader?.split(' ')[1] ?? '';
         const tokenData : TokenType = webTokenManager.verifyWebToken( token );
 
-        
         if (!tokenData.valid){
             req.user = undefined;
             return next();
@@ -24,7 +23,6 @@ export async function authTokenHeader ( req : Request, res : Response, next : Ne
             const userDb = await userController.getById( tokenData.decoded.id )
             req.user = userDb as UserType;
         }
-
         
         return next();
     } catch (err){
