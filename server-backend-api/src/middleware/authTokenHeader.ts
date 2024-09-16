@@ -5,7 +5,7 @@ import { sendError } from "../utils/responseUtils";
 import { webTokenManager } from "../services/tokenManager";
 import { userController } from "../controllers/controllers";
 import { TokenType } from "../types/TokenType";
-import { UserType } from "../types/UserType";
+import { UserRoles, UserType } from "../types/UserType";
 
 export async function authTokenHeader ( req : Request, res : Response, next : NextFunction){
     try {
@@ -14,16 +14,17 @@ export async function authTokenHeader ( req : Request, res : Response, next : Ne
         const token : string  = authHeader?.split(' ')[1] ?? '';
         const tokenData : TokenType = webTokenManager.verifyWebToken( token );
 
-
-        if (!tokenData.valid){
-            req.user = {} as UserType;
-            return next();
-        } 
         
-        if (tokenData.decoded?.id){
-            const userDb = await userController.getById( tokenData.decoded.id )
-            req.user = userDb as UserType;
-        }
+        req.user = {role: 'client'} as UserType;
+        // if (!tokenData.valid){
+        //     req.user = undefined;
+        //     return next();
+        // } 
+        
+        // if (tokenData.decoded?.id){
+        //     const userDb = await userController.getById( tokenData.decoded.id )
+        //     req.user = userDb as UserType;
+        // }
 
         
         return next();

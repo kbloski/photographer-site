@@ -1,8 +1,7 @@
 import multer from 'multer';
-import path, { dirname, join } from 'path';
+import path from 'path';
 import fs from 'fs';
 import { unlink } from 'node:fs';
-
 
 export const uploadPath = './uploads/images';
 const storage = multer.diskStorage(
@@ -38,5 +37,15 @@ export function deleteFile( fileUrl : string = '/file/to/path.ext'){
         return { deleted : true };
     } catch (err){
         return { deleted : false, error: err };
+    }
+}
+
+export function loadJsonFileSync( path : string ) : any
+{
+    try {
+        const data = fs.readFileSync( path, 'utf-8');
+        return JSON.parse(data);
+    } catch (err){
+        throw new Error( `Error reading or parsing JOSN file: ${err}`);
     }
 }
