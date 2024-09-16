@@ -9,6 +9,7 @@ registerRoutes(app);
 
 app.get("/", async (req, res) => {
     res.status(200).json({
+        
         msg: "Server started at PORT " + PORT,
     });
 });
