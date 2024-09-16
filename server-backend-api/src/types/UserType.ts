@@ -1,22 +1,12 @@
-
-
-export enum DBUserRoles {
+export enum UserRoles {
     ADMIN = 'admin',
     CLIENT = 'client',
+    // GUEST = 'guest' 
 }
-
-export enum UserRoles {
-    ADMIN = DBUserRoles.ADMIN,
-    CLIENT = DBUserRoles.CLIENT,
-    GUEST = ' guest' // virtual user role
-}
-
-
-export const UserRolesGuest : string = 'guest';
 
 export interface UserInterface {
     id: number,
-    role: DBUserRoles.CLIENT | DBUserRoles.ADMIN,
+    role: UserRoles.CLIENT | UserRoles.ADMIN,
     username: string,
     email: string,
     password: string,

@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import { DATABASE_HOST, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_PORT, DATABASE_USER } from "../config/config";
+import { DATABASE_HOST, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_PORT, DATABASE_USER } from "../config";
 
 
 const sequelize = new Sequelize({

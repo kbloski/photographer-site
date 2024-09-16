@@ -5,14 +5,14 @@ import {
     InferCreationAttributes,
     Model,
 } from "sequelize";
-import { DBUserRoles, UserInterface } from "../types/UserType";
+import { UserRoles, UserInterface } from "../types/UserType";
 
 export class User
     extends Model<InferAttributes<User>, InferCreationAttributes<User>>
     implements UserInterface
 {
     declare id: number;
-    declare role: DBUserRoles;
+    declare role: UserRoles;
     declare username: string;
     declare email: string;
     declare password: string;
@@ -31,9 +31,9 @@ User.init(
             },
         },
         role: {
-            type: DataTypes.ENUM(...Object.values(DBUserRoles)),
+            type: DataTypes.ENUM(...Object.values(UserRoles)),
             allowNull: false,
-            defaultValue: DBUserRoles.CLIENT,
+            defaultValue: UserRoles.CLIENT,
         },
         username: {
             type: DataTypes.STRING(64),

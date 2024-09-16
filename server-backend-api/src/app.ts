@@ -2,7 +2,7 @@
 
 import express from 'express';
 import cors from 'cors';
-import { ALLOWED_ORIGINS } from './config/config';
+import { ALLOWED_ORIGINS } from './config';
 import { authTokenHeader } from './middleware/authTokenHeader';
 import accessControMiddleware from './middleware/accessControMiddleware';
 
