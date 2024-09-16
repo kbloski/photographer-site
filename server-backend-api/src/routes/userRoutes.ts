@@ -7,6 +7,7 @@ import { UserSchema } from "../schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { isNumberString } from "../utils/validation";
+import { UserController } from "../controllers/UserController";
 
 const router = express.Router();
 const resource = "user";
@@ -41,8 +42,11 @@ router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
 router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
     try {
         delete req.body.id;
-        const userData: Partial<Omit<UserType, "id">> = req.body;
+        const userData: Partial<Omit<UserType, "id">> = req.body ?? {};
         UserSchema.parse(userData);
+
+        const userExist = await userController.getByEmail( userData.email as string);
+        if (userExist) return sendError(req, res, 403, `User with email ${userExist.email} exist in database` );
 
         const userDb = await userController.create(userData as UserType);
 
