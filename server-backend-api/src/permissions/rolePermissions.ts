@@ -63,8 +63,5 @@ const rolePermissions = {
 };
 
 rolePermissions.addRoleParrents( UserRoles.CLIENT, 'guest' )
-console.log( 
-    JSON.stringify( rolePermissions.userRoles, null, 4 )
-)
 
 export { rolePermissions };

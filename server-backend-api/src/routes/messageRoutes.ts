@@ -19,7 +19,8 @@ router.get(
     apiUrlBuilderV1.createCustomUrl(`${resource}/all/inbox`),
     async (req, res) => {
         try {
-            if (!req.user?.id) return sendError(req, res, 401);
+            if (!req.user?.id) return sendError(req, res, 401, 'Middleware authorization not authenticate user');
+
             let statusParam: MessageStatus | undefined;
             const { status } = req.query;
             switch (status) {
