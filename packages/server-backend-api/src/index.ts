@@ -1,3 +1,4 @@
+
 // Cel: Punkt wejściowy aplikacji.
 import app from "./app";
 import { API_PORT } from "./config";
@@ -9,7 +10,6 @@ registerRoutes(app);
 
 app.get("/", async (req, res) => {
     res.status(200).json({
-        
         msg: "Server started at PORT " + PORT,
     });
 });

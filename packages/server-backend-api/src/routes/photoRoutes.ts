@@ -32,7 +32,7 @@ router.get(
 router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     try {
         const { id } = req.params;
-        if (!isNumberString) return sendError(req, res, 400, "id - bad id");
+        if (!isNumberString(id)) return sendError(req, res, 400, "id - bad id");
 
         const photoDb: PhotoType | null = await photoController.getById(
             Number(id)
