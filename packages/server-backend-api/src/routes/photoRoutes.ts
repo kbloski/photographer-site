@@ -79,7 +79,7 @@ router.post(
                 title: photoData?.title ?? fileUpload.filename,
                 description:
                     photoData.description ??
-                    `About photo ${photoData.filename}`,
+                    `About photo ${fileUpload.filename}`,
             });
 
             await transaction.commit();
