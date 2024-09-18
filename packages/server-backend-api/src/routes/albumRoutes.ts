@@ -2,11 +2,12 @@ import express from "express";
 import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { sendError, sendSuccess } from "../utils/responseUtils";
 import { AlbumType } from "shared/src/types/AlbumType";
-import { albumController } from "../controllers/controllers";
+import { albumController, photoController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { AlbumSchema } from "../schemas/AlbumSchema";
+import { sequelize } from "../utils/db";
 
 const router = express.Router();
 const resource = "album";
@@ -66,13 +67,18 @@ router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
 });
 
 router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
+    const transaction = await sequelize.transaction();
     try {
         const { id } = req.params;
         if (!isNumberString(id)) return sendError(req, res, 400, "id: bad id");
 
+        await photoController.deleteAllByAlbumId(Number(id));
         await albumController.deleteById(Number(id));
+
+        await transaction.commit();
         sendSuccess(req, res, 204);
     } catch (err) {
+        await transaction.rollback();
         sendError(req, res);
     }
 });

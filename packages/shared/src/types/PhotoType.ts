@@ -1,4 +1,4 @@
-export interface PhotoInterface {
+export type PhotoType = {
     id?: number;
     url: string;
     title: string;
@@ -6,4 +6,4 @@ export interface PhotoInterface {
     album_id?: number;
 }
 
-export type PhotoType = PhotoInterface;
+// export type PhotoType = PhotoInterface;

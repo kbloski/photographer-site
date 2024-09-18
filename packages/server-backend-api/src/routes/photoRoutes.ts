@@ -53,7 +53,7 @@ router.get(
             if (!isNumberString(albumId))
                 return sendError(req, res, 400, "Bad album id");
 
-            const photosDb = await photoController.getAllByAlbumId(albumId);
+            const photosDb = await photoController.getAllByAlbumId(Number(albumId));
             if (!photosDb) return sendError(req, res, 404);
 
             sendSuccess(req, res, 200, { albumPhotos: photosDb });

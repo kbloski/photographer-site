@@ -1,4 +1,4 @@
-import { PhotoInterface } from "shared/src/types/PhotoType";
+import { PhotoType } from "shared/src/types/PhotoType";
 import { sequelize } from "../utils/db";
 import {
     DataTypes,
@@ -9,7 +9,7 @@ import {
 
 export class Photo
     extends Model<InferAttributes<Photo>, InferCreationAttributes<Photo>>
-    implements PhotoInterface
+    implements PhotoType
 {
     declare id: number;
     declare url: string;

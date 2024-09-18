@@ -5,6 +5,7 @@ import photoRouter from "./photoRoutes";
 import serviceRouter from "./serviceRoutes";
 import messageRouter from "./messageRoutes";
 import authRouter from "./authRoutes";
+import reactionRouter from './reactionRoutes';
 
 const routersArr = [
     userRouter,
@@ -13,6 +14,7 @@ const routersArr = [
     serviceRouter,
     messageRouter,
     authRouter,
+    reactionRouter
 ];
 
 const registerRoutes = (app: Express) => {
