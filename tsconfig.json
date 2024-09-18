@@ -7,6 +7,10 @@
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
+
+      "typeRoots": [
+        "./node_modules/@types",
+      ],
       
       "baseUrl": "./",
       "paths": {

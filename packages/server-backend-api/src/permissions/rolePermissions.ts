@@ -1,6 +1,7 @@
 import { UserRoles, UserType } from "../types/UserType";
-import { loadJsonFileSync } from "../utils/filesOperation";
+// import { loadJsonFileSync } from "../utils/filesOperation";
 import path from "node:path";
+import { accessPermission } from '../config/permission-config';
 
 type AllowsType = {
     resource: string;
@@ -13,7 +14,7 @@ type UserRolesType = {
 };
 
 const pathFilePermission = path.join(__dirname, '../../config', "./permission-config.json");
-const userRoles: UserRolesType[] = loadJsonFileSync(pathFilePermission);
+const userRoles: UserRolesType[] = accessPermission;
 
 const rolePermissions = {
     userRoles,

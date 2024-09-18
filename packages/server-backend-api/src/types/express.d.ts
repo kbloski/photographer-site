@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { UserType } from "../src/types/UserType";
+import { UserType } from "./UserType";
 
 declare global {
     namespace Express {

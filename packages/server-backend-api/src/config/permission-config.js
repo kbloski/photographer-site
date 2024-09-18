@@ -1,4 +1,7 @@
-[
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.accessPermission = void 0;
+exports.accessPermission = [
     {
         "role": "admin",
         "allows": [
@@ -23,7 +26,7 @@
             { "resource": "/api/v1/service/all", "methods": ["get"] },
             { "resource": "/api/v1/user/all", "methods": ["get"] },
             { "resource": "/api/login", "methods": ["post"] },
-            { "resource": "/api/v1/photo/id", "methods": ["get"]}
+            { "resource": "/api/v1/photo/id", "methods": ["get"] }
         ]
     }
-]
+];

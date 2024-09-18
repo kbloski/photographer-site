@@ -2,17 +2,19 @@
   "name": "photographer-site",
   "version": "1.0.0",
   "description": "working now...\r start project - 11.09.2024",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "Kamil Błoński",
   "license": "ISC",
-
-
-
-
   
+  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "backend:start" : "cd packages/server-backend-api && npm run start",
+    "backend:build" : "cd packages/server-backend-api && npm run build",
+    "backend:dev" : "cd packages/server-backend-api && npm run dev"
+  },
+
   "devDependencies": {
     "@types/node": "^22.5.5",
     "ts-node": "^10.9.2",
