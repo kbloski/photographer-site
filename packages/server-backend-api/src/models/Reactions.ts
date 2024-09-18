@@ -31,6 +31,7 @@ Reaction.init(
         reaction: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: ReactionEmotions.LIKE,
             validate: {
                 isInt: true,
                 isIn: [reactionArr]
