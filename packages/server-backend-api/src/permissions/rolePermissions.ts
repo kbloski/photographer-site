@@ -1,20 +1,12 @@
 import { UserRoles, UserType } from "../types/UserType";
 // import { loadJsonFileSync } from "../utils/filesOperation";
 import path from "node:path";
-import { accessPermission } from '../config/permission-config';
+import { accessPermissions } from '../config/permission-config';
+import { PermissionType } from "../types/PermissionType";
 
-type AllowsType = {
-    resource: string;
-    methods: string[];
-};
-
-type UserRolesType = {
-    role: UserRoles | unknown;
-    allows: AllowsType[];
-};
 
 const pathFilePermission = path.join(__dirname, '../../config', "./permission-config.json");
-const userRoles: UserRolesType[] = accessPermission;
+const userRoles: PermissionType[] = accessPermissions;
 
 const rolePermissions = {
     userRoles,
@@ -33,7 +25,7 @@ const rolePermissions = {
         method: string
     ) {
         // RoleData
-        let roleData: UserRolesType = {
+        let roleData: PermissionType = {
             role: "guest",
             allows:
                 this.userRoles.find((v) => v.role === "guest")?.allows ?? [],
@@ -41,11 +33,21 @@ const rolePermissions = {
         if (userRole)
             roleData = this.userRoles.find(
                 (v) => v.role == userRole
-            ) as UserRolesType;
+            ) as PermissionType;
 
         // Resource
         const resourceData = roleData.allows.find(
-            (v) => v.resource === resource || v.resource === "*"
+            (v) => {
+                // String
+                if (typeof v.resource === 'string'){
+                    if (v.resource === resource || v.resource === "*") return v;
+                } 
+                
+                // RegExp
+                if (typeof v.resource !== 'string'){
+                    if (v.resource.test( String(resource))) return v;
+                }
+            }
         );
         if (!resourceData || !resourceData?.methods) return false;
 

@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { sendError } from "../utils/responseUtils";
 import { rolePermissions } from "../permissions/rolePermissions";
-import { UserRoles } from "../types/UserType";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 
-export default function (req : Request, res : Response, next: NextFunction){
+//
+export default function (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res : Response, next: NextFunction){
     try {
         // Development
         if (!rolePermissions.isResourseAllowedForRole( 

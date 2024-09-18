@@ -7,7 +7,6 @@ import { UserSchema } from "../schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { isNumberString } from "../utils/validation";
-import { UserController } from "../controllers/UserController";
 
 const router = express.Router();
 const resource = "user";
