@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
 
     "backend:start" : "cd packages/server-backend-api && npm run start",
-    "backend:build" : "cd packages/server-backend-api && npm run build",
+    "backend:build" : "cd packages/server-backend-api && npm run build && cd ../shared && npm run build",
     "backend:dev" : "cd packages/server-backend-api && npm run dev"
   },
 
