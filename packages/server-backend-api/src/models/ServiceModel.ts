@@ -1,4 +1,4 @@
-import { ServiceInterface } from "../types/ServiceType";
+import { ServiceInterface } from "shared/src/types/ServiceType";
 import { sequelize } from "../utils/db";
 import {
     DataTypes,

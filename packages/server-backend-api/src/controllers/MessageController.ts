@@ -1,7 +1,7 @@
 import { WhereOptions } from "sequelize";
 import { Message } from "../models/MessagesModel";
-import { MessageStatus, MessageType } from "../types/MessageType";
-import { UserType } from "../types/UserType";
+import { MessageStatus, MessageType } from "shared/src/types/MessageType";
+import { UserType } from "shared/src/types/UserType";
 import { AbstractCrudController } from "./AbstrctCrudController";
 
 export class MessageController extends AbstractCrudController<Message> {

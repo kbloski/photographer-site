@@ -1,7 +1,7 @@
 import express from "express";
 import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { sendError, sendSuccess } from "../utils/responseUtils";
-import { MessageStatus, MessageType } from "../types/MessageType";
+import { MessageStatus, MessageType } from "shared/src/types/MessageType";
 import {
     messageController,
     serviceController,

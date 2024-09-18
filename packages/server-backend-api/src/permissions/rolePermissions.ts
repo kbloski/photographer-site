@@ -1,5 +1,4 @@
-import { UserRoles, UserType } from "../types/UserType";
-// import { loadJsonFileSync } from "../utils/filesOperation";
+import { UserRoles, UserType } from "shared/src/types/UserType";
 import path from "node:path";
 import { accessPermissions } from "../config/permission-config";
 import { PermissionType } from "../types/PermissionType";

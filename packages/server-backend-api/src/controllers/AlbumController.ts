@@ -1,6 +1,6 @@
 import { Album } from "../models/AlbumModel";
-import { AlbumType } from "../types/AlbumType";
-import { UserType } from "../types/UserType";
+import { AlbumType } from "shared/src/types/AlbumType";
+import { UserType } from "shared/src/types/UserType";
 import { AbstractCrudController } from "./AbstrctCrudController";
 
 export class AlbumController extends AbstractCrudController<Album> {

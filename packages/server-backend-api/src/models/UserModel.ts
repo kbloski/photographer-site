@@ -5,7 +5,7 @@ import {
     InferCreationAttributes,
     Model,
 } from "sequelize";
-import { UserRoles, UserInterface } from "../types/UserType";
+import { UserRoles, UserInterface } from "shared/src/types/UserType";
 
 export class User
     extends Model<InferAttributes<User>, InferCreationAttributes<User>>

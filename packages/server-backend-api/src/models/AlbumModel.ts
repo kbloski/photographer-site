@@ -1,4 +1,4 @@
-import { AlbumInterface } from "../types/AlbumType";
+import { AlbumInterface } from "shared/src/types/AlbumType";
 import { sequelize } from "../utils/db";
 import {
     DataTypes,

@@ -1,6 +1,6 @@
 import { AbstractCrudController } from "./AbstrctCrudController";
 import { User } from "../models/UserModel";
-import { UserType } from "../types/UserType";
+import { UserType } from "shared/src/types/UserType";
 import bcrypt from "bcrypt";
 
 class UserService {

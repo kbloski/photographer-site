@@ -1,7 +1,7 @@
 import express from "express";
 import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { sendError, sendSuccess } from "../utils/responseUtils";
-import { AlbumType } from "../types/AlbumType";
+import { AlbumType } from "shared/src/types/AlbumType";
 import { albumController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
 import { z } from "zod";

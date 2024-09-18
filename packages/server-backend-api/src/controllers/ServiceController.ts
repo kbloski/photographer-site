@@ -1,5 +1,5 @@
 import { Service } from "../models/ServiceModel";
-import { ServiceType } from "../types/ServiceType";
+import { ServiceType } from "shared/src/types/ServiceType";
 import { AbstractCrudController } from "./AbstrctCrudController";
 
 export class ServiceController extends AbstractCrudController<Service> {

@@ -2,7 +2,7 @@ import express from "express";
 import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { deleteFile, upload, uploadPath } from "../utils/filesOperation";
 import { sendError, sendSuccess } from "../utils/responseUtils";
-import { PhotoType } from "../types/PhotoType";
+import { PhotoType } from "shared/src/types/PhotoType";
 import { photoController, userController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
 import { sequelize } from "../utils/db";

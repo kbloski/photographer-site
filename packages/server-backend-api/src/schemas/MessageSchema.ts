@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { MessageStatus } from "../types/MessageType";
+import { MessageStatus } from "shared/src/types/MessageType";
 
 export const MessageSchema = z.object({
     id: z.number().int().positive().optional(),

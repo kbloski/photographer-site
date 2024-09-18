@@ -1,7 +1,7 @@
 import express from "express";
 import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { sendError, sendSuccess } from "../utils/responseUtils";
-import { ServiceType } from "../types/ServiceType";
+import { ServiceType } from "shared/src/types/ServiceType";
 import { serviceController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
 import { ServiceSchema } from "../schemas/ServiceSchema";

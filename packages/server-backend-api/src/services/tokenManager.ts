@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
-import { UserType } from "../types/UserType";
-import { TokenType } from "../types/TokenType";
+import { UserType } from "shared/src/types/UserType";
+import { TokenType } from "shared/src/types/TokenType";
 import dotenv from "dotenv";
 dotenv.config();
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserRoles } from "../types/UserType";
+import { UserRoles } from "shared/src/types/UserType";
 
 export const UserSchema = z.object({
     id: z.number().int().positive().optional(),

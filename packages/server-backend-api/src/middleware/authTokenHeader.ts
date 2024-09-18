@@ -4,8 +4,8 @@ import { NextFunction } from "express";
 import { sendError } from "../utils/responseUtils";
 import { webTokenManager } from "../services/tokenManager";
 import { userController } from "../controllers/controllers";
-import { TokenType } from "../types/TokenType";
-import { UserRoles, UserType } from "../types/UserType";
+import { TokenType } from "shared/src/types/TokenType";
+import { UserRoles, UserType } from "shared/src/types/UserType";
 
 export async function authTokenHeader(
     req: Request,

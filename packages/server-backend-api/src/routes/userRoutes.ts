@@ -2,7 +2,7 @@ import express from "express";
 import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { sendError, sendSuccess } from "../utils/responseUtils";
 import { userController } from "../controllers/controllers";
-import { UserType } from "../types/UserType";
+import { UserType } from "shared/src/types/UserType";
 import { UserSchema } from "../schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";

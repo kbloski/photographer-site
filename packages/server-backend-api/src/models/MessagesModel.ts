@@ -1,4 +1,4 @@
-import { MessageInterface, MessageStatus } from "../types/MessageType";
+import { MessageInterface, MessageStatus } from "shared/src/types/MessageType";
 import { sequelize } from "../utils/db";
 import {
     DataTypes,

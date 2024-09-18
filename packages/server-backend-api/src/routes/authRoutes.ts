@@ -4,7 +4,7 @@ import { UserSchema } from "../schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { userController } from "../controllers/controllers";
-import { UserType } from "../types/UserType";
+import { UserType } from "shared/src/types/UserType";
 import { webTokenManager } from "../services/tokenManager";
 
 const router = express.Router();

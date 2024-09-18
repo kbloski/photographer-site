@@ -1,4 +1,4 @@
-import { PhotoInterface } from "../types/PhotoType";
+import { PhotoInterface } from "shared/src/types/PhotoType";
 import { sequelize } from "../utils/db";
 import {
     DataTypes,
