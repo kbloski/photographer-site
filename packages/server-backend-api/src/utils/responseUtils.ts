@@ -31,6 +31,9 @@ export async function sendError(
         case 404: 
             statusMessage = 'Not Found';
             break;
+        case 409: 
+            statusMessage = 'Conflict';
+            break;
         case 502: 
             statusMessage = 'Bad Gateway';
             break;

@@ -71,6 +71,9 @@ router.post(
         const transaction = await sequelize.transaction();
 
         try {
+            console.log( fileUpload )
+            if ( Object.keys(fileUpload).length === 0) return sendError(req, res, 400, "The photo was not sent in the variable 'photo.' ");
+
             const photoData = req.body;
             PhotoSchema.partial().parse(photoData);
 
@@ -96,6 +99,53 @@ router.post(
         }
     }
 );
+
+router.patch(
+    apiUrlBuilderV1.createUrlWithId(resource),
+    upload.single("photo"),
+    async (req, res) => {
+        const updateFile = req.file;
+        const transaction = await sequelize.transaction();
+
+        try {
+            const { id } = req.params;
+            if (!isNumberString(id)) return sendError(req, res, 400, "Id must be number");
+
+            const photoDb = await photoController.getById(Number(id));
+            if (!photoDb) return sendError(req, res, 404);
+
+            const updatePhotoDbData : Partial<PhotoType> = req.body;
+            delete updatePhotoDbData?.id;
+            delete updatePhotoDbData.url;
+
+            const oldUrl : string = photoDb.url;
+            if ( updateFile ) {
+                updatePhotoDbData.url = `${uploadPath}/${updateFile.filename}`;
+            }
+
+            PhotoSchema.partial().parse(updatePhotoDbData);
+
+            try {
+                const updated = await photoController.updateById(Number(id), updatePhotoDbData );
+
+                if (!updated) return sendError(req, res, 409);
+                
+                deleteFile( oldUrl );
+                await transaction.commit();
+            } catch (err){
+                await transaction.rollback();
+                throw new Error('Error update to database')
+            }
+            
+            sendSuccess(req, res,200)
+        } catch (err){
+            await transaction.rollback();
+            if (err instanceof z.ZodError){
+                return sendError(req, res, 400, generateZodErrorString(err));
+            }
+            sendError(req, res, 500)
+        }
+})
 
 router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     const transaction = await sequelize.transaction();
