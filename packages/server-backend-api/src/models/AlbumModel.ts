@@ -1,16 +1,21 @@
 import { AlbumInterface } from "../types/AlbumType";
 import { sequelize } from "../utils/db";
-import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import {
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    Model,
+} from "sequelize";
 
-export class Album 
-extends Model<InferAttributes<Album>, InferCreationAttributes<Album>>
-implements AlbumInterface
+export class Album
+    extends Model<InferAttributes<Album>, InferCreationAttributes<Album>>
+    implements AlbumInterface
 {
     declare id: number;
     declare name: string;
     declare description: string;
     declare user_id?: number;
-} 
+}
 
 Album.init(
     {
@@ -41,11 +46,11 @@ Album.init(
             type: DataTypes.INTEGER,
             allowNull: true,
             validate: {
-                isInt: true
-            }
-        }
+                isInt: true,
+            },
+        },
     },
     {
-        sequelize
+        sequelize,
     }
-)
+);

@@ -8,5 +8,5 @@ export const MessageSchema = z.object({
     message: z.string().max(1024).optional(),
     status: z.nativeEnum(MessageStatus).optional(),
     sender_id: z.number().int().positive().optional(),
-    recipient_id:  z.number().int().positive().optional(),
-})
+    recipient_id: z.number().int().positive().optional(),
+});

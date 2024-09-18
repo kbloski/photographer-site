@@ -8,10 +8,7 @@ import {
 } from "sequelize";
 
 export class Service
-    extends Model<
-        InferAttributes<Service>,
-        InferCreationAttributes<Service>
-    >
+    extends Model<InferAttributes<Service>, InferCreationAttributes<Service>>
     implements ServiceInterface
 {
     declare id: number;

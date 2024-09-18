@@ -3,7 +3,7 @@ import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { deleteFile, upload, uploadPath } from "../utils/filesOperation";
 import { sendError, sendSuccess } from "../utils/responseUtils";
 import { PhotoType } from "../types/PhotoType";
-import { photoController } from "../controllers/controllers";
+import { photoController, userController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
 import { sequelize } from "../utils/db";
 import { FileUploadType } from "../types/FileUploadType";
@@ -65,33 +65,30 @@ router.get(
 
 router.post(
     apiUrlBuilderV1.createUrlAdd(resource),
-    upload.array("images"),
+    upload.single("photo"),
     async (req, res) => {
+        const fileUpload = (req.file ?? {}) as FileUploadType;
         const transaction = await sequelize.transaction();
-        const filesUpload = (req.files ?? []) as FileUploadType[];
 
         try {
-            const photo = req.body ?? {};
-            PhotoSchema.partial().parse(photo);
+            const photoData = req.body;
+            PhotoSchema.partial().parse(photoData);
 
-            for (const file of filesUpload) {
-                await photoController.create({
-                    url: `${uploadPath}/${file.filename}`,
-                    title: photo?.title ?? file.filename,
-                    description: photo?.description,
-                });
-            }
+            const photoDb = await photoController.create({
+                url: `${uploadPath}/${fileUpload.filename}`,
+                title: photoData?.title ?? fileUpload.filename,
+                description:
+                    photoData.description ??
+                    `About photo ${photoData.filename}`,
+            });
 
             await transaction.commit();
             sendSuccess(req, res, 201);
         } catch (err) {
-            await transaction.rollback();
+            const filePath = `${uploadPath}/${fileUpload.filename}`;
+            deleteFile(filePath);
 
-            for (const file of filesUpload) {
-                const filePath = `${uploadPath}/${file.filename}`;
-                deleteFile(filePath);
-            }
-
+            transaction.rollback();
             if (err instanceof z.ZodError) {
                 return sendError(req, res, 400, generateZodErrorString(err));
             }
@@ -99,10 +96,6 @@ router.post(
         }
     }
 );
-
-// router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
-//     // Update zasobu
-// });
 
 router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
     const transaction = await sequelize.transaction();

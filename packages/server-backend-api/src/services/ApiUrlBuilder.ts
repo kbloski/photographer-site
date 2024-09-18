@@ -1,6 +1,3 @@
-import { config } from "dotenv";
-import { version } from "os";
-
 class ApiUrlBuilder {
     private basePath: string;
     private version: string;

@@ -15,5 +15,5 @@ export {
     albumController,
     messageController,
     photoController,
-    serviceController
-}
+    serviceController,
+};

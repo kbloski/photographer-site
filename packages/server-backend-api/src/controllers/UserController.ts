@@ -1,4 +1,4 @@
-import {  AbstractCrudController } from "./AbstrctCrudController";
+import { AbstractCrudController } from "./AbstrctCrudController";
 import { User } from "../models/UserModel";
 import { UserType } from "../types/UserType";
 import bcrypt from "bcrypt";
@@ -7,11 +7,14 @@ class UserService {
     private static SALT_ROUNDS = 10;
     private static GEN_SALT = bcrypt.genSaltSync(this.SALT_ROUNDS);
 
-    static async validPassword( password: string, hashedPassword : string) : Promise<boolean>{
-        return await bcrypt.compare(password, hashedPassword )
+    static async validPassword(
+        password: string,
+        hashedPassword: string
+    ): Promise<boolean> {
+        return await bcrypt.compare(password, hashedPassword);
     }
-    
-    static async hashPassword( password: string) : Promise<string>{
+
+    static async hashPassword(password: string): Promise<string> {
         return await bcrypt.hash(password, UserService.GEN_SALT);
     }
 }
@@ -22,7 +25,7 @@ export class UserController extends AbstractCrudController<User> {
     }
 
     // @ts-ignore
-    async create(data: Omit<UserType, 'id' | 'role'>): Promise<User | null> {
+    async create(data: Omit<UserType, "id" | "role">): Promise<User | null> {
         try {
             // const salt = await bcrypt.genSalt(10);
             data.password = await UserService.hashPassword(data.password);
@@ -35,8 +38,9 @@ export class UserController extends AbstractCrudController<User> {
         }
     }
 
-    async updateById (id: number, data: Partial<UserType>) : Promise<number> {
-        if (data.password) data.password = await UserService.hashPassword(data.password);
+    async updateById(id: number, data: Partial<UserType>): Promise<number> {
+        if (data.password)
+            data.password = await UserService.hashPassword(data.password);
 
         return await super.updateById(id, data);
     }

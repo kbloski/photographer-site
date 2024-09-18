@@ -1,11 +1,11 @@
 export type ErrorResponse = {
-    success: false,
-    message: string,
-    errorCode?: string
+    success: false;
+    message: string;
+    errorCode?: string;
 };
 
 export type SuccessResponse<T> = {
-    success: true,
+    success: true;
     data: T;
-    message?: string
-}
+    message?: string;
+};

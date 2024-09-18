@@ -1,5 +1,5 @@
 # Uploads file folder 
-uploads/images/*
+uploads/*
 
 # Logs
 logs

@@ -1,16 +1,22 @@
 import { UserRoles, UserType } from "../types/UserType";
 // import { loadJsonFileSync } from "../utils/filesOperation";
 import path from "node:path";
-import { accessPermissions } from '../config/permission-config';
+import { accessPermissions } from "../config/permission-config";
 import { PermissionType } from "../types/PermissionType";
 
-
-const pathFilePermission = path.join(__dirname, '../../config', "./permission-config.json");
+const pathFilePermission = path.join(
+    __dirname,
+    "../../config",
+    "./permission-config.json"
+);
 const userRoles: PermissionType[] = accessPermissions;
 
 const rolePermissions = {
     userRoles,
-    addRoleParrents: function (targetRole: UserRoles | string, sourceRole: UserRoles | string) {
+    addRoleParrents: function (
+        targetRole: UserRoles | string,
+        sourceRole: UserRoles | string
+    ) {
         const targetData = this.userRoles.find((v) => v.role === targetRole);
         const sourceData = this.userRoles.find((v) => v.role === sourceRole);
 
@@ -36,19 +42,17 @@ const rolePermissions = {
             ) as PermissionType;
 
         // Resource
-        const resourceData = roleData.allows.find(
-            (v) => {
-                // String
-                if (typeof v.resource === 'string'){
-                    if (v.resource === resource || v.resource === "*") return v;
-                } 
-                
-                // RegExp
-                if (typeof v.resource !== 'string'){
-                    if (v.resource.test( String(resource))) return v;
-                }
+        const resourceData = roleData.allows.find((v) => {
+            // String
+            if (typeof v.resource === "string") {
+                if (v.resource === resource || v.resource === "*") return v;
             }
-        );
+
+            // RegExp
+            if (typeof v.resource !== "string") {
+                if (v.resource.test(String(resource))) return v;
+            }
+        });
         if (!resourceData || !resourceData?.methods) return false;
 
         // Check access control
@@ -65,6 +69,6 @@ const rolePermissions = {
     },
 };
 
-rolePermissions.addRoleParrents( UserRoles.CLIENT, 'guest' )
+rolePermissions.addRoleParrents(UserRoles.CLIENT, "guest");
 
 export { rolePermissions };

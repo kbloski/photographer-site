@@ -44,8 +44,16 @@ router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
         const userData: Partial<Omit<UserType, "id">> = req.body ?? {};
         UserSchema.parse(userData);
 
-        const userExist = await userController.getByEmail( userData.email as string);
-        if (userExist) return sendError(req, res, 403, `User with email ${userExist.email} exist in database` );
+        const userExist = await userController.getByEmail(
+            userData.email as string
+        );
+        if (userExist)
+            return sendError(
+                req,
+                res,
+                403,
+                `User with email ${userExist.email} exist in database`
+            );
 
         const userDb = await userController.create(userData as UserType);
 

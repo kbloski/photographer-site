@@ -10,9 +10,8 @@ export interface MessageInterface {
     subject: string;
     status: MessageStatus.NEW | MessageStatus.READ | MessageStatus.ARCHIVED;
     message?: string;
-    sender_id? : number;
-    recipient_id? : number;	
-
+    sender_id?: number;
+    recipient_id?: number;
 }
 
 export type MessageType = MessageInterface;

@@ -8,10 +8,7 @@ import {
 } from "sequelize";
 
 export class Photo
-    extends Model<
-        InferAttributes<Photo>,
-        InferCreationAttributes<Photo>
-    >
+    extends Model<InferAttributes<Photo>, InferCreationAttributes<Photo>>
     implements PhotoInterface
 {
     declare id: number;
@@ -55,9 +52,9 @@ Photo.init(
             type: DataTypes.INTEGER,
             allowNull: true,
             validate: {
-                isInt: true
-            }
-        }
+                isInt: true,
+            },
+        },
     },
     {
         sequelize,
