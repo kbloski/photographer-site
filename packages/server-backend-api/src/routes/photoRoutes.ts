@@ -66,6 +66,42 @@ router.get(
 );
 
 router.post(
+    apiUrlBuilderV1.createCustomUrl(`${resource}/add/list`),
+    upload.array("images"),
+    async (req, res) => {
+        const filesUpload = (req.files ?? []) as FileUploadType[];
+        const transaction = await sequelize.transaction();
+
+        try {
+            if (filesUpload.length === 0) return sendError(req, res, 400, "The images was not sent in the variable 'images.' ");
+
+            for (const photo of filesUpload){
+                await photoController.create({
+                    url: `${uploadPath}/${photo.filename}`,
+                    title: photo.filename,
+                    description: `Image from gallery`
+                })
+            }
+          
+
+            await transaction.commit();
+            sendSuccess(req, res, 201);
+        } catch (err) {
+            transaction.rollback();
+
+            for(const photo of filesUpload){
+                const filePath = `${uploadPath}/${photo.filename}`;
+                deleteFile(filePath);
+            }
+
+            if (err instanceof z.ZodError) {
+                return sendError(req, res, 400, generateZodErrorString(err));
+            }
+            sendError(req, res, 500);
+        }
+    }
+);
+router.post(
     apiUrlBuilderV1.createUrlAdd(resource),
     upload.single("photo"),
     async (req, res) => {

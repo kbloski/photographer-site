@@ -1,49 +1,3 @@
-TODO - 
-AUTHORIZE URL IN DATABASE
-
-1. Tabela: users (dla administratora/fotografa)
-id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator użytkownika.
-username (VARCHAR(50), -- UNIQUE --) — nazwa użytkownika do logowania.
-password (VARCHAR(255)) — hasło użytkownika, najlepiej w formie hasza.
-email (VARCHAR(100), -- UNIQUE --) — adres e-mail użytkownika.
-created_at (DATETIME) — data i czas utworzenia konta.
-2. Tabela: albums (portfolio fotografa)
-id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator albumu.
-name (VARCHAR(100)) — nazwa albumu (np. "Śluby", "Portrety").
-description (TEXT) — opcjonalny opis albumu.
-created_at (DATETIME) — data utworzenia albumu.
-updated_at (DATETIME) — data ostatniej aktualizacji albumu.
-3. Tabela: photos (zdjęcia w portfolio)
-id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator zdjęcia.
-album_id (INT, FOREIGN KEY) — identyfikator albumu, do którego należy zdjęcie (powiązanie z tabelą albums).
-title (VARCHAR(100)) — opcjonalny tytuł zdjęcia.
-description (TEXT) — opcjonalny opis zdjęcia.
-url (VARCHAR(255)) — ścieżka do zdjęcia na serwerze lub w chmurze.
-created_at (DATETIME) — data dodania zdjęcia.
-updated_at (DATETIME) — data ostatniej aktualizacji zdjęcia.
-4. Tabela: services (usługi fotograficzne)
-id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator usługi.
-name (VARCHAR(100)) — nazwa usługi (np. "Fotografia ślubna").
-description (TEXT) — opis usługi.
-price (DECIMAL(10, 2)) — cena usługi.
-created_at (DATETIME) — data utworzenia wpisu usługi.
-updated_at (DATETIME) — data ostatniej aktualizacji wpisu.
-5. Tabela: clients (klienci)
-id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator klienta.
-name (VARCHAR(100)) — imię i nazwisko klienta.
-email (VARCHAR(100)) — adres e-mail klienta.
-phone (VARCHAR(20)) — numer telefonu klienta.
-password (VARCHAR(255)) — hasło do prywatnych galerii (opcjonalnie).
-created_at (DATETIME) — data utworzenia konta klienta.
-
-8. Tabela: messages (wiadomości z formularza kontaktowego)
-id (INT, PRIMARY KEY, AUTO_INCREMENT) — unikalny identyfikator wiadomości.
-name (VARCHAR(100)) — imię i nazwisko nadawcy.
-email (VARCHAR(100)) — adres e-mail nadawcy.
-subject (VARCHAR(100)) — temat wiadomości.
-message (TEXT) — treść wiadomości.
-created_at (DATETIME) — data otrzymania wiadomości.
-status (ENUM('new', 'read', 'archived')) — status wiadomości (domyślnie 'new').
 
 // Maybe in the feature
 6. Tabela: client_galleries (prywatne galerie klientów)
@@ -59,6 +13,10 @@ gallery_id (INT, FOREIGN KEY) — identyfikator galerii, do której należy zdj�
 url (VARCHAR(255)) — ścieżka do zdjęcia na serwerze lub w chmurze.
 title (VARCHAR(100)) — opcjonalny tytuł zdjęcia.
 created_at (DATETIME) — data dodania zdjęcia.
+
+
+
+
 
 ----------------------------------- ADMIN PANEL ------------------------------------------------
 Jeśli chcesz stworzyć bardzo prostą wersję panelu administracyjnego dla fotografa, możesz skupić się na podstawowych funkcjach, które umożliwią efektywne zarządzanie stroną internetową, bez nadmiaru zaawansowanych opcji. Oto uproszczona wersja panelu administracyjnego:
