@@ -12,7 +12,11 @@
 
     "backend:start" : "cd packages/server-backend-api && npm run start",
     "backend:build" : "cd packages/server-backend-api && npm run build && cd ../shared && npm run build",
-    "backend:dev" : "cd packages/server-backend-api && npm run dev"
+    "backend:dev" : "cd packages/server-backend-api && npm run dev",
+
+    "frontend:start" : "cd packages/frontend-app-nextjs && npm run start",
+    "frontend:build" : "cd packages/frontend-app-nextjs && npm run build && cd ../shared && npm run build",
+    "frontend:dev" : "cd packages/frontend-app-nextjs && npm run dev"
   },
 
   "devDependencies": {
