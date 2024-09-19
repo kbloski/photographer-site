@@ -4,7 +4,7 @@ import { sendError, sendSuccess } from "../utils/responseUtils";
 import { ServiceType } from "shared/src/types/ServiceType";
 import { serviceController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
-import { ServiceSchema } from "../schemas/ServiceSchema";
+import { ServiceSchema } from "shared/src/schemas/ServiceSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 

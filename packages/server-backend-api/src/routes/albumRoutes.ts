@@ -6,7 +6,7 @@ import { albumController, photoController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
-import { AlbumSchema } from "../schemas/AlbumSchema";
+import { AlbumSchema } from "shared/src/schemas/AlbumSchema";
 import { sequelize } from "../utils/db";
 
 const router = express.Router();

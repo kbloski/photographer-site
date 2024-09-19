@@ -3,7 +3,7 @@ import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { sendError, sendSuccess } from "../utils/responseUtils";
 import { userController } from "../controllers/controllers";
 import { UserType } from "shared/src/types/UserType";
-import { UserSchema } from "../schemas/UserSchema";
+import { UserSchema } from "shared/src/schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { isNumberString } from "../utils/validation";

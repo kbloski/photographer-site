@@ -10,7 +10,7 @@ import { FileUploadType } from "../types/FileUploadType";
 import path from "path";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
-import { PhotoSchema } from "../schemas/PhotoSchema";
+import { PhotoSchema } from "shared/src/schemas/PhotoSchema";
 
 const router = express.Router();
 const resource = "photo";

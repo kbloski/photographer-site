@@ -10,7 +10,7 @@ import {
 import { isNumberString } from "../utils/validation";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { z } from "zod";
-import { MessageSchema } from "../schemas/MessageSchema";
+import { MessageSchema } from "shared/src/schemas/MessageSchema";
 
 const router = express.Router();
 const resource = "message";

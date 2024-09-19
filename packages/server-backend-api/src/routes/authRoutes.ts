@@ -1,6 +1,6 @@
 import express from "express";
 import { sendError, sendSuccess } from "../utils/responseUtils";
-import { UserSchema } from "../schemas/UserSchema";
+import { UserSchema } from "shared/src/schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { userController } from "../controllers/controllers";
