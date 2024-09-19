@@ -1,9 +1,9 @@
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <button className="btn btn-secondary">Name </button>
+    <div className={styles.page+' '+ 'p-2'}>
+      
     </div>
   );
 }
