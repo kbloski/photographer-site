@@ -1,3 +1,3 @@
 export const commonMetadata = {
-    title: "Photograper"
+    title: "PhotoSide"
  }

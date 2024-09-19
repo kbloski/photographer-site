@@ -4,6 +4,7 @@ import "./globals.css";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from "react";
+import { Header } from "../common/components/Header/Header";
 
 export default function RootLayout({
   children,
@@ -17,7 +18,8 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body >
+        <Header />
         {children}
       </body>
     </html>
