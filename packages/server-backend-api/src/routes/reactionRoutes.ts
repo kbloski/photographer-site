@@ -7,7 +7,7 @@ import {
     photoController,
     reactionController,
 } from "../controllers/controllers";
-import { ReactionEmotions } from "shared/src/types/ReactionType";
+import { ReactionEmotions, ReactionType } from "shared/src/types/ReactionType";
 
 const router = express.Router();
 const resource = "reaction";
@@ -65,77 +65,40 @@ router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
     }
 });
 
-// router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
-//     try {
-//         const { photoId, albumId, reaction } = req.query;
+router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!isNumberString(id)) return sendError(req, res, 400, "id: bad id");
 
-//         if (
-//             !reaction ||
-//             !Object.values(ReactionEmotions).includes(Number(reaction))
-//         )
-//             return sendError(
-//                 req,
-//                 res,
-//                 400,
-//                 "Need query param reaction type number"
-//             );
+        const updateData: Partial<ReactionType> = req.body;
+        const reactionDb = await reactionController.getById(Number(id));
+        if (!reactionDb) return sendError(req, res, 404);
 
-//         if (
-//             (!photoId && !albumId) ||
-//             (photoId && !isNumberString(photoId as string)) ||
-//             (albumId && !isNumberString(albumId as string))
-//         )
-//             return sendError(
-//                 req,
-//                 res,
-//                 400,
-//                 "Param query (photoId or albumId) must be number"
-//             );
+        if (req.user) updateData.user_id = req.user.id;
 
-//         if (photoId) {
-//             const photoDb = await photoController.getById(Number(photoId));
-//             if (!photoDb)
-//                 return sendError(req, res, 404, "Not found photo in database");
-//         } else if (albumId) {
-//             const albumDb = await albumController.getById(Number(albumId));
-//             if (!albumDb)
-//                 return sendError(req, res, 404, "Not found album in database");
-//         }
+        const updated = await reactionController.updateById(
+            Number(id),{
+                reaction: updateData.reaction
+            } as Partial<ReactionType>
+        );
 
-//         const reactionOption = Number(reaction) as ReactionEmotions;
-//         const reactionDb = await reactionController.create({
-//             reaction: reactionOption,
-//             user_id: Number(req.user?.id) ?? undefined,
-//             album_id: Number(albumId) ?? undefined,
-//             photo_id: Number(photoId) ?? undefined,
-//         });
+        sendSuccess(req, res, 204)
+    } catch (err) {
+        sendError(req, res, 500);
+    }
+});
 
-//         sendSuccess(req, res, 200, { reaction: reactionDb });
-//     } catch (err) {
-//         console.error(err);
-//         sendError(req, res);
-//     }
-// });
+router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!isNumberString(id)) return sendError(req, res, 400, "id: bad id");
 
-// router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
-//     // const { id } = req.params;
-//     // if (!isNumberString(id)) return sendError(req, res, 400, "id: bad id");
-//     // delete req.body.id;
-//     // const albumUpdate: Omit<AlbumType, "id"> = req.body;
-//     // AlbumSchema.partial().parse(albumUpdate);
-//     // const update = await albumController.updateById(Number(id), albumUpdate);
-//     // sendSuccess(req, res, 204);
-// });
+        await reactionController.deleteById(Number(id));
 
-// router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
-//     // try {
-//     //     const { id } = req.params;
-//     //     if (!isNumberString(id)) return sendError(req, res, 400, "id: bad id");
-//     //     await albumController.deleteById(Number(id));
-//     //     sendSuccess(req, res, 204);
-//     // } catch (err) {
-//     //     sendError(req, res);
-//     // }
-// });
+        sendSuccess(req, res, 204);
+    } catch (err) {
+        sendError(req, res);
+    }
+});
 
 export default router;
