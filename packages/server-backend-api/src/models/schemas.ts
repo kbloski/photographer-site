@@ -2,7 +2,7 @@ import { sequelize } from "../utils/db";
 import { Album } from "./AlbumModel";
 import { Message } from "./MessagesModel";
 import { Photo } from "./PhotoModel";
-import { Reaction } from "./Reactions";
+import { Reaction } from "./ReactionModel";
 import { Service } from "./ServiceModel";
 import { User } from "./UserModel";
 
@@ -54,6 +54,9 @@ Reaction.belongsTo(User, {
     foreignKey: "user_id",
 });
 
-sequelize.sync();
+export function syncDatabase(){
+    sequelize.sync();
+    console.log('Database Synchronization')
+}
 
-export { Album, Message, Photo, Service, User };
+export { Album, Message, Photo, Service, User, Reaction };

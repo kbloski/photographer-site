@@ -3,8 +3,12 @@
 import app from "./app";
 import { API_PORT } from "./config";
 import registerRoutes from "./routes/routes";
+import {syncDatabase} from './models/schemas';
+
 
 const PORT = API_PORT || 3010;
+
+syncDatabase();
 
 registerRoutes(app);
 

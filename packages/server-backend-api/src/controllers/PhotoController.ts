@@ -2,7 +2,7 @@ import { Photo } from "../models/PhotoModel";
 import { PhotoType } from "shared/src/types/PhotoType";
 import { AbstractCrudController } from "./AbstrctCrudController";
 import { sequelize } from "../utils/db";
-import { photoController, reactionController } from "./controllers";
+import {  reactionController } from "./controllers";
 
 export class PhotoController extends AbstractCrudController<Photo> {
     constructor() {

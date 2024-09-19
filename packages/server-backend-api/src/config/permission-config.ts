@@ -30,8 +30,15 @@ export const accessPermissions: PermissionType[] = [
             { resource: "/api/v1/user/all", methods: ["get"] },
             { resource: "/api/login", methods: ["post"] },
             { resource: "/", methods: ["get"] },
-            // { resource: '/api/v1/photo/add', methods: ['post']}
-            // { resource: /^\/api\/v1\/photo\/(\d+)$/, methods: ['patch']}
+            {
+                resource: '/api/v1/reaction/add',
+                methods: ["post"],
+            }, 
+            {
+                resource: '/api/v1/reaction/all',
+                methods: ["get"],
+            }, 
+        
         ],
     },
 ];
