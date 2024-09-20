@@ -38,6 +38,10 @@ export const accessPermissions: PermissionType[] = [
                 resource: '/api/v1/reaction/all',
                 methods: ["get"],
             }, 
+            {
+                resource: '/api/login',
+                methods: ["post"],
+            }, 
         
         ],
     },

@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import { UserType } from "shared/src/types/UserType";
-import { TokenType } from "shared/src/types/TokenType";
+import { TokenValidationResult } from "shared/src/types/TokenType";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,7 +20,7 @@ class WebTokenManager {
         return token;
     }
 
-    verifyWebToken(token: string): TokenType {
+    verifyWebToken(token: string): TokenValidationResult {
         if (!token) return { valid: false };
 
         try {

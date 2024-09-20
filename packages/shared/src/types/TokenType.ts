@@ -1,10 +1,8 @@
 import { UserType } from "./UserType";
 
-interface TokenInterfejs {
+export type TokenValidationResult = {
     valid: boolean;
     decoded?: UserType;
     error?: string;
     details?: string;
 }
-
-export type TokenType = TokenInterfejs;
