@@ -5,7 +5,7 @@ export function Footer(){
 
     return (
         <footer className="container bg-light p-4">
-            <div className="row">
+            <div className="row d-block d-md-flex">
                 <div className="col-6">
                     <ul className="breadcrumb">
                         <li className="breadcrumb-item">

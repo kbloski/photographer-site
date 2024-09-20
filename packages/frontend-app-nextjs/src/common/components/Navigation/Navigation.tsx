@@ -1,8 +1,6 @@
 import Link from "next/link";
 
 export function Navigation(){
-
-
     return(
         <>
             <nav >
@@ -21,7 +19,7 @@ export function Navigation(){
                         <Link href="#" className="nav-link">Gallery</Link>
                     </li>
                     <li className="nav-item">
-                        <Link href="#" className="nav-link">Contact</Link>
+                        <Link href="#" className="nav-link">Contact&Support</Link>
                     </li>
                 </ul>
             </nav>

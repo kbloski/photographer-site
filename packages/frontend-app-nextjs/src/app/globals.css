@@ -4,13 +4,20 @@
 
 body {
   margin:0 auto;
-
+  
 }
-body .container  {
+
+.body-container  {
   max-width: 1200px;
+  box-shadow: 0 0 20px black;
 }
 
 a {
   text-decoration: none; 
   color: gray;
+}
+
+img {
+  width: 100%;
+  height: auto;
 }
