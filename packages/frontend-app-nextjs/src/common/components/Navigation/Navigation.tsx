@@ -8,7 +8,6 @@ export function Navigation(){
                     <li className="nav-item">
                         <Link href="#" className="nav-link">Home</Link>
                     </li>
-                   
                     <li className="nav-item">
                         <Link href="#" className="nav-link">Packages</Link>
                     </li>

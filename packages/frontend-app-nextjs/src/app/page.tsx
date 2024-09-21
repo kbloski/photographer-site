@@ -1,3 +1,4 @@
+import { AlbumListBlock } from "../common/components/AlbumListBlock/AlbumListBlock";
 import { Baner } from "../common/components/BanerBlock/BanerBlock";
 import { Information } from "../common/components/InformationBlock/InformationBlock";
 import { QuoteBlock } from "../common/components/QuoteBlock/QuoteBlock";
@@ -30,7 +31,7 @@ export default function Home() {
       <Baner images={ images } />
       <QuoteBlock />
       <Information />
-      
+      <AlbumListBlock />
     </div>
   );
 }

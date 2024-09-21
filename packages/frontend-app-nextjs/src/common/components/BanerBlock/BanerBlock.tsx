@@ -22,7 +22,7 @@ export function Baner({ images }: BannerProps) {
     }, []);
 
     return (
-        <div className="container p-2">
+        <div className="container pt-3">
             <div
                 id={carouselId}
                 className="carousel slide"
@@ -54,7 +54,7 @@ export function Baner({ images }: BannerProps) {
                             <Image
                                 src={value.src}
                                 alt="baner"
-                                sizes="(min-width: 800px) 300px, 680px"
+                                sizes="(min-width: 800px) 300px, 1200px"
                                 width={0}
                                 height={0}
                             />

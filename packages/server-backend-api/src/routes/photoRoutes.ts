@@ -48,8 +48,8 @@ router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
         );
         if (!photoDb) return sendError(req, res, 404);
 
-        res.status(200).sendFile(path.resolve(photoDb.url), (err) =>{
-            return sendError(req, res, 404)
+        res.sendFile(path.resolve(photoDb.url), (err) =>{
+            
         });
     } catch (err) {
         sendError(req, res, 500);

@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="container body-container">
+        <div className="container body-container p-3">
               <Header />
               {children}
               <Footer />

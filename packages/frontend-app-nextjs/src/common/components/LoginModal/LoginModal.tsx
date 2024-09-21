@@ -72,9 +72,8 @@ export function LoginModal() {
             })
             .then((data) => {
                 if (data) {
-                    const modalBody = document.getElementById('modal-body')
-                    if (modalBody) modalBody.innerHTML = 'Login success, close window'
                     webTokenManger.setLocalToken(data.token);
+                    alert('Zalogowano, możesz wyjść z panelu logowania');
                 }
             });
     }
