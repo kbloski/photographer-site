@@ -1,0 +1,18 @@
+.album-list-item {
+    aspect-ratio: 1 / 1;    
+
+    &:hover {
+        background: gray;
+        color: white;
+    }
+}
+
+.album-list-item-photo {
+    overflow: hidden;
+    max-height: 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: none;
+}

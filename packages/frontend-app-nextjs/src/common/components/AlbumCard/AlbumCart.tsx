@@ -1,19 +1,19 @@
 'use client'
 
-import style from './albumListItem.module.scss';
+import style from './albumCart.module.scss';
 import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { AlbumType } from 'shared/src/types/AlbumType';
-import { useFetch } from '../../../hooks/useFetch';
-import { createApiUrl } from '../../../api/apiUtils';
 import { PhotoType } from 'shared/src/types/PhotoType';
 import Link from 'next/link';
+import { useFetch } from '../../hooks/useFetch';
+import { createApiUrl } from '../../api/apiUtils';
 
-type AlbumListItemProps = {
+type AlbumCardPros = {
     album: AlbumType ;
 }
 
-export function AlbumListItem( { album } : AlbumListItemProps ) {
+export function AlbumCard( { album } : AlbumCardPros ) {
     const [srcImg, setSrcImg] = useState<string>();
     const fetchImages = useFetch(
         createApiUrl(`/api/v1/photo/list/for-album/${ album.id }`),
@@ -58,6 +58,9 @@ export function AlbumListItem( { album } : AlbumListItemProps ) {
                     <h3 className="card-title text-center p-1 pt-3">
                         {album.name}
                     </h3>
+                    <p className='card-content'>
+                        {album.description}
+                    </p>
                 </div>
             </div>
         </Link>

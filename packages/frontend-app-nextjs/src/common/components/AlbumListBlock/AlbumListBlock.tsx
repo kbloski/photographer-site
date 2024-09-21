@@ -15,7 +15,7 @@ export function AlbumListBlock() {
         <div className="container p-3">
             <div className="d-flex">
                 <h2 className="flex-grow-1">Chosen from my albums</h2>
-                <Link href="#">
+                <Link href="/album">
                     <h2>View more...</h2>
                 </Link>
             </div>

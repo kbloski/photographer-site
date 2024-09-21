@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from "react";
 import { Header } from "../common/components/Header/Header";
 import { Footer } from "../common/components/Footer/Footer";
+import style from './layout.module.scss';
 
 export default function RootLayout({
   children,
@@ -20,11 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="container body-container p-3">
-              <Header />
-              {children}
-              <Footer />
-        </div>
+          <div className="container body-container p-3">
+            <Header />
+              <div className={[
+                "container",
+                style.children
+              ].join(' ')}>
+                {children}
+              </div>
+            <Footer />
+          </div>
       </body>
     </html>
   );
