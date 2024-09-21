@@ -11,18 +11,27 @@ import path from "path";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { PhotoSchema } from "shared/src/schemas/PhotoSchema";
+import { Photo } from "../models/PhotoModel";
 
 const router = express.Router();
 const resource = "photo";
+
+function deletePhotoUrl( photoDb : Photo ){
+    const photoData : Partial<PhotoType> = photoDb.dataValues;
+    delete photoData.url;
+    return photoData;
+}
 
 router.get(
     apiUrlBuilderV1.createCustomUrl(`${resource}/list/all`),
     async (req, res) => {
         try {
-            const photosDb: PhotoType[] | null = await photoController.getAll();
-            if (!photosDb || ![].length) return sendError(req, res, 404);
+            const photosDb: Photo[] | null = await photoController.getAll();
+            if (!photosDb || !photosDb.length) return sendError(req, res, 404);
 
-            sendSuccess(req, res, 200, { photos: photosDb });
+            const dataToSend = photosDb.map( photo => deletePhotoUrl(photo) )
+
+            sendSuccess(req, res, 200, { photos: dataToSend });
         } catch (err) {
             sendError(req, res, 500);
         }
@@ -58,7 +67,9 @@ router.get(
             const photosDb = await photoController.getAllByAlbumId(Number(albumId));
             if (!photosDb) return sendError(req, res, 404);
 
-            sendSuccess(req, res, 200, { albumPhotos: photosDb });
+            const dataToSend = photosDb.map( photo => deletePhotoUrl(photo) )
+
+            sendSuccess(req, res, 200, { albumPhotos: dataToSend });
         } catch (err) {
             sendError(req, res, 500);
         }
