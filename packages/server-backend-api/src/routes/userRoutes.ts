@@ -7,16 +7,28 @@ import { UserSchema } from "shared/src/schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { isNumberString } from "../utils/validation";
+import { User } from "../models/UserModel";
 
 const router = express.Router();
 const resource = "user";
 
+function deletePassword( userDb : User ){
+    const userData : Partial<User> = userDb.dataValues;
+    delete userData.password;
+    return userData;
+}
+
 router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
     try {
-        const usersDb: UserType[] | null = await userController.getAll();
+        const usersDb: User[] | null = await userController.getAll();
 
         if (!usersDb || !usersDb.length) return sendError(req, res, 404);
-        sendSuccess(req, res, 200, { users: usersDb });
+
+        const usersToSend = usersDb.map( user => {
+            return deletePassword( user )
+        })
+
+        sendSuccess(req, res, 200, { users: usersToSend });
     } catch (err) {
         console.error(err);
         sendError(req, res);
@@ -30,8 +42,11 @@ router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
 
         const userDb = await userController.getById(Number(id));
         if (!userDb) sendError(req, res, 404);
+        
+        let userToSend;
+        if (userDb)  userToSend = deletePassword( userDb );
 
-        sendSuccess(req, res, 200, { user: userDb });
+        sendSuccess(req, res, 200, { user: userToSend });
     } catch (err) {
         console.error(err);
         sendError(req, res);

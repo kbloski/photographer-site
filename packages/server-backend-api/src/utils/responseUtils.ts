@@ -1,6 +1,5 @@
 import { Request } from "express";
 import { Response } from "express";
-import { SuccessResponse } from "../types/ResponseTypes";
 
 export async function sendError(
     req: Request,
@@ -60,11 +59,9 @@ export async function sendSuccess<T>(
     res: Response,
     statusCode: number,
     data?: object,
-    message?: string
+    // message?: string
 ): Promise<void> {
-    res.status(statusCode).json({
-        success: true,
-        ...data,
-        message
-    } as SuccessResponse<T>);
+    res.status(statusCode).json(
+        data
+    );
 }
