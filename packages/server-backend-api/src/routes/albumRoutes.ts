@@ -15,7 +15,6 @@ const resource = "album";
 router.get(apiUrlBuilderV1.createUrlAll(resource), async (req, res) => {
     try {
         const albumsDb: AlbumType[] | null = await albumController.getAll();
-        console.log( albumsDb );
 
         if (!albumsDb || !albumsDb.length ) return sendError(req, res, 404);
         sendSuccess(req, res, 200, { albums: albumsDb });

@@ -17,6 +17,14 @@ export class PhotoController extends AbstractCrudController<Photo> {
         return await Photo.findAll({ where: { album_id: albumId } });
     }
 
+    async getInRangeByAlbumId(albumId: number, offset: number = 0, limit: number = 10): Promise<Photo[]> {
+        return await Photo.findAll({ 
+            where: { album_id: albumId }, 
+            offset,
+            limit
+        });
+    }
+
     async updateById(id: number, data: Partial<Photo>): Promise<number> {
         return await super.updateById(id, data);
     }
