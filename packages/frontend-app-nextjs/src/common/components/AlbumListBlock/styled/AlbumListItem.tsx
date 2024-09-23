@@ -20,6 +20,7 @@ export function AlbumListItem( { album } : AlbumListItemProps ) {
         'get'
     )
     
+    
     useEffect( ()=>{
         if (!fetchImages.loading){
             const photoArr : PhotoType[] | null = fetchImages?.data.

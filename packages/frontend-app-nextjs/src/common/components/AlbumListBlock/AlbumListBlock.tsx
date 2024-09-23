@@ -5,14 +5,34 @@ import Link from "next/link";
 import { useFetch } from "../../hooks/useFetch";
 import { createApiUrl } from "../../api/apiUtils";
 import { AlbumType } from "shared/src/types/AlbumType";
+import { useEffect, useState } from "react";
+import { getRandomIndexFromArr } from "../../helpers/getRandomElement";
 
 export function AlbumListBlock() {
-    const fetchAlbum = useFetch(createApiUrl("/api/v1/album/all"), "get");
+    const fetchAlbum = useFetch(createApiUrl("/api/v1/album/all"), {
+        method: "get"
+    });
+    const [albums, setAlbums] = useState<AlbumType[]>([]);
+    
+    useEffect( ()=>{
+        const albumsFetch : AlbumType[] = fetchAlbum?.data?.albums ?? [];
+        const albumsLength = albumsFetch.length;
 
-    const albums: AlbumType[] = fetchAlbum.data?.albums ?? undefined;
+        if ( albumsLength){
+            const mixedAlbums = [];
+            for( let i = 0; i < albumsLength; i++){
+                const randomIndex = getRandomIndexFromArr( albumsFetch );
+    
+                mixedAlbums.push( albumsFetch[randomIndex] );
+                albumsFetch.splice(randomIndex, 1);
+            }
+            setAlbums( mixedAlbums );
+        }
+
+    }, [ fetchAlbum.loading ])
 
     return (
-        <div className="container p-3">
+        <div className="container p-3 w-100">
             <div className="d-flex">
                 <h2 className="flex-grow-1">Chosen from my albums</h2>
                 <Link href="/album">
@@ -21,7 +41,7 @@ export function AlbumListBlock() {
             </div>
             <div className="row d-block d-sm-flex">
                 { !fetchAlbum.loading ? (
-                    albums ?
+                    albums?.length ?
                         albums.map((album, index) => {
                             if (index > 3) return;
                             return (

@@ -1,5 +1,6 @@
 .album-list-item {
-    aspect-ratio: 1 / 1;    
+    // aspect-ratio: 1 / 1;    
+    height: 100%;
 
     &:hover {
         background: gray;
@@ -9,7 +10,7 @@
 
 .album-list-item-photo {
     overflow: hidden;
-    max-height: 100%;
+    aspect-ratio: 1 / 1 ;
 }
 
 .link {

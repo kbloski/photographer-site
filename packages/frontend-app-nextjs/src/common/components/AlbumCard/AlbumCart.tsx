@@ -10,25 +10,40 @@ import { useFetch } from "../../hooks/useFetch";
 import { createApiUrl } from "../../api/apiUtils";
 import { useCheckLogged } from "../../hooks/useCheckLogged";
 import { webTokenManger } from "../../services/tokenManager";
+import { getRandomIndexFromArr } from "../../helpers/getRandomElement";
 
 type AlbumCardPros = {
+    refreshFetch?: () => void;
     album: AlbumType;
 };
 
-export function AlbumCard({ album }: AlbumCardPros) {
+export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
+    const [ cardId, setCardId] = useState<string>();
     const { logged, user } = useCheckLogged();
-    const [srcImg, setSrcImg] = useState<string>();
+    const [ srcImg, setSrcImg] = useState<string>();
     const fetchImages = useFetch(
         createApiUrl(`/api/v1/photo/list/for-album/${album.id}`),
-        "get"
+        {
+            method: "get"
+        }
     );
+
+    const prepareDescription = ( description : string, length : number = 20) =>{
+        const newDescription = description.slice(0, length );
+        return newDescription;
+    }
+
+    useEffect( ()=>{
+        const id = `albumCardItem${album.id}`;
+        setCardId( id );
+    }, [album.id])
 
     useEffect(() => {
         if (!fetchImages.loading) {
             const photoArr: PhotoType[] | null = fetchImages?.data.albumPhotos;
 
             if (photoArr?.length) {
-                const photoId = photoArr[0].id;
+                const photoId = getRandomIndexFromArr(photoArr);
                 setSrcImg(createApiUrl(`/api/v1/photo/${photoId}`));
             }
         }
@@ -43,13 +58,13 @@ export function AlbumCard({ album }: AlbumCardPros) {
             },
         }).then((response) => {
             if (!response.ok) throw new Error();
-        });
 
-        window.location.reload();
+            if (refreshFetch) refreshFetch();
+        });
     }
 
     return (
-        <div className="container p-3 ">
+        <div id={cardId} className="container p-3 ">
             {logged && user?.role === "admin" && (
                 <button
                     className={"badge bg-danger"}
@@ -75,7 +90,12 @@ export function AlbumCard({ album }: AlbumCardPros) {
                     <h3 className="card-title text-center p-1 pt-3">
                         {album.name}
                     </h3>
-                    <p className="card-content">{album.description}</p>
+                    <div>
+                        <p className="card-content text-center p-2">{
+                            album.description &&
+                            prepareDescription( album.description ) + '...'
+                        }  </p>
+                    </div>
                 </div>
             </Link>
         </div>

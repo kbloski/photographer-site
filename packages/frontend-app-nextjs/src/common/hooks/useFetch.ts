@@ -4,15 +4,21 @@ type FetchType = {
     // eslint-disable-next-line
     data: any,
     loading: boolean,
-    error: string | null
+    error: string | null,
+    refresh: ()=> void
 }
+
+
 
 export const useFetch = <T>(
     url: string, 
-    method: string, 
-    headers?: Record<string, string>, 
-    body?: unknown
+    options  :{
+        method: string, 
+        headers?: Record<string, string>, 
+        body?: unknown
+    }
 ) : FetchType => {
+    const [ refresh, setRefresh] = useState<boolean>(false);
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -24,12 +30,13 @@ export const useFetch = <T>(
 
             try {
                 const response = await fetch(url, {
-                    method,
-                    headers,
-                    body: body ? JSON.stringify(body) : undefined, 
+                    method: options.method,
+                    headers: options.headers,
+                    body: options.body ? JSON.stringify(options.body) : undefined, 
                 });
 
                 if (!response.ok) {
+                    setData( null );
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
@@ -45,9 +52,12 @@ export const useFetch = <T>(
                 setLoading(false);
             }
         };
-
         fetchData();
-    }, [url, method, headers, body]);
+    }, [url, options.method, options.headers, options.body, refresh]);
 
-    return { data, loading, error };
+    function refreshToggle() {
+        setRefresh( prev => !prev );
+    } 
+
+    return { data, loading, error, refresh: refreshToggle };
 };

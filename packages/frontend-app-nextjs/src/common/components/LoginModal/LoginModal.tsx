@@ -1,51 +1,47 @@
 "use client";
 
-import { useState } from "react";
-import { UserType } from "shared/src/types/UserType";
+import { useEffect, useState } from "react";
 import { UserSchema } from "shared/src/schemas/UserSchema";
-import { handlerChange } from "../../hooks/useFormHandlers";
-import { generateZodErrorString } from "../../utils/zodErrorUtils";
 import { createApiUrl } from "../../api/apiUtils";
 import { webTokenManger } from "../../services/tokenManager";
-import { ZodError } from "zod";
 import { useCheckLogged } from "../../hooks/useCheckLogged";
+import { generateZodErrorString } from "../../utils/zodErrorUtils";
+import { ZodError } from "zod";
+import { manualDropModalBootstrap } from "../../helpers/bootstrapHelper";
 
 export function LoginModal() {
-    const {logged} = useCheckLogged();
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const { logged } = useCheckLogged();
+    const [modalId, setModalId] = useState<string>();
+    const [loginData, setLoginData] = useState({});
     const [message, setMessage] = useState<string>("");
 
-    function onChange(
-        event: React.ChangeEvent<HTMLInputElement>,
-        setStateFunction: unknown
-    ) {
-        handlerChange(event, setStateFunction);
+    useEffect(() => {
+        const id = `loginModal${Math.round(Math.random() * 1000)}`;
+        setModalId(id);
+    }, []);
+
+    function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const name = event.target.name;
         const value = event.target.value;
 
-        const userData: Omit<UserType, "username" | "id" | "role"> = {
-            email: event.target.name === "email" ? value : email,
-            password: event.target.name === "password" ? value : password,
-        };
+        setLoginData((prev) => {
+            const newLoginData: Record<string, string> = { ...prev };
+            newLoginData[name] = value;
 
-        let message = "";
+            try {
+                UserSchema.omit({ username: true }).parse(newLoginData);
+                setMessage("");
+            } catch (err) {
+                setMessage(generateZodErrorString(err as ZodError));
+            }
 
-        try {
-            UserSchema.omit({ username: true }).parse(userData);
-        } catch (err) {
-            message = generateZodErrorString(err as ZodError);
-        }
-
-        setMessage(message);
+            return newLoginData;
+        });
     }
 
     async function onSubmitAction(event: React.FormEvent) {
         event.preventDefault();
-        
-        const userData = {
-            email,
-            password,
-        };
+        const userData = loginData;
 
         await fetch(createApiUrl("/api/login"), {
             method: "POST",
@@ -56,46 +52,42 @@ export function LoginModal() {
             },
         })
             .then((response) => {
-                if (!response.ok) {
-                    setMessage(response.statusText);
-                    return;
-                }
-
+                if (!response.ok) throw new Error( response.statusText);
                 return response.json();
             })
             .then((data) => {
                 if (data) {
-                    webTokenManger.setLocalToken(data.token);
-                    alert('Zalogowano, możesz wyjść z panelu logowania');
-                }
-            });
+                    webTokenManger.setLocalToken(data.token)
+                    
+                    const modalElement = document.getElementById(String(modalId)) as HTMLElement;
+                    manualDropModalBootstrap(modalElement);
+                };
+            })
+            .catch( (err : Error)=>{ setMessage(err.message ) });
     }
 
     return (
         <div className="p-3">
-
-            { logged ? (
+            {logged ? (
                 <button
-                        className="btn btn-danger"
-                        onClick={ webTokenManger.deleteLocalToken }
-                    >
-                        Log out
-                    </button>
-                ) : (
-                    <button
-                        className="btn btn-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#loginModal"
-                    >
-                        Login
-                    </button>
-                ) 
-            }
-
+                    className="btn btn-danger"
+                    onClick={webTokenManger.deleteLocalToken}
+                >
+                    Log out
+                </button>
+            ) : (
+                <button
+                    className="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target={`#${modalId}`}
+                >
+                    Login
+                </button>
+            )}
 
             <div
                 className="modal fade"
-                id="loginModal"
+                id={modalId}
                 data-bs-backdrop="static"
             >
                 <div className="modal-dialog">
@@ -128,9 +120,7 @@ export function LoginModal() {
                                     className="form-control"
                                     name="email"
                                     id="emailControl"
-                                    onChange={(event) =>
-                                        onChange(event, setEmail)
-                                    }
+                                    onChange={onChange}
                                 />
 
                                 <label
@@ -144,9 +134,7 @@ export function LoginModal() {
                                     className="form-control"
                                     id="passwordControl"
                                     name="password"
-                                    onChange={(event) =>
-                                        onChange(event, setPassword)
-                                    }
+                                    onChange={onChange}
                                 ></input>
                                 <div className="p-2 d-flex justify-content-end">
                                     <button className="btn btn-secondary disabled">
@@ -161,8 +149,6 @@ export function LoginModal() {
                                 </div>
                             </form>
                         </div>
-                        {/* <div className="modal-footer">
-                        </div> */}
                     </div>
                 </div>
             </div>

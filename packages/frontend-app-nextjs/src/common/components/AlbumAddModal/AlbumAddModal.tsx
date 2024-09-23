@@ -4,8 +4,13 @@ import { generateZodErrorString } from "../../utils/zodErrorUtils";
 import {  ZodError } from "zod";
 import { createApiUrl } from "../../api/apiUtils";
 import { webTokenManger } from "../../services/tokenManager";
+import { manualDropModalBootstrap } from "../../helpers/bootstrapHelper";
 
-export function AlbumAddModal() {
+type AlbumAddModalProps = {
+    refreshFetch?: () => void
+}
+
+export function AlbumAddModal( { refreshFetch } : AlbumAddModalProps) {
     const [modalId, setModalId] = useState<string>();
     const [albumData, setAlbumData] = useState({});
     const [errorMessage, setErrorMsg] = useState<string>();
@@ -49,6 +54,10 @@ export function AlbumAddModal() {
         ).then(
             response => {
                 if (!response.ok) throw new Error();
+                if (refreshFetch) refreshFetch();
+
+                const modalElement = document.getElementById( String(modalId ))
+                if (modalElement) manualDropModalBootstrap( modalElement );
             }
         ).catch( 
            () => setErrorMsg( errorMessage )

@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 // import style from "./baner.module.scss";
+
 import { ImageType } from "../../types/ImageType";
 import { useEffect, useState } from "react";
 
@@ -70,16 +71,20 @@ export function Baner({ images }: BannerProps) {
                     href={`#${carouselId}`}
                     data-bs-slide="prev"
                 >
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span
+                        className="carousel-control-prev-icon"
+                        aria-hidden="true"
+                    ></span>
                     <span className="visually-hidden">Previous</span>
                 </a>
                 <a
                     className="carousel-control-next"
                     href={`#${carouselId}`}
-                    data-bs-slide='next'
+                    data-bs-slide="next"
                 >
-                    <span className="carousel-control-next-icon"
-                        aria-hidden='true'
+                    <span
+                        className="carousel-control-next-icon"
+                        aria-hidden="true"
                     ></span>
                     <span className="visually-hidden">Next</span>
                 </a>
