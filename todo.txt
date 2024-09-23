@@ -1,3 +1,5 @@
+todo addAlbum fetch and refactor code
+
 
 // Maybe in the feature
 6. Tabela: client_galleries (prywatne galerie klientów)

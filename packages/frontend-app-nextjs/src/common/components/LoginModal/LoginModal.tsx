@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UserType } from "shared/src/types/UserType";
 import { UserSchema } from "shared/src/schemas/UserSchema";
 import { handlerChange } from "../../hooks/useFormHandlers";
@@ -8,20 +8,13 @@ import { generateZodErrorString } from "../../utils/zodErrorUtils";
 import { createApiUrl } from "../../api/apiUtils";
 import { webTokenManger } from "../../services/tokenManager";
 import { ZodError } from "zod";
+import { useCheckLogged } from "../../hooks/useCheckLogged";
 
 export function LoginModal() {
-    const [token, setToken] = useState<string>("");
+    const {logged} = useCheckLogged();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setToken(webTokenManger.getLocalToken());
-        }, 100);
-
-        return () => clearInterval(interval);
-    });
 
     function onChange(
         event: React.ChangeEvent<HTMLInputElement>,
@@ -81,7 +74,7 @@ export function LoginModal() {
     return (
         <div className="p-3">
 
-            { token ? (
+            { logged ? (
                 <button
                         className="btn btn-danger"
                         onClick={ webTokenManger.deleteLocalToken }
@@ -156,7 +149,7 @@ export function LoginModal() {
                                     }
                                 ></input>
                                 <div className="p-2 d-flex justify-content-end">
-                                    <button className="btn btn-secondary">
+                                    <button className="btn btn-secondary disabled">
                                         Register
                                     </button>
                                     <button
