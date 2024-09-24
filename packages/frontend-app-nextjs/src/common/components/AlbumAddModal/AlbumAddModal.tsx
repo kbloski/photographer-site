@@ -16,7 +16,7 @@ export function AlbumAddModal( { refreshFetch } : AlbumAddModalProps) {
     const [errorMessage, setErrorMsg] = useState<string>();
 
     useState(() => {
-        const modalId = `modalAlbum${Math.round(Math.random() * 1000)}`;
+        const modalId = `modalAlbumAdd${Math.round(Math.random() * 1000)}`;
         setModalId(modalId);
     });
 
