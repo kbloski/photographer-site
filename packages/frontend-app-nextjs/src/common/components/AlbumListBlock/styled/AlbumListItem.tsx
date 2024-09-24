@@ -17,7 +17,9 @@ export function AlbumListItem( { album } : AlbumListItemProps ) {
     const [srcImg, setSrcImg] = useState<string>();
     const fetchImages = useFetch(
         createApiUrl(`/api/v1/photo/list/for-album/${ album.id }`),
-        'get'
+        {
+            method: 'GET'
+        }
     )
     
     

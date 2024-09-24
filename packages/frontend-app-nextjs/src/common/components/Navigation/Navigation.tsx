@@ -12,10 +12,7 @@ export function Navigation(){
                         <Link href="/album" className="nav-link">Gallery</Link>
                     </li>
                     <li className="nav-item">
-                        <Link href="#" className="nav-link">Booking</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link href="#" className="nav-link">Contact&Support</Link>
+                        <Link href="/contact" className="nav-link">Contact&Support</Link>
                     </li>
                 </ul>
             </nav>

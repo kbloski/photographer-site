@@ -9,13 +9,13 @@ export function Footer(){
                 <div className="col-6">
                     <ul className="breadcrumb">
                         <li className="breadcrumb-item">
-                            <Link href='#'>About Me</Link>
+                            <Link href='/about-me'>About Me</Link>
                         </li>
                         <li className="breadcrumb-item">
-                            <Link href='#'>FaQ</Link>
+                            <Link href='/faq'>FaQ</Link>
                         </li>
                         <li className="breadcrumb-item">
-                            <Link href='#'>Contact</Link>
+                            <Link href='/contact'>Contact</Link>
                         </li>
                     </ul>
                 </div>

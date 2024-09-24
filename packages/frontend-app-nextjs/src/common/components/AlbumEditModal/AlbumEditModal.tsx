@@ -11,10 +11,10 @@ import { manualDropModalBootstrap } from "../../helpers/bootstrapHelper";
 
 type AlbumEditModalProps = {
     albumId: number;
-    fetchRefresh?: ()=> void
+    successFetch?: ()=> void
 };
 
-export const AlbumEditModal: NextPage<AlbumEditModalProps> = ({ albumId, fetchRefresh }) => {
+export const AlbumEditModal: NextPage<AlbumEditModalProps> = ({ albumId, successFetch }) => {
     const [modalId, setModalId] = useState<string>();
     const [albumData, setAlbumData] = useState<Partial<AlbumType>>({});
     const [validMessage, setValidMessage] = useState<string>();
@@ -72,7 +72,7 @@ export const AlbumEditModal: NextPage<AlbumEditModalProps> = ({ albumId, fetchRe
         ).then( response => {
             if (!response.ok) throw new Error( response.statusText );
 
-            if (fetchRefresh) fetchRefresh();
+            if (successFetch) successFetch();
 
             const modalElement = document.getElementById( String(modalId) );
             if (modalElement) manualDropModalBootstrap( modalElement )

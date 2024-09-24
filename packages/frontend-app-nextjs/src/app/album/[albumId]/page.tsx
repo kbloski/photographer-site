@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { NextPage } from "next/types";
 import { createApiUrl } from "packages/frontend-app-nextjs/src/common/api/apiUtils";
@@ -7,6 +8,7 @@ import { AlbumEditModal } from "packages/frontend-app-nextjs/src/common/componen
 import { AlbumPhotoUploadBlock } from "packages/frontend-app-nextjs/src/common/components/AlbumPhotoUploadBlock/AlbumPhotoUploadBlock";
 import { useCheckLogged } from "packages/frontend-app-nextjs/src/common/hooks/useCheckLogged";
 import { useFetch } from "packages/frontend-app-nextjs/src/common/hooks/useFetch";
+import { webTokenManger } from "packages/frontend-app-nextjs/src/common/services/tokenManager";
 import { useEffect, useState } from "react";
 import { AlbumType } from "shared/src/types/AlbumType";
 import { PhotoType } from "shared/src/types/PhotoType";
@@ -45,6 +47,22 @@ const AlbumPage: NextPage<AlbumPageProps> = ({ params }) => {
         }
     }, [fetchAlbum.data, fetchAlbum.loading]);
 
+    function deletePhoto(id: number) {
+        fetch(
+            createApiUrl(`/api/v1/photo/${id}`),
+            {
+                method: "DELETE",
+                headers: {
+                    'authorization' : `Bearer ${webTokenManger.getLocalToken()}`
+                }
+            }
+        ).then( response => {
+            if (!response.ok) throw new Error(response.statusText);
+            fetchPhotos.refresh();
+        })
+        .catch( err => null)
+    }
+
     return (
         <div className="container p-2">
             <div className="card">
@@ -68,23 +86,61 @@ const AlbumPage: NextPage<AlbumPageProps> = ({ params }) => {
                                     </p>
                                 </div>
                             )}
-                            {   logged && user?.role === 'admin' &&
-                                <AlbumEditModal albumId={Number(albumId)} fetchRefresh={fetchAlbum.refresh}/>
-                            }
+                            {logged && user?.role === "admin" && (
+                                <AlbumEditModal
+                                    albumId={Number(albumId)}
+                                    successFetch={fetchAlbum.refresh}
+                                />
+                            )}
                         </>
                     )}
                 </div>
             </div>
-            { logged && user?.role === 'admin' && <AlbumPhotoUploadBlock albumId={ Number(albumId)} />}
+            {logged && user?.role === "admin" && (
+                <AlbumPhotoUploadBlock
+                    albumId={Number(albumId)}
+                    successFetch={fetchPhotos.refresh}
+                />
+            )}
             <div>
+                <h1>Photos</h1>
                 {fetchPhotos.loading ? (
-                    <h1>Ładowanie</h1>
+                    <h1>
+                        <span className="spinner-border text-secondary"></span>Loading...
+                    </h1>
                 ) : photos?.length ? (
                     <>
-                        <h1>Zdjęcia</h1>
-                        {photos?.map((photo) => (
-                            <div key={photo.id}>Moje zdjęcia</div>
-                        ))}
+                        <section className="container d-flex p-2 row">
+                            {photos?.map((photo) => (
+                                <div
+                                    key={photo.id}
+                                    className="col-12 col-sm-6 col-md-4 col-lg-3"
+                                >
+                                    {   logged && user?.role === 'admin' &&
+                                        <button
+                                            className="badge bg-danger position-absolute"
+                                            onClick={() =>
+                                                deletePhoto(Number(photo.id))
+                                            }
+                                        >
+                                            Delete
+                                        </button>
+                                    }
+                                    <div className="p-2">
+                                        <Image
+                                            className="p-2 bg-secondary"
+                                            src={createApiUrl(
+                                                `/api/v1/photo/${photo.id}`
+                                            )}
+                                            alt=""
+                                            sizes="min-width (100px) 100px, 300px"
+                                            width={0}
+                                            height={0}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </section>
                     </>
                 ) : (
                     <h1 className="text-secondary p-2">
