@@ -43,6 +43,9 @@ router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
         delete req.body.id;
         const albumData: Omit<AlbumType, "id"> = req.body;
 
+        if (!req.user) return sendError(req, res, 401);
+        albumData.user_id = req.user.id;
+
         AlbumSchema.parse(albumData);
 
         const albumDb = await albumController.create(albumData);

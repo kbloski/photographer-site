@@ -21,7 +21,7 @@ export const accessPermissions: PermissionType[] = [
             { resource: /^\/api\/v1\/album\/(\d+)$/, methods: ["get"] }, // "/api/v1/album/:id"
             { resource: "/api/v1/album/all", methods: ["get"] },
             { resource: "/api/v1/photo/list/all", methods: ["get"] },
-            { resource: /^\/api\/v1\/photo\/(\d+)$/, methods: ["*"] }, // /api/v1/photo/:id
+            // { resource: /^\/api\/v1\/photo\/(\d+)$/, methods: ["*"] }, // /api/v1/photo/:id
             {
                 resource: /^\/api\/v1\/photo\/list\/for-album\/(\d+)$/, //"/api/v1/photo/list/for-album/:albumId"
                 methods: ["get"],
