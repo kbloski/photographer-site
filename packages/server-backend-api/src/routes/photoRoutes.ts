@@ -3,7 +3,7 @@ import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { deleteFile, upload, uploadPath } from "../utils/filesOperation";
 import { sendError, sendSuccess } from "../utils/responseUtils";
 import { PhotoType } from "shared/src/types/PhotoType";
-import { photoController, userController } from "../controllers/controllers";
+import { albumController, photoController, userController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
 import { sequelize } from "../utils/db";
 import { FileUploadType } from "../types/FileUploadType";
@@ -75,20 +75,33 @@ router.get(
 );
 
 router.post(
-    apiUrlBuilderV1.createCustomUrl(`${resource}/add/list`),
-    upload.array("images"),
+    apiUrlBuilderV1.createCustomUrl(`${resource}/add/list/for-album/:albumId`),
+    upload.array("images", 10),
     async (req, res) => {
         const filesUpload = (req.files ?? []) as FileUploadType[];
         const transaction = await sequelize.transaction();
 
         try {
-            if (filesUpload.length === 0) return sendError(req, res, 400, "The images was not sent in the variable 'images.' ");
+            const { albumId } = req.params;
+            if (!isNumberString(albumId)) {
+                return sendError(req, res, 400, "Bad album id - albumId must be number")
+            }
+            
+            const albumDb = await albumController.getById( Number(albumId) );
+            if (!albumDb){
+                return sendError(req, res, 404, "Not found album")
+            }
+
+            if (filesUpload.length === 0) {
+                return sendError(req, res, 400, "The images was not sent in the variable 'images.' ");
+            }
 
             for (const photo of filesUpload){
                 await photoController.create({
                     url: `${uploadPath}/${photo.filename}`,
                     title: photo.filename,
-                    description: `Image from gallery`
+                    description: `Image from gallery`,
+                    album_id: Number( albumId )
                 })
             }
           
@@ -103,49 +116,46 @@ router.post(
                 deleteFile(filePath);
             }
 
-            if (err instanceof z.ZodError) {
-                return sendError(req, res, 400, generateZodErrorString(err));
-            }
             sendError(req, res, 500);
         }
     }
 );
-router.post(
-    apiUrlBuilderV1.createUrlAdd(resource),
-    upload.single("photo"),
-    async (req, res) => {
-        const fileUpload = (req.file ?? {}) as FileUploadType;
-        const transaction = await sequelize.transaction();
 
-        try {
-            console.log( fileUpload )
-            if ( Object.keys(fileUpload).length === 0) return sendError(req, res, 400, "The photo was not sent in the variable 'photo.' ");
+// router.post(
+//     apiUrlBuilderV1.createUrlAdd(resource),
+//     upload.single("photo"),
+//     async (req, res) => {
+//         const fileUpload = (req.file ?? {}) as FileUploadType;
+//         const transaction = await sequelize.transaction();
 
-            const photoData = req.body;
-            PhotoSchema.partial().parse(photoData);
+//         try {
+//             if ( Object.keys(fileUpload).length === 0) return sendError(req, res, 400, "The photo was not sent in the variable 'photo.' ");
 
-            const photoDb = await photoController.create({
-                url: `${uploadPath}/${fileUpload.filename}`,
-                title: photoData?.title ?? fileUpload.filename,
-                description:
-                    photoData.description ??
-                    `About photo ${fileUpload.filename}`,
-            });
+//             const photoData = req.body;
+//             PhotoSchema.partial().parse(photoData);
 
-            await transaction.commit();
-            sendSuccess(req, res, 201);
-        } catch (err) {
-            const filePath = `${uploadPath}/${fileUpload.filename}`;
-            deleteFile(filePath);
+//             const photoDb = await photoController.create({
+//                 url: `${uploadPath}/${fileUpload.filename}`,
+//                 title: photoData?.title ?? fileUpload.filename,
+//                 description:
+//                     photoData.description ??
+//                     `About photo ${fileUpload.filename}`,
+//             });
 
-            transaction.rollback();
-            if (err instanceof z.ZodError) {
-                return sendError(req, res, 400, generateZodErrorString(err));
-            }
-            sendError(req, res, 500);
-        }
-    }
-);
+//             await transaction.commit();
+//             sendSuccess(req, res, 201);
+//         } catch (err) {
+//             const filePath = `${uploadPath}/${fileUpload.filename}`;
+//             deleteFile(filePath);
+
+//             transaction.rollback();
+//             if (err instanceof z.ZodError) {
+//                 return sendError(req, res, 400, generateZodErrorString(err));
+//             }
+//             sendError(req, res, 500);
+//         }
+//     }
+// );
 
 router.patch(
     apiUrlBuilderV1.createUrlWithId(resource),

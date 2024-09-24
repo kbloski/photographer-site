@@ -42,7 +42,7 @@ export const accessPermissions: PermissionType[] = [
                 resource: '/api/login',
                 methods: ["post"],
             }, 
-        
+            // { resource: '*', methods: ['*']}
         ],
     },
 ];

@@ -43,6 +43,8 @@ export async function sendError(
             statusMessage = 'Internal Server Error'
     }
     
+
+    
     const errMessage = `${statusMessage}: ${errorMessage ?? null}`
     res.statusMessage = errMessage ;
     res.status(errorCode).json(
@@ -51,7 +53,7 @@ export async function sendError(
             message: errMessage,
             errorCode
         }
-    )
+    ).end();
 }
 
 export async function sendSuccess<T>(
@@ -61,7 +63,8 @@ export async function sendSuccess<T>(
     data?: object,
     // message?: string
 ): Promise<void> {
-    res.status(statusCode).json(
+    res.status(statusCode)
+    .json(
         data
     );
 }
