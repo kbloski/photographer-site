@@ -43,7 +43,8 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
             const photoArr: PhotoType[] | null = fetchImages?.data.albumPhotos;
 
             if (photoArr?.length) {
-                const photoId = getRandomIndexFromArr(photoArr);
+                const randomId = getRandomIndexFromArr(photoArr);
+                const photoId = photoArr[randomId].id
                 setSrcImg(createApiUrl(`/api/v1/photo/${photoId}`));
             }
         }
