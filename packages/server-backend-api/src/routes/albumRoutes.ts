@@ -4,7 +4,7 @@ import { sendError, sendSuccess } from "../utils/responseUtils";
 import { AlbumType } from "shared/src/types/AlbumType";
 import { albumController, photoController } from "../controllers/controllers";
 import { isNumberString } from "../utils/validation";
-import { z } from "zod";
+import { z, ZodEffects, ZodError } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
 import { AlbumSchema } from "shared/src/schemas/AlbumSchema";
 import { sequelize } from "../utils/db";
@@ -58,15 +58,21 @@ router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
 });
 
 router.patch(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
-    const { id } = req.params;
-    if (!isNumberString(id)) return sendError(req, res, 400, "id: bad id");
-
-    delete req.body.id;
-    const albumUpdate: Omit<AlbumType, "id"> = req.body;
-    AlbumSchema.partial().parse(albumUpdate);
-
-    const update = await albumController.updateById(Number(id), albumUpdate);
-    sendSuccess(req, res, 204);
+    try {
+        const { id } = req.params;
+        if (!isNumberString(id)) return sendError(req, res, 400, "id: bad id");
+    
+        delete req.body.id;
+        const albumUpdate: Omit<AlbumType, "id"> = req.body;
+        AlbumSchema.partial().parse(albumUpdate);
+    
+        const update = await albumController.updateById(Number(id), albumUpdate);
+        sendSuccess(req, res, 204);
+    } catch (err){
+        if (err instanceof ZodError) return sendError(req, res, 400, generateZodErrorString(err));
+        
+        sendError(req, res, 500)
+    }
 });
 
 router.delete(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
