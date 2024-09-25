@@ -44,6 +44,9 @@ Message.init(
         subject: {
             type: DataTypes.STRING(124),
             allowNull: false,
+            validate: {
+                len: [3, 124]
+            }
         },
         message: {
             type: DataTypes.TEXT,
