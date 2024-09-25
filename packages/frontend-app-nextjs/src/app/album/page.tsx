@@ -22,7 +22,7 @@ export default function AlbumPage() {
         } else {
             setAlbums([]);
         } 
-    }, [ fetchAlbums.loading ])
+    }, [fetchAlbums.data?.albums])
 
     return (
         <div className="container p-3">
@@ -37,22 +37,26 @@ export default function AlbumPage() {
                             <span className="spinner-border"></span>
                             Ładowanie
                         </div>
-                    ) : albums ? (
-                        albums.map((album, index) => {
-                            return (
-                                <div
-                                    key={index}
-                                    className="col-12 col-sm-6 col-md-4 col-lg-3 "
-                                >
-                                    <AlbumCard album={album} refreshFetch={ () => fetchAlbums.refresh() } />
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <h1 className="text-center text-secondary">
-                            Brak albumów
-                        </h1>
-                    )}
+                    ) : <>
+                        {
+                            albums?.length ? (
+                            albums.map((album, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className="col-12 col-sm-6 col-md-4 col-lg-3 "
+                                    >
+                                        <AlbumCard album={album} refreshFetch={ () => fetchAlbums.refresh() } />
+                                    </div>
+                                );
+                            })
+                            ) : (
+                                <h1 className="text-center text-secondary">
+                                    Brak albumów
+                                </h1>
+                            )
+                        }</>
+                    }
                 </div>
             </div>
         </div>

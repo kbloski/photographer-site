@@ -1,18 +1,19 @@
-import { constactInfo } from '../../config';
+import { contactDetails } from '../../config';
 import style from './contact.module.scss';
 
 export function Contact(){
     return (
         <>
             <ul className="list-unstyled d-block">
-                {   constactInfo.phone &&
+                <h3>contactDetails</h3>
+                {   contactDetails.phone &&
                     <li className="list-item">
-                        <a href={`tel:${constactInfo.phone}`} className={style.link}>Tel: {constactInfo.phone}</a>
+                        Tel:<a href={`tel:${contactDetails.phone}`} className={style.link}> {contactDetails.phone}</a>
                     </li>
                 }
-                {   constactInfo.email &&
+                {   contactDetails.email &&
                     <li className="list-item">
-                        <a href={`mailto:${constactInfo.email}`} className={style.link}>Email: {constactInfo.email}</a>
+                        Email:<a href={`mailto:${contactDetails.email}`} className={style.link}> {contactDetails.email}</a>
                     </li>
                 }
             </ul>

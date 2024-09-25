@@ -26,7 +26,6 @@ export function Footer(){
                     </p>
                 </div>
                 <div className="col-3 p-2">
-                    <h4>Contact</h4>
                     <Contact />
                 </div>
             </div>

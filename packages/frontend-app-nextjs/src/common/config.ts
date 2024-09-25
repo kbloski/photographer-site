@@ -1,6 +1,7 @@
 const defaultApiUrl = 'http://localhost:3010';
 
-export const constactInfo = {
+export const contactDetails = {
+    userId: 1,
     phone: '123456789',
     email: 'support@example.com'
 };
