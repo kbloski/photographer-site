@@ -7,7 +7,7 @@ import {
     photoController,
     reactionController,
 } from "../controllers/controllers";
-import { ReactionEmotions, ReactionType } from "shared/src/types/ReactionType";
+import { Emotions, ReactionType } from "shared/src/types/ReactionType";
 
 const router = express.Router();
 const resource = "reaction";
@@ -125,7 +125,7 @@ router.post(apiUrlBuilderV1.createCustomUrl(resource), async (req, res) => {
         const reaction = req.body.reaction;
         if (!reaction)
             return sendError(req, res, 404, "Variable 'emotion' is undefined.");
-        if (!Object.values(ReactionEmotions).includes(Number(reaction)))
+        if (!Object.values(Emotions).includes(Number(reaction)))
             return sendError(req, res, 404, "Bad reaction type");
 
         // Check correct query

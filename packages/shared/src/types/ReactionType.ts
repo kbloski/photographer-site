@@ -1,27 +1,24 @@
-export enum ReactionEmotions {
+export enum Emotions {
     LIKE = 1,
     LOVE = 2,
     WOW = 3,
     HAHA = 4,
 }
 
-export function getReactionEnumValues(){
-    const values = Object.values(ReactionEmotions).filter( v => typeof v === 'number');
-    return values;
-}
-
-export function getReactionEnumKeys(){
-    const values = Object.values(ReactionEmotions).filter( v => typeof v === 'string');
-    return values;
-}
+export const EmotionsObject = {
+    'LIKE' : 1,
+    'LOVE' : 2,
+    'WOW'  : 3,
+    'HAHA' : 4
+} as const;
 
 export type ReactionType = {
     id?: number;
     reaction:
-        | ReactionEmotions.LIKE
-        | ReactionEmotions.LOVE
-        | ReactionEmotions.WOW
-        | ReactionEmotions.HAHA;
+        | Emotions.LIKE
+        | Emotions.LOVE
+        | Emotions.WOW
+        | Emotions.HAHA;
     user_id?: number;
     photo_id?: number;
     album_id?: number;

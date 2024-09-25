@@ -1,8 +1,8 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
-import { ReactionEmotions, ReactionType } from 'shared/src/types/ReactionType';
+import { Emotions, EmotionsObject, ReactionType } from 'shared/src/types/ReactionType';
 import { sequelize } from "../utils/db";
 
-const reactionArr = Object.values(ReactionEmotions);
+const reactionArr = Object.values(EmotionsObject);
 
 export class Reaction 
 extends Model<
@@ -10,7 +10,7 @@ extends Model<
     InferCreationAttributes<Reaction>
 > implements ReactionType {
     declare id: number | undefined;
-    declare reaction: ReactionEmotions;
+    declare reaction: Emotions;
     declare user_id: number | undefined;
     declare photo_id: number | undefined;
     declare album_id: number | undefined;
@@ -31,7 +31,7 @@ Reaction.init(
         reaction: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: ReactionEmotions.LIKE,
+            defaultValue: Emotions.LIKE,
             validate: {
                 isInt: true,
                 isIn: [reactionArr]
