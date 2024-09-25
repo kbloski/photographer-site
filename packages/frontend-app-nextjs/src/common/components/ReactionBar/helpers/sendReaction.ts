@@ -6,15 +6,19 @@ type sendReactionProps = {
     reaction: number;
     albumId?: number;
     photoId?: Number;
-    callbackSuccess?: () => void
+    fetchFinally?: () => void
 }
 
 export default function sendReaction(
-    { reaction, albumId, photoId, callbackSuccess} : sendReactionProps
+    { reaction, albumId, photoId, fetchFinally} : sendReactionProps
         
 ) {
-    if (!Object.values( EmotionsObject ).includes( reaction as any)){
-        console.error( 'Bad reaction type')
+    if (
+        !Object.values( EmotionsObject ).includes( reaction as any) ||
+        !webTokenManger.getLocalToken()
+    
+    ){
+        console.error( 'Bad reaction type or you dont login')
         return;
     } 
 
@@ -28,7 +32,10 @@ export default function sendReaction(
     })
     .then((response) => {
         if (!response.ok) throw new Error(response.statusText);
-        if (callbackSuccess) callbackSuccess();
+        
     })
-    .catch((err) => console.error(err.message));
+    .catch((err) => console.error(err.message))
+    .finally( () => {
+        if (fetchFinally) fetchFinally();
+    } )
 }

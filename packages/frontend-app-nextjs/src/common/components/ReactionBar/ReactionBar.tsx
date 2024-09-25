@@ -7,6 +7,7 @@ import { createApiUrl } from "../../api/apiUtils";
 import { webTokenManger } from "../../services/tokenManager";
 import sendReaction from "./helpers/sendReaction";
 import { Emotions, EmotionsObject, ReactionType } from "packages/shared/src/types/ReactionType";
+import { useCheckLogged } from "../../hooks/useCheckLogged";
 
 type ReactionBarProps = {
     albumId?: number;
@@ -60,7 +61,7 @@ export function ReactionBar({ albumId, photoId }: ReactionBarProps) {
                             reaction: emotionValue,
                             albumId,
                             photoId,
-                            callbackSuccess: () => {
+                            fetchFinally: () => {
                                 fetchReactions.refresh()
                                 fetchExistReaction.refresh()
                             }

@@ -61,9 +61,16 @@ export function LoginModal() {
                     
                     const modalElement = document.getElementById(String(modalId)) as HTMLElement;
                     manualDropModalBootstrap(modalElement);
+                    
+                    window.location.reload()
                 };
             })
-            .catch( (err : Error)=>{ setMessage(err.message ) });
+            .catch( (err : Error)=>{ setMessage(err.message ) })
+    }
+
+    function logOut(){
+        webTokenManger.deleteLocalToken();
+        window.location.reload();
     }
 
     return (
@@ -71,7 +78,7 @@ export function LoginModal() {
             {logged ? (
                 <button
                     className="btn btn-danger"
-                    onClick={webTokenManger.deleteLocalToken}
+                    onClick={ logOut }
                 >
                     Log out
                 </button>
