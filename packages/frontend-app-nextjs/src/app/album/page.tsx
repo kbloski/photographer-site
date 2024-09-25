@@ -10,19 +10,15 @@ import { useEffect, useState } from "react";
 
 export default function AlbumPage() {
     const { logged, user } = useCheckLogged();
-    const [albums, setAlbums] = useState<AlbumType[]>();
+    const [albums, setAlbums] = useState<AlbumType[]>([]);
     const fetchAlbums = useFetch(createApiUrl("/api/v1/album/all"), {
         method: "get",
     });
 
     useEffect(() => {
         const albums = fetchAlbums.data?.albums ?? undefined;
-        if (albums) {
-            setAlbums(albums);
-        } else {
-            setAlbums([]);
-        }
-    }, [fetchAlbums.data?.albums]);
+        if (albums) setAlbums(albums);
+    }, [fetchAlbums.data]);
 
     return (
         <div className="container p-3">

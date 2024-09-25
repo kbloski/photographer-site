@@ -36,7 +36,7 @@ export function ReactionBar({ albumId, photoId }: ReactionBarProps) {
     useEffect(() => {
         const reactinos = fetchReactions?.data?.reactions;
         if (reactinos) setReactions(reactinos);
-    }, [fetchReactions.loading, fetchReactions.data?.reactions]);
+    }, [fetchReactions.loading, fetchReactions.data]);
 
     useEffect(() => {
         const existUserReaction = fetchExistReaction?.data?.reaction;

@@ -28,7 +28,7 @@ export function AlbumListBlock() {
             }
             setAlbums(mixedAlbums);
         }
-    }, [fetchAlbum.loading, fetchAlbum.data.albums]);
+    }, [fetchAlbum.loading, fetchAlbum.data]);
 
     return (
         <div className="container p-3 w-100">
