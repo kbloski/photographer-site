@@ -26,6 +26,10 @@ export class ReactionController extends AbstractCrudController<Reaction> {
         return await Reaction.findAll( { where: { user_id: userId}})
     }
 
+    async findOneWhere(data: Partial<ReactionType>): Promise<Reaction | null> {
+        return await super.findOneWhere( data );
+    }
+
     async countByAlbumId(albumId: number) {
         const reactionArr = getReactionEmotionsValues();
 

@@ -28,6 +28,14 @@ export abstract class AbstractCrudController<T extends Model> {
         return await this.model.findByPk(id);
     }
 
+    async findOneWhere( data: any ){
+        return await this.model.findOne( {where: data})
+    }
+
+    async findAllWhere( data: any ){
+        return await this.model.findAll( {where: data})
+    }
+
     async updateById(id: number, data: any): Promise<number> {
         const whereOption: WhereOptions = { id } as WhereOptions;
         return (await this.model.update(data, { where: whereOption }))[0];

@@ -14,8 +14,14 @@ export const accessPermissions: PermissionType[] = [
                 methods: ["post"],
             },
             {
-                resource: '/api/v1/reaction', methods: ['POST']
-            }
+                resource: '/api/v1/reaction', methods: ['POST', "GET"]
+            },
+            {
+                resource: '/api/v1/reaction/all/forUser', methods: ['get']
+            },
+            // {
+                // resource: '/api/v1/reaction', methods: ['*']
+            // }
         ],
     },
     {
