@@ -5,7 +5,7 @@ import { webTokenManger } from "../../../services/tokenManager";
 type sendReactionProps = {
     reaction: number;
     albumId?: number;
-    photoId?: Number;
+    photoId?: number;
     fetchFinally?: () => void
 }
 
@@ -14,6 +14,7 @@ export default function sendReaction(
         
 ) {
     if (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         !Object.values( EmotionsObject ).includes( reaction as any) ||
         !webTokenManger.getLocalToken()
     

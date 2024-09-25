@@ -53,6 +53,7 @@ export const useFetch = <T>(
             }
         };
         fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         url, 
         options.method,

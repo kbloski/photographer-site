@@ -12,7 +12,6 @@ export function deletePhoto(id: number, callbackFinally?: () => void) {
             if (!response.ok) throw new Error(response.statusText);
             // fetchPhotos.refresh();
         })
-        .catch((err) => null)
         .finally( () => { 
             if (callbackFinally) callbackFinally();
         } )

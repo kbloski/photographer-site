@@ -9,7 +9,6 @@ import { AlbumPhotoUploadBlock } from "packages/frontend-app-nextjs/src/common/c
 import { ReactionBar } from "packages/frontend-app-nextjs/src/common/components/ReactionBar/ReactionBar";
 import { useCheckLogged } from "packages/frontend-app-nextjs/src/common/hooks/useCheckLogged";
 import { useFetch } from "packages/frontend-app-nextjs/src/common/hooks/useFetch";
-import { webTokenManger } from "packages/frontend-app-nextjs/src/common/services/tokenManager";
 import { useEffect, useState } from "react";
 import { AlbumType } from "shared/src/types/AlbumType";
 import { PhotoType } from "shared/src/types/PhotoType";

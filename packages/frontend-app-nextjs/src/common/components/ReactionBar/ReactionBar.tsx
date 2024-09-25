@@ -7,7 +7,6 @@ import { createApiUrl } from "../../api/apiUtils";
 import { webTokenManger } from "../../services/tokenManager";
 import sendReaction from "./helpers/sendReaction";
 import { Emotions, EmotionsObject, ReactionType } from "packages/shared/src/types/ReactionType";
-import { useCheckLogged } from "../../hooks/useCheckLogged";
 
 type ReactionBarProps = {
     albumId?: number;
@@ -37,7 +36,7 @@ export function ReactionBar({ albumId, photoId }: ReactionBarProps) {
     useEffect(() => {
         const reactinos = fetchReactions?.data?.reactions;
         if (reactinos) setReactions(reactinos);
-    }, [fetchReactions.loading]);
+    }, [fetchReactions.loading, fetchReactions.data?.reactions]);
 
     useEffect(() => {
         const existUserReaction = fetchExistReaction?.data?.reaction;
