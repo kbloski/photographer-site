@@ -1,5 +1,5 @@
 import {
-    getReactionEmotionsValues,
+    getReactionEnumValues,
     ReactionType,
 } from "shared/src/types/ReactionType";
 
@@ -31,7 +31,7 @@ export class ReactionController extends AbstractCrudController<Reaction> {
     }
 
     async countByAlbumId(albumId: number) {
-        const reactionArr = getReactionEmotionsValues();
+        const reactionArr = getReactionEnumValues();
 
         const result: any = {};
 
@@ -48,7 +48,7 @@ export class ReactionController extends AbstractCrudController<Reaction> {
     }
 
     async countByPhotoId(photoId: number) {
-        const reactionArr = getReactionEmotionsValues();
+        const reactionArr = getReactionEnumValues();
 
         const result: any = {};
 

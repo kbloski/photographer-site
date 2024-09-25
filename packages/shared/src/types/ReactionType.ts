@@ -5,8 +5,13 @@ export enum ReactionEmotions {
     HAHA = 4,
 }
 
-export function getReactionEmotionsValues(){
+export function getReactionEnumValues(){
     const values = Object.values(ReactionEmotions).filter( v => typeof v === 'number');
+    return values;
+}
+
+export function getReactionEnumKeys(){
+    const values = Object.values(ReactionEmotions).filter( v => typeof v === 'string');
     return values;
 }
 
