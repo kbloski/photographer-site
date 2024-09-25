@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, use, useState } from "react";
 import { useCheckLogged } from "../../hooks/useCheckLogged";
 import { MessageSchema } from "packages/shared/src/schemas/MessageSchema";
 import { generateZodErrorString } from "../../utils/zodErrorUtils";
@@ -11,6 +11,7 @@ import { webTokenManger } from "../../services/tokenManager";
 
 export function SupportForm() {
     const { user } = useCheckLogged();
+    const [successMessage, setSuccessMessage] = useState<string>();
     const [validationMessage, setValidationMessage] = useState<string>();
     const [messageData, setMessageData] = useState({});
     const [pending, setPending] = useState<boolean>(false);
@@ -23,6 +24,8 @@ export function SupportForm() {
         setMessageData((prev) => {
             const newMessage: Record<string, string> = prev ? { ...prev } : {};
             newMessage[name] = value;
+
+            if (user?.email) newMessage.email = user.email;
 
             try {
                 MessageSchema.parse(newMessage);
@@ -39,7 +42,7 @@ export function SupportForm() {
         event.preventDefault();
 
         setPending(true);
-
+        
         fetch(
             createApiUrl(`/api/v1/message/sendTo/${contactDetails.userId}`),
             {
@@ -53,7 +56,7 @@ export function SupportForm() {
         )
         .then( response => {
             if (!response.ok) throw new Error( response.statusText );
-            console.log( 'Success' )
+            setSuccessMessage('Message sent.')
         } )
         .catch( err => setValidationMessage( err.message ) )
         .finally( () => setPending( false ));
@@ -63,6 +66,11 @@ export function SupportForm() {
     return (
         <div className="container p-2 bg-light">
             <h3 className="">Contact Form</h3>
+            {   successMessage &&
+                <div className="alert alert-success">
+                    {successMessage}
+                </div>
+            }
             <div>
                 { validationMessage &&
                     <div className="alert alert-danger">
@@ -83,7 +91,7 @@ export function SupportForm() {
                             className="form-control"
                             required
                             onChange={handleChange}
-                            value={ user?.email }
+                            defaultValue={ user?.email }
                         />
                     
                 </div>
