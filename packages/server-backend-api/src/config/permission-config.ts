@@ -13,6 +13,9 @@ export const accessPermissions: PermissionType[] = [
                 resource: /^\/api\/v1\/message\/sendTo\/(\d+)$/, // "/api/v1/message/sendTo/:recipientId"
                 methods: ["post"],
             },
+            {
+                resource: '/api/v1/reaction', methods: ['POST']
+            }
         ],
     },
     {

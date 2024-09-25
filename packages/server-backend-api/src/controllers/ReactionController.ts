@@ -5,6 +5,7 @@ import {
 
 import { Reaction } from "../models/ReactionModel";
 import { AbstractCrudController } from "./AbstrctCrudController";
+import { where } from "sequelize";
 
 export class ReactionController extends AbstractCrudController<Reaction> {
     constructor() {
@@ -18,6 +19,11 @@ export class ReactionController extends AbstractCrudController<Reaction> {
         }
 
         return super.create(data);
+    }
+
+    async getByUserId( userId: number) : Promise<Reaction[]>
+    {
+        return await Reaction.findAll( { where: { user_id: userId}})
     }
 
     async countByAlbumId(albumId: number) {
