@@ -1,68 +1,62 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AlbumSchema } from "shared/src/schemas/AlbumSchema";
 import { generateZodErrorString } from "../../utils/zodErrorUtils";
-import {  ZodError } from "zod";
+import { effect, ZodError } from "zod";
 import { createApiUrl } from "../../api/apiUtils";
 import { webTokenManger } from "../../services/tokenManager";
 import { manualDropModalBootstrap } from "../../helpers/bootstrapHelper";
 
 type AlbumAddModalProps = {
-    refreshFetch?: () => void
-}
+    refreshFetch?: () => void;
+};
 
-export function AlbumAddModal( { refreshFetch } : AlbumAddModalProps) {
+export function AlbumAddModal({ refreshFetch }: AlbumAddModalProps) {
     const [modalId, setModalId] = useState<string>();
     const [albumData, setAlbumData] = useState({});
     const [errorMessage, setErrorMsg] = useState<string>();
 
-    useState(() => {
+    useEffect(() => {
         const modalId = `modalAlbumAdd${Math.round(Math.random() * 1000)}`;
         setModalId(modalId);
-    });
+    }, []);
 
     function onChange(event: ChangeEvent<HTMLInputElement>) {
         const name = event.target.name;
         const value = event.target.value;
         setAlbumData((prev) => {
-            setErrorMsg('')
+            setErrorMsg("");
             const newData: Record<string, string> = { ...prev };
             newData[name] = value;
 
             try {
-                AlbumSchema.parse( newData );
+                AlbumSchema.parse(newData);
             } catch (err) {
-                setErrorMsg( generateZodErrorString(err as ZodError) );
+                setErrorMsg(generateZodErrorString(err as ZodError));
             }
 
             return newData;
         });
     }
 
-    function onSubmit( event : React.FormEvent){
+    function onSubmit(event: React.FormEvent) {
         event.preventDefault();
 
-        fetch(
-            createApiUrl('/api/v1/album/add'),
-            {
-                method: 'post',
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'authorization' : `Bearer ${webTokenManger.getLocalToken()}`
-                },
-                body: JSON.stringify( albumData )
-            }
-        ).then(
-            response => {
+        fetch(createApiUrl("/api/v1/album/add"), {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${webTokenManger.getLocalToken()}`,
+            },
+            body: JSON.stringify(albumData),
+        })
+            .then((response) => {
                 if (!response.ok) throw new Error();
                 if (refreshFetch) refreshFetch();
 
-                const modalElement = document.getElementById( String(modalId ))
-                if (modalElement) manualDropModalBootstrap( modalElement );
-            }
-        ).catch( 
-           () => setErrorMsg( errorMessage )
-        )
-       
+                const modalElement = document.getElementById(String(modalId));
+                if (modalElement) manualDropModalBootstrap(modalElement);
+            })
+            .catch(() => setErrorMsg(errorMessage));
     }
 
     return (
@@ -87,10 +81,12 @@ export function AlbumAddModal( { refreshFetch } : AlbumAddModalProps) {
                                 data-bs-dismiss="modal"
                             ></button>
                         </div>
-                        <div className={
-                                    "alert " +
-                                    (errorMessage ? "alert-danger" : "d-none")
-                                }>
+                        <div
+                            className={
+                                "alert " +
+                                (errorMessage ? "alert-danger" : "d-none")
+                            }
+                        >
                             {errorMessage}
                         </div>
                         <div className="modal-body">

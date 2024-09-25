@@ -23,10 +23,12 @@ export default function RootLayout({
       <body>
           <div className="container body-container p-3">
             <Header />
-              <div className={[
-                "container",
-                style.children
-              ].join(' ')}>
+              <div 
+                className={[
+                    "container",
+                    style.children
+                ].join(' ')}
+              >
                 {children}
               </div>
             <Footer />

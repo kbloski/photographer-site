@@ -10,26 +10,25 @@ import { getRandomIndexFromArr } from "../../helpers/getRandomElement";
 
 export function AlbumListBlock() {
     const fetchAlbum = useFetch(createApiUrl("/api/v1/album/all"), {
-        method: "get"
+        method: "get",
     });
     const [albums, setAlbums] = useState<AlbumType[]>([]);
-    
-    useEffect( ()=>{
-        const albumsFetch : AlbumType[] = fetchAlbum?.data?.albums ?? [];
+
+    useEffect(() => {
+        const albumsFetch: AlbumType[] = fetchAlbum?.data?.albums ?? [];
         const albumsLength = albumsFetch.length;
 
-        if ( albumsLength){
+        if (albumsLength) {
             const mixedAlbums = [];
-            for( let i = 0; i < albumsLength; i++){
-                const randomIndex = getRandomIndexFromArr( albumsFetch );
-    
-                mixedAlbums.push( albumsFetch[randomIndex] );
+            for (let i = 0; i < albumsLength; i++) {
+                const randomIndex = getRandomIndexFromArr(albumsFetch);
+
+                mixedAlbums.push(albumsFetch[randomIndex]);
                 albumsFetch.splice(randomIndex, 1);
             }
-            setAlbums( mixedAlbums );
+            setAlbums(mixedAlbums);
         }
-
-    }, [ fetchAlbum.loading ])
+    }, [fetchAlbum.loading]);
 
     return (
         <div className="container p-3 w-100">
@@ -40,14 +39,14 @@ export function AlbumListBlock() {
                 </Link>
             </div>
             <div className="row d-block d-sm-flex">
-                { !fetchAlbum.loading ? (
-                    albums?.length ?
+                {!fetchAlbum.loading ? (
+                    albums?.length ? (
                         albums.map((album, index) => {
                             if (index > 3) return;
                             return (
                                 <div
                                     className={
-                                        index < 3 
+                                        index < 3
                                             ? "col-12 col-sm-4 col-lg-3"
                                             : "d-none col-12 col-sm-0 d-lg-block col-lg-3 "
                                     }
@@ -56,20 +55,20 @@ export function AlbumListBlock() {
                                     <AlbumListItem album={album} />
                                 </div>
                             );
-                        }) 
-                    : <div>
-                        <h1 className="text-secondary p-4">Brak albumów</h1>
-                    </div>
-                ) : 
+                        })
+                    ) : (
+                        <div>
+                            <h1 className="text-secondary p-4">Brak albumów</h1>
+                        </div>
+                    )
+                ) : (
                     <div>
                         <h1>
                             <span className="spinner-border"></span>
                             Ładowanie albumów
                         </h1>
-                </div>
-                
-                
-                }
+                    </div>
+                )}
             </div>
         </div>
     );

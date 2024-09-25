@@ -9,9 +9,9 @@ import Link from "next/link";
 import { useFetch } from "../../hooks/useFetch";
 import { createApiUrl } from "../../api/apiUtils";
 import { useCheckLogged } from "../../hooks/useCheckLogged";
-import { webTokenManger } from "../../services/tokenManager";
 import { getRandomIndexFromArr } from "../../helpers/getRandomElement";
 import { ReactionBar } from "../ReactionBar/ReactionBar";
+import onClickDelete from "./helpers/deleteHelper";
 
 type AlbumCardPros = {
     refreshFetch?: () => void;
@@ -48,30 +48,16 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
 
     const prepareDescription = (description: string, length: number = 20) => {
         const newDescription = description.slice(0, length);
-        return newDescription;
+
+        return newDescription + "...";
     };
 
-    function onClickDelete(id: number) {
-        fetch(createApiUrl(`/api/v1/album/${id}`), {
-            method: "delete",
-            headers: {
-                authorization: `Bearer ${webTokenManger.getLocalToken()}`,
-            },
-        }).then((response) => {
-            if (!response.ok) throw new Error();
-
-            if (refreshFetch) refreshFetch();
-        });
-    }
-
     return (
-        <div id={cardId} 
-            className={`container p-3`}
-        >
+        <div id={cardId} className={`container p-3`}>
             {logged && user?.role === "admin" && (
                 <button
                     className={"badge bg-danger"}
-                    onClick={() => onClickDelete(album.id)}
+                    onClick={() => onClickDelete(album.id, refreshFetch)}
                 >
                     Delete
                 </button>
@@ -79,7 +65,7 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
             <div className={`card`}>
                 <Link
                     href={`album/${album.id}`}
-                    className={ [style.link,style["album-list-item"]].join(' ')}
+                    className={[style.link, style["album-list-item"]].join(" ")}
                 >
                     <div className={style["album-list-item-photo"]}>
                         <Image
@@ -99,8 +85,7 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
                     <div>
                         <p className="card-content text-center p-2">
                             {album.description &&
-                                prepareDescription(album.description) +
-                                    "..."}{" "}
+                                prepareDescription(album.description)}
                         </p>
                     </div>
                 </Link>

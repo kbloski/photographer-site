@@ -52,23 +52,27 @@ export function LoginModal() {
             },
         })
             .then((response) => {
-                if (!response.ok) throw new Error( response.statusText);
+                if (!response.ok) throw new Error(response.statusText);
                 return response.json();
             })
             .then((data) => {
                 if (data) {
-                    webTokenManger.setLocalToken(data.token)
-                    
-                    const modalElement = document.getElementById(String(modalId)) as HTMLElement;
+                    webTokenManger.setLocalToken(data.token);
+
+                    const modalElement = document.getElementById(
+                        String(modalId)
+                    ) as HTMLElement;
                     manualDropModalBootstrap(modalElement);
-                    
-                    window.location.reload()
-                };
+
+                    window.location.reload();
+                }
             })
-            .catch( (err : Error)=>{ setMessage(err.message ) })
+            .catch((err: Error) => {
+                setMessage(err.message);
+            });
     }
 
-    function logOut(){
+    function logOut() {
         webTokenManger.deleteLocalToken();
         window.location.reload();
     }
@@ -76,10 +80,7 @@ export function LoginModal() {
     return (
         <div className="p-3">
             {logged ? (
-                <button
-                    className="btn btn-danger"
-                    onClick={ logOut }
-                >
+                <button className="btn btn-danger" onClick={logOut}>
                     Log out
                 </button>
             ) : (
@@ -92,11 +93,7 @@ export function LoginModal() {
                 </button>
             )}
 
-            <div
-                className="modal fade"
-                id={modalId}
-                data-bs-backdrop="static"
-            >
+            <div className="modal fade" id={modalId} data-bs-backdrop="static">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

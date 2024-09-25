@@ -4,16 +4,16 @@ import { TokenValidationResult } from "shared/src/types/TokenType";
 import { UserType } from "packages/shared/src/types/UserType";
 
 class WebTokenManger {
-    setLocalToken( token: string ){
-        localStorage.setItem(AUTH_TOKEN_KEY, token)
+    setLocalToken(token: string) {
+        localStorage.setItem(AUTH_TOKEN_KEY, token);
     }
 
-    deleteLocalToken(){
-        localStorage.setItem( AUTH_TOKEN_KEY, '')
+    deleteLocalToken() {
+        localStorage.setItem(AUTH_TOKEN_KEY, "");
     }
 
     getLocalToken() {
-        return localStorage.getItem(AUTH_TOKEN_KEY) ?? '';
+        return localStorage.getItem(AUTH_TOKEN_KEY) ?? "";
     }
 
     getTokenDecoded(token: string): TokenValidationResult {

@@ -13,6 +13,7 @@ import { webTokenManger } from "packages/frontend-app-nextjs/src/common/services
 import { useEffect, useState } from "react";
 import { AlbumType } from "shared/src/types/AlbumType";
 import { PhotoType } from "shared/src/types/PhotoType";
+import { deletePhoto } from "./helpers/deletePhotoHelper";
 
 type AlbumPageProps = {
     params: {
@@ -47,22 +48,6 @@ const AlbumPage: NextPage<AlbumPageProps> = ({ params }) => {
             if (!album) redirect("/album");
         }
     }, [fetchAlbum.data, fetchAlbum.loading]);
-
-    function deletePhoto(id: number) {
-        fetch(
-            createApiUrl(`/api/v1/photo/${id}`),
-            {
-                method: "DELETE",
-                headers: {
-                    'authorization' : `Bearer ${webTokenManger.getLocalToken()}`
-                }
-            }
-        ).then( response => {
-            if (!response.ok) throw new Error(response.statusText);
-            fetchPhotos.refresh();
-        })
-        .catch( err => null)
-    }
 
     return (
         <div className="container p-2">
@@ -107,7 +92,8 @@ const AlbumPage: NextPage<AlbumPageProps> = ({ params }) => {
                 <h1>Photos</h1>
                 {fetchPhotos.loading ? (
                     <h1>
-                        <span className="spinner-border text-secondary"></span>Loading...
+                        <span className="spinner-border text-secondary"></span>
+                        Loading...
                     </h1>
                 ) : photos?.length ? (
                     <>
@@ -117,16 +103,19 @@ const AlbumPage: NextPage<AlbumPageProps> = ({ params }) => {
                                     key={photo.id}
                                     className="col-12 col-sm-6 col-md-4 col-lg-3"
                                 >
-                                    {   logged && user?.role === 'admin' &&
+                                    {logged && user?.role === "admin" && (
                                         <button
                                             className="badge bg-danger position-absolute"
                                             onClick={() =>
-                                                deletePhoto(Number(photo.id))
+                                                deletePhoto(
+                                                    Number(photo.id),
+                                                    fetchPhotos.refresh
+                                                )
                                             }
                                         >
                                             Delete
                                         </button>
-                                    }
+                                    )}
                                     <div className="p-2">
                                         <Image
                                             className="p-2 bg-secondary"

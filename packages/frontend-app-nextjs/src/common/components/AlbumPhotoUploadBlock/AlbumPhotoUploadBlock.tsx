@@ -5,10 +5,13 @@ import { webTokenManger } from "../../services/tokenManager";
 
 type AlbumPhotoUploadBlockProps = {
     albumId: number;
-    successFetch?: () => void
+    successFetch?: () => void;
 };
 
-export function AlbumPhotoUploadBlock({ albumId, successFetch }: AlbumPhotoUploadBlockProps) {
+export function AlbumPhotoUploadBlock({
+    albumId,
+    successFetch,
+}: AlbumPhotoUploadBlockProps) {
     const [pending, setPending] = useState(false);
     const MAX_FILES = 10;
     const MAX_FILE_SIZE = 1024 * 1024 * 4;
@@ -39,49 +42,45 @@ export function AlbumPhotoUploadBlock({ albumId, successFetch }: AlbumPhotoUploa
         event.preventDefault();
 
         const formData = new FormData();
-        
+
         for (const file of files) {
             formData.append("images", file);
         }
-        
-        setPending(true)
+
+        setPending(true);
         fetch(createApiUrl(`/api/v1/photo/add/list/for-album/${albumId}`), {
             method: "POST",
             headers: {
                 authorization: `Bearer ${webTokenManger.getLocalToken()}`,
             },
-            
+
             body: formData,
         })
-        .then((response) => {
-            if (!response.ok) throw new Error(response.statusText);
+            .then((response) => {
+                if (!response.ok) throw new Error(response.statusText);
 
-            if (successFetch) successFetch();
-            alert("Pliki zostały wysłane na serwer")
-        })
-        .catch((err) => {
-            setMessage(err.message);
-        })
-        .finally(
-            () => {
-                setPending(false)
+                if (successFetch) successFetch();
+                alert("Pliki zostały wysłane na serwer");
+            })
+            .catch((err) => {
+                setMessage(err.message);
+            })
+            .finally(() => {
+                setPending(false);
                 setFiles([]);
-            }
-        )
+            });
     }
 
-    const deleteFile = ( file : File ) => {
-        setFiles( prev => {
-            const filesArr = prev.filter( f => f !== file)
+    const deleteFile = (file: File) => {
+        setFiles((prev) => {
+            const filesArr = prev.filter((f) => f !== file);
             return filesArr ?? [];
-        })
-    }
+        });
+    };
 
     return (
         <div className={`container p-2 bg-light`}>
-            <h3>
-                Choose your photo to send to the album
-            </h3>
+            <h3>Choose your photo to send to the album</h3>
 
             {message && <div className="alert alert-danger">{message}</div>}
             <form onSubmit={onSubmit} encType="multipart/form-data">
@@ -92,9 +91,9 @@ export function AlbumPhotoUploadBlock({ albumId, successFetch }: AlbumPhotoUploa
                             key={index}
                         >
                             <div>
-                                <button 
+                                <button
                                     className="badge bg-danger position-absolute"
-                                    onClick={ () => deleteFile(file) }
+                                    onClick={() => deleteFile(file)}
                                 >
                                     Delete
                                 </button>
@@ -108,7 +107,7 @@ export function AlbumPhotoUploadBlock({ albumId, successFetch }: AlbumPhotoUploa
                             </div>
                         </div>
                     ))}
-                    { files.length < MAX_FILES && !pending && (
+                    {files.length < MAX_FILES && !pending && (
                         <div className="col-12 p-2 justify-content-center d-flex">
                             <label>
                                 <input
@@ -121,19 +120,21 @@ export function AlbumPhotoUploadBlock({ albumId, successFetch }: AlbumPhotoUploa
                         </div>
                     )}
                 </div>
-                { pending ? <>
-                    <div className="alert alert-warning">
-                        Trwa wysyłanie plików ...
-                    </div>
-                </> :
+                {pending ? (
+                    <>
+                        <div className="alert alert-warning">
+                            Trwa wysyłanie plików ...
+                        </div>
+                    </>
+                ) : (
                     <div>
-                        {   files.length > 0 &&
+                        {files.length > 0 && (
                             <button type="submit" className="btn btn-success">
                                 Dodaj zdjęcia
                             </button>
-                        }
+                        )}
                     </div>
-                }
+                )}
             </form>
         </div>
     );
