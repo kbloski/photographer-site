@@ -16,7 +16,9 @@
 
     "frontend:start" : "cd packages/frontend-app-nextjs && npm run start",
     "frontend:build" : "cd packages/frontend-app-nextjs && npm run build && cd ../shared && npm run build",
-    "frontend:dev" : "cd packages/frontend-app-nextjs && npm run dev"
+    "frontend:dev" : "cd packages/frontend-app-nextjs && npm run dev",
+
+    "project:build": "cd packages/server-backend-api && npm run build && cd ../shared && npm run build && cd ../frontend-app-nextjs && npm run build "
   },
 
   "devDependencies": {
