@@ -5,7 +5,7 @@ export function Contact(){
     return (
         <>
             <ul className="list-unstyled d-block">
-                <h3>contactDetails</h3>
+                <h3>Contact</h3>
                 {   contactDetails.phone &&
                     <li className="list-item">
                         Tel:<a href={`tel:${contactDetails.phone}`} className={style.link}> {contactDetails.phone}</a>

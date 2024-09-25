@@ -19,12 +19,12 @@ export function ReactionBar({ albumId, photoId }: ReactionBarProps) {
 
     const fetchReactions = useFetch(
         createApiUrl(
-            `/api/v1/reaction/all?albumId=${albumId}&photoId=${photoId ?? ""}`
+            `/api/v1/reaction/all?albumId=${albumId ?? ''}&photoId=${photoId ?? ''}`
         ),
         { method: "GET" }
     );
     const fetchExistReaction = useFetch(
-        createApiUrl(`/api/v1/reaction?albumId=${albumId ?? ""}`),
+        createApiUrl(`/api/v1/reaction?albumId=${albumId ?? ""}&photoId=${photoId ?? ''}`),
         {
             method: "GET",
             headers: {
@@ -59,6 +59,7 @@ export function ReactionBar({ albumId, photoId }: ReactionBarProps) {
                         onClick={ () => sendReaction({
                             reaction: emotionValue,
                             albumId,
+                            photoId,
                             callbackSuccess: () => {
                                 fetchReactions.refresh()
                                 fetchExistReaction.refresh()

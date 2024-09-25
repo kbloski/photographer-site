@@ -6,6 +6,7 @@ import { NextPage } from "next/types";
 import { createApiUrl } from "packages/frontend-app-nextjs/src/common/api/apiUtils";
 import { AlbumEditModal } from "packages/frontend-app-nextjs/src/common/components/AlbumEditModal/AlbumEditModal";
 import { AlbumPhotoUploadBlock } from "packages/frontend-app-nextjs/src/common/components/AlbumPhotoUploadBlock/AlbumPhotoUploadBlock";
+import { ReactionBar } from "packages/frontend-app-nextjs/src/common/components/ReactionBar/ReactionBar";
 import { useCheckLogged } from "packages/frontend-app-nextjs/src/common/hooks/useCheckLogged";
 import { useFetch } from "packages/frontend-app-nextjs/src/common/hooks/useFetch";
 import { webTokenManger } from "packages/frontend-app-nextjs/src/common/services/tokenManager";
@@ -138,6 +139,7 @@ const AlbumPage: NextPage<AlbumPageProps> = ({ params }) => {
                                             height={0}
                                         />
                                     </div>
+                                    <ReactionBar photoId={photo.id} />
                                 </div>
                             ))}
                         </section>
