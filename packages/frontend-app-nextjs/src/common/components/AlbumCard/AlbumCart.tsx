@@ -57,7 +57,7 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
             {logged && user?.role === "admin" && (
                 <button
                     className={"badge bg-danger"}
-                    onClick={() => onClickDelete(album.id, refreshFetch)}
+                    onClick={() => onClickDelete(album.id, refreshFetch )}
                 >
                     Delete
                 </button>

@@ -17,15 +17,17 @@ export default function AlbumPage() {
 
     useEffect(() => {
         const albums = fetchAlbums.data?.albums ?? undefined;
-        if (albums) setAlbums(albums);
-    }, [fetchAlbums.data]);
+        if (albums) return setAlbums(albums);
+        setAlbums([])
+    }, [fetchAlbums.data, fetchAlbums.loading]);
+    
 
     return (
         <div className="container p-3">
             <div className="d-flex">
                 <h1>Gallery</h1>
                 {logged && user?.role === "admin" && (
-                    <AlbumAddModal refreshFetch={fetchAlbums.refresh} />
+                    <AlbumAddModal refreshFetch={ fetchAlbums.refresh} />
                 )}
             </div>
             <div>

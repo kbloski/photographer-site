@@ -9,6 +9,9 @@ export default function onClickDelete(id: number, callbackSuccess?: ()=> void) {
         },
     }).then((response) => {
         if (!response.ok) throw new Error();
-        if( callbackSuccess) callbackSuccess();
-    });
+        
+    })
+    .finally( () => {
+        if ( callbackSuccess) callbackSuccess()
+        })
 }
