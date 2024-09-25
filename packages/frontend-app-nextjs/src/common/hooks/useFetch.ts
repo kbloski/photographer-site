@@ -53,7 +53,13 @@ export const useFetch = <T>(
             }
         };
         fetchData();
-    }, [url, options.method, options.headers, options.body, refresh]);
+    }, [
+        url, 
+        options.method,
+        // options.headers,
+        options.body,
+        refresh
+    ]);
 
     function refreshToggle() {
         setRefresh( prev => !prev );

@@ -9,4 +9,5 @@ export const contactDetails = {
 export const API_URL = process.env.API_URL || defaultApiUrl;
 export const PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || defaultApiUrl;
 
+// Localstorage
 export const AUTH_TOKEN_KEY = 'auth_token';

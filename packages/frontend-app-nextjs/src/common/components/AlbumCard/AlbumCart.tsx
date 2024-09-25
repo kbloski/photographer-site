@@ -11,6 +11,7 @@ import { createApiUrl } from "../../api/apiUtils";
 import { useCheckLogged } from "../../hooks/useCheckLogged";
 import { webTokenManger } from "../../services/tokenManager";
 import { getRandomIndexFromArr } from "../../helpers/getRandomElement";
+import { ReactionBar } from "../ReactionBar/ReactionBar";
 
 type AlbumCardPros = {
     refreshFetch?: () => void;
@@ -18,25 +19,19 @@ type AlbumCardPros = {
 };
 
 export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
-    const [ cardId, setCardId] = useState<string>();
+    const [cardId, setCardId] = useState<string>();
     const { logged, user } = useCheckLogged();
-    const [ srcImg, setSrcImg] = useState<string>();
+    const [srcImg, setSrcImg] = useState<string>();
+
     const fetchImages = useFetch(
         createApiUrl(`/api/v1/photo/list/for-album/${album.id}`),
-        {
-            method: "get"
-        }
+        { method: "GET" }
     );
 
-    const prepareDescription = ( description : string, length : number = 20) =>{
-        const newDescription = description.slice(0, length );
-        return newDescription;
-    }
-
-    useEffect( ()=>{
+    useEffect(() => {
         const id = `albumCardItem${album.id}`;
-        setCardId( id );
-    }, [album.id])
+        setCardId(id);
+    }, [album.id]);
 
     useEffect(() => {
         if (!fetchImages.loading) {
@@ -44,12 +39,17 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
 
             if (photoArr?.length) {
                 const randomId = getRandomIndexFromArr(photoArr);
-                const photoId = photoArr[randomId].id
+                const photoId = photoArr[randomId].id;
                 setSrcImg(createApiUrl(`/api/v1/photo/${photoId}`));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchImages.loading]);
+
+    const prepareDescription = (description: string, length: number = 20) => {
+        const newDescription = description.slice(0, length);
+        return newDescription;
+    };
 
     function onClickDelete(id: number) {
         fetch(createApiUrl(`/api/v1/album/${id}`), {
@@ -65,7 +65,9 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
     }
 
     return (
-        <div id={cardId} className="container p-3 ">
+        <div id={cardId} 
+            className={`container p-3`}
+        >
             {logged && user?.role === "admin" && (
                 <button
                     className={"badge bg-danger"}
@@ -74,8 +76,11 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
                     Delete
                 </button>
             )}
-            <Link href={`album/${album.id}`} className={style.link}>
-                <div className={"card " + style["album-list-item"]}>
+            <div className={`card`}>
+                <Link
+                    href={`album/${album.id}`}
+                    className={ [style.link,style["album-list-item"]].join(' ')}
+                >
                     <div className={style["album-list-item-photo"]}>
                         <Image
                             className={["card-img-top"].join(" ")}
@@ -92,13 +97,17 @@ export function AlbumCard({ album, refreshFetch }: AlbumCardPros) {
                         {album.name}
                     </h3>
                     <div>
-                        <p className="card-content text-center p-2">{
-                            album.description &&
-                            prepareDescription( album.description ) + '...'
-                        }  </p>
+                        <p className="card-content text-center p-2">
+                            {album.description &&
+                                prepareDescription(album.description) +
+                                    "..."}{" "}
+                        </p>
                     </div>
+                </Link>
+                <div>
+                    <ReactionBar albumId={album.id} />
                 </div>
-            </Link>
+            </div>
         </div>
     );
 }
