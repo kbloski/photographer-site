@@ -8,6 +8,7 @@ import { useCheckLogged } from "../../hooks/useCheckLogged";
 import { generateZodErrorString } from "../../utils/zodErrorUtils";
 import { ZodError } from "zod";
 import { manualDropModalBootstrap } from "../../helpers/bootstrapHelper";
+import Link from "next/link";
 
 export function LoginModal() {
     const { logged } = useCheckLogged();
@@ -141,9 +142,11 @@ export function LoginModal() {
                                     onChange={onChange}
                                 ></input>
                                 <div className="p-2 d-flex justify-content-end">
-                                    <button className="btn btn-secondary disabled">
-                                        Register
-                                    </button>
+                                    <Link href={'/client/register'}>
+                                        <button className="btn btn-secondary">
+                                            Register
+                                        </button>
+                                    </Link>
                                     <button
                                         className="btn btn-primary ms-2"
                                         onClick={onSubmitAction}
