@@ -1,6 +1,23 @@
 START 11.09.2024 
 END 25.09.2024
 
+
+Monorepo Application
+Pełnostackowy projekt monorepo, łączący backend i frontend.
+
+Backend: Zbudowany z wykorzystaniem Node.js, Express i Sequelize ORM,
+napisany w TypeScript. Zarządza API oraz operacjami na bazie danych,
+dostarczając skalowalne usługi RESTful.
+
+Frontend: Rozwijany przy użyciu Next.js z App Router oraz React, również napisany w TypeScript.
+Aplikacja dostarcza nowoczesny interfejs użytkownika renderowany po stronie klienta.
+
+Projekt opiera się na najlepszych praktykach TypeScript zarówno po stronie backendu,
+jak i frontendu, aby zapewnić bezpieczeństwo typów i łatwość utrzymania.
+
+
+
+
 -------------- USERS ADMIN ---------------
 CREATE ADMIN - EMAIL MUST INCLUDE '@admin.example'
 WITH CREATE IN REGISTER PAGE SETTING DEVELOPMENT 
