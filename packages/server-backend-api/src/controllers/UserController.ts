@@ -25,7 +25,7 @@ export class UserController extends AbstractCrudController<User> {
     }
 
     // @ts-ignore
-    async create(data: Omit<UserType, "id" | "role">): Promise<User | null> {
+    async create(data: Omit<UserType, "id" >): Promise<User | null> {
         try {
             // const salt = await bcrypt.genSalt(10);
             data.password = await UserService.hashPassword(data.password);

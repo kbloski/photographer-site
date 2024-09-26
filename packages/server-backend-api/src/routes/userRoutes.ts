@@ -56,8 +56,12 @@ router.get(apiUrlBuilderV1.createUrlWithId(resource), async (req, res) => {
 router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
     try {
         delete req.body.id;
+
+        if(!(req?.user?.role === 'admin')) delete req.body.role;
+
         const userData: Partial<Omit<UserType, "id">> = req.body ?? {};
         UserSchema.parse(userData);
+
 
         const userExist = await userController.getByEmail(
             userData.email as string

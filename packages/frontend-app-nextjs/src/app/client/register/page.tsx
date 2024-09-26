@@ -15,7 +15,7 @@ export default function RegisterPage() {
     const [errorMessage, setErrorMsg] = useState<string>();
     const [userData, setUserData] = useState<Partial<UserType>>();
 
-    function onChange(event: ChangeEvent<HTMLInputElement>) {
+    function onChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement> ) {
         const name = event.target.name;
         const value = event.target.value;
 
@@ -33,11 +33,12 @@ export default function RegisterPage() {
             return newUser;
         });
     }
+
     
     function onsubmit( event : React.FormEvent){
         event.preventDefault();
         
-        setUserData({});
+        console.log( userData)
 
         fetch(
             createApiUrl('/api/v1/user/add'),
@@ -66,8 +67,7 @@ export default function RegisterPage() {
                         <label htmlFor="roleControl" className="form-label">
                             ROLE
                         </label>
-
-                        <select name="role" className="form-control">
+                        <select name="role" className="form-control" onChange={ onChange}>
                             {roles.map(([roleKey, roleValue]) => (
                                 <>
                                     <option
