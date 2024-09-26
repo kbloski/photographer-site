@@ -1,3 +1,11 @@
+
+-------------- USERS ADMIN ---------------
+CREATE ADMIN - EMAIL MUST INCLUDE '@admin.example'
+WITH CREATE IN REGISTER PAGE SETTING DEVELOPMENT 
+
+
+
+-------------- START LOCAL PROJECT---------------
 HOW TO START PROJECT LOCALHOST
 
 - YOU MUST HAVE INSTALL node.js and xampp

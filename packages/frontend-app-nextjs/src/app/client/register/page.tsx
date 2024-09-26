@@ -38,8 +38,6 @@ export default function RegisterPage() {
     function onsubmit( event : React.FormEvent){
         event.preventDefault();
         
-        console.log( userData)
-
         fetch(
             createApiUrl('/api/v1/user/add'),
             {

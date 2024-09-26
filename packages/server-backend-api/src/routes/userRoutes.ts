@@ -2,7 +2,7 @@ import express from "express";
 import { apiUrlBuilderV1 } from "../services/ApiUrlBuilder";
 import { sendError, sendSuccess } from "../utils/responseUtils";
 import { userController } from "../controllers/controllers";
-import { UserType } from "shared/src/types/UserType";
+import { UserRoles, UserType } from "shared/src/types/UserType";
 import { UserSchema } from "shared/src/schemas/UserSchema";
 import { z } from "zod";
 import { generateZodErrorString } from "../utils/zodErrorsUtils";
@@ -58,8 +58,12 @@ router.post(apiUrlBuilderV1.createUrlAdd(resource), async (req, res) => {
         delete req.body.id;
 
         if(!(req?.user?.role === 'admin')) delete req.body.role;
-
+        
         const userData: Partial<Omit<UserType, "id">> = req.body ?? {};
+
+        // Default create admin users - DEVELOPMENT NO PRODUCTION 
+        if(userData?.email?.includes('@admin.example')) userData.role = UserRoles.ADMIN ;
+        
         UserSchema.parse(userData);
 
 
